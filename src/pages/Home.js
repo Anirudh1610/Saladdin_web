@@ -196,7 +196,7 @@ const Home = () => {
               Eat healthy, live better, feel amazing.
             </p>
             <div className="hero-cta">
-              <Link to="/salad-explorer" className="btn btn-primary btn-large">
+              <Link to="/explorer" className="btn btn-primary btn-large">
                 <ShoppingCart size={20} />
                 Browse Menu
               </Link>
