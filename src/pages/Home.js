@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Star, Flame, Heart, Leaf, Award, Truck, Users } from 'lucide-react';
 import './Home.css';
 
 const Home = () => {
+  const navigate = useNavigate();
 
   const salads = [
     {
@@ -269,7 +270,11 @@ const Home = () => {
           
           <div className="featured-grid">
             {featuredSalads.map(salad => (
-              <div key={salad.id} className="featured-card card">
+              <div 
+                key={salad.id} 
+                className="featured-card card" 
+                onClick={() => navigate(`/salad/${salad.id}`)}
+              >
                 <div className="featured-image">{salad.image}</div>
                 {salad.tag && <span className="featured-tag">{salad.tag}</span>}
                 
@@ -291,7 +296,11 @@ const Home = () => {
 
                   <div className="featured-footer">
                     <span className="price">${salad.price}</span>
-                    <Link to="/explorer" className="btn btn-primary btn-sm">
+                    <Link 
+                      to="/explorer" 
+                      className="btn btn-primary btn-sm"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       Order Now
                     </Link>
                   </div>

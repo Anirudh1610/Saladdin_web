@@ -193,10 +193,12 @@
 }
 
 .feature-card {
-  text-align: center;
-  padding: 2rem 1.5rem;
-  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .feature-card:hover {
