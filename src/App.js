@@ -13,6 +13,8 @@ import ConsultationBooking from './pages/ConsultationBooking';
 import ConsultationChat from './pages/ConsultationChat';
 import Subscription from './pages/Subscription';
 import ProfilePage from './pages/ProfilePage';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path="/chat" element={<ConsultationChat />} />
           <Route path="/subscription" element={<Subscription />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div>
     </Router>

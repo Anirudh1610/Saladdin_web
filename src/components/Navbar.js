@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { User, Menu, X } from 'lucide-react';
+import { User, Menu, X, ShoppingCart } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -23,6 +23,9 @@ const Navbar = () => {
           </div>
 
           <div className="nav-actions">
+            <Link to="/cart" className="cart-btn">
+              <ShoppingCart size={20} />
+            </Link>
             <Link to="/profile" className="profile-btn">
               <User size={20} />
             </Link>
