@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Star, Flame, Heart } from 'lucide-react';
+import { ShoppingCart, Star, Flame, Heart, Leaf, Award, Truck, Users } from 'lucide-react';
 import './Home.css';
 
 const Home = () => {
-  const [cart, setCart] = useState([]);
 
   const salads = [
     {
@@ -165,6 +164,8 @@ const Home = () => {
     }
   ];
 
+  const featuredSalads = salads.slice(0, 6);
+  
   const recommendations = [
     {
       title: 'Top Rated This Week',
@@ -180,136 +181,222 @@ const Home = () => {
     }
   ];
 
-  const addToCart = (salad) => {
-    setCart([...cart, salad]);
-    // Show a brief notification (you could add a toast notification here)
-    alert(`${salad.name} added to cart!`);
-  };
-
   return (
-    <div className="home-ecommerce">
-      <div className="container-wide">
-        <div className="ecommerce-layout">
-          {/* Main Product Grid */}
-          <div className="products-section">
-            <div className="section-header">
-              <h1>Fresh Salads Delivered Daily</h1>
-              <p>Choose from our chef-curated selection</p>
-            </div>
-
-            <div className="products-grid">
-              {salads.map(salad => (
-                <div key={salad.id} className="product-card card">
-                  <div className="product-image">{salad.image}</div>
-                  {salad.tag && <span className="product-tag">{salad.tag}</span>}
-                  
-                  <div className="product-info">
-                    <h3>{salad.name}</h3>
-                    <p className="product-description">{salad.description}</p>
-                    
-                    <div className="product-meta">
-                      <div className="rating">
-                        <Star fill="#FF9800" color="#FF9800" size={16} />
-                        <span>{salad.rating}</span>
-                        <span className="review-count">({salad.reviews})</span>
-                      </div>
-                      <div className="nutrition-quick">
-                        <span><Flame size={14} color="#FF5722" /> {salad.calories} cal</span>
-                        <span>💪 {salad.protein}g protein</span>
-                      </div>
-                    </div>
-
-                    {salad.allergens.length > 0 && (
-                      <div className="allergen-warning-small">
-                        Contains: {salad.allergens.join(', ')}
-                      </div>
-                    )}
-
-                    <div className="product-footer">
-                      <div className="price-section">
-                        <span className="price">${salad.price}</span>
-                      </div>
-                      <button 
-                        className="btn btn-primary add-to-cart-btn"
-                        onClick={() => addToCart(salad)}
-                      >
-                        <ShoppingCart size={18} />
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Recommendations Sidebar */}
-          <aside className="recommendations-sidebar">
-            <div className="cart-summary card">
-              <h3>
+    <div className="home-landing">
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="container">
+          <div className="hero-content">
+            <h1 className="hero-title">
+              Fresh, Healthy Salads <br/>
+              <span className="hero-highlight">Delivered to Your Door</span>
+            </h1>
+            <p className="hero-subtitle">
+              Chef-curated, nutrient-packed salads made with the finest organic ingredients. 
+              Eat healthy, live better, feel amazing.
+            </p>
+            <div className="hero-cta">
+              <Link to="/salad-explorer" className="btn btn-primary btn-large">
                 <ShoppingCart size={20} />
-                Your Cart
-              </h3>
-              <div className="cart-count">
-                {cart.length === 0 ? (
-                  <p className="empty-cart">Your cart is empty</p>
-                ) : (
-                  <>
-                    <p>{cart.length} item{cart.length !== 1 ? 's' : ''}</p>
-                    <p className="cart-total">
-                      Total: ${cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)}
-                    </p>
-                    <button className="btn btn-primary btn-block">
-                      Checkout
-                    </button>
-                  </>
-                )}
+                Browse Menu
+              </Link>
+              <Link to="/build-your-bowl" className="btn btn-outline btn-large">
+                <Leaf size={20} />
+                Build Your Own
+              </Link>
+            </div>
+            <div className="hero-stats">
+              <div className="stat-item">
+                <strong>500+</strong>
+                <span>Daily Orders</span>
+              </div>
+              <div className="stat-item">
+                <strong>4.8★</strong>
+                <span>Average Rating</span>
+              </div>
+              <div className="stat-item">
+                <strong>100%</strong>
+                <span>Organic</span>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {recommendations.map((rec, index) => (
-              <div key={index} className="recommendation-card card">
-                <h3>{rec.title}</h3>
-                <div className="recommendation-items">
-                  {rec.items.map(item => (
-                    <div key={item.id} className="rec-item">
-                      <span className="rec-icon">{item.image}</span>
-                      <div className="rec-info">
-                        <strong>{item.name}</strong>
-                        <div className="rec-meta">
-                          <span className="rec-rating">
-                            <Star fill="#FF9800" color="#FF9800" size={12} />
-                            {item.rating}
-                          </span>
-                          <span className="rec-price">${item.price}</span>
-                        </div>
-                      </div>
-                      <button 
-                        className="quick-add-btn"
-                        onClick={() => addToCart(item)}
-                        title="Quick add"
-                      >
-                        <ShoppingCart size={16} />
-                      </button>
+      {/* Features Section */}
+      <section className="features-section">
+        <div className="container">
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon">
+                <Leaf size={40} />
+              </div>
+              <h3>100% Organic</h3>
+              <p>Only the freshest, locally-sourced organic ingredients in every bowl</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">
+                <Truck size={40} />
+              </div>
+              <h3>Fast Delivery</h3>
+              <p>Same-day delivery available. Fresh from our kitchen to your doorstep</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">
+                <Award size={40} />
+              </div>
+              <h3>Chef Curated</h3>
+              <p>Expertly crafted recipes by professional chefs and nutritionists</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">
+                <Users size={40} />
+              </div>
+              <h3>Personalized</h3>
+              <p>Customize your bowl or consult with our nutrition experts</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Salads Section */}
+      <div className="main-with-sidebar">
+        <section className="featured-section">
+          <div className="section-header-center">
+            <h2>Popular Favorites</h2>
+            <p>Discover our most loved salads</p>
+          </div>
+          
+          <div className="featured-grid">
+            {featuredSalads.map(salad => (
+              <div key={salad.id} className="featured-card card">
+                <div className="featured-image">{salad.image}</div>
+                {salad.tag && <span className="featured-tag">{salad.tag}</span>}
+                
+                <div className="featured-info">
+                  <h3>{salad.name}</h3>
+                  <p className="featured-description">{salad.description}</p>
+                  
+                  <div className="featured-meta">
+                    <div className="rating">
+                      <Star fill="#FF9800" color="#FF9800" size={16} />
+                      <span>{salad.rating}</span>
+                      <span className="review-count">({salad.reviews})</span>
                     </div>
-                  ))}
+                    <div className="nutrition-quick">
+                      <span><Flame size={14} color="#FF5722" /> {salad.calories} cal</span>
+                      <span>💪 {salad.protein}g</span>
+                    </div>
+                  </div>
+
+                  <div className="featured-footer">
+                    <span className="price">${salad.price}</span>
+                    <Link to="/salad-explorer" className="btn btn-primary btn-sm">
+                      Order Now
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
+          </div>
 
-            <div className="promo-card card">
-              <h3>🎉 Special Offers</h3>
-              <div className="promo-content">
-                <p><strong>Free Delivery</strong> on orders over $30</p>
-                <p><strong>15% Off</strong> your first subscription</p>
-                <Link to="/subscription" className="btn btn-secondary btn-block">
-                  View Plans
-                </Link>
+          <div className="section-cta">
+            <Link to="/salad-explorer" className="btn btn-primary btn-large">
+              View All Salads
+            </Link>
+          </div>
+        </section>
+
+        {/* Recommendations Sidebar (as floating cards on the side) */}
+        <aside className="recommendations-sidebar">
+          {recommendations.map((rec, index) => (
+            <div key={index} className="recommendation-card card">
+              <h3>{rec.title}</h3>
+              <div className="recommendation-items">
+                {rec.items.map(item => (
+                  <div key={item.id} className="rec-item">
+                    <span className="rec-icon">{item.image}</span>
+                    <div className="rec-info">
+                      <strong>{item.name}</strong>
+                      <div className="rec-meta">
+                        <span className="rec-rating">
+                          <Star fill="#FF9800" color="#FF9800" size={12} />
+                          {item.rating}
+                        </span>
+                        <span className="rec-price">${item.price}</span>
+                      </div>
+                    </div>
+                    <Link 
+                      to="/salad-explorer"
+                      className="quick-add-btn"
+                      title="View details"
+                    >
+                      <ShoppingCart size={16} />
+                    </Link>
+                  </div>
+                ))}
               </div>
             </div>
-          </aside>
-        </div>
+          ))}
+
+          <div className="promo-card card">
+            <h3>🎉 Special Offers</h3>
+            <div className="promo-content">
+              <p><strong>Free Delivery</strong> on orders over $30</p>
+              <p><strong>15% Off</strong> your first subscription</p>
+              <Link to="/subscription" className="btn btn-secondary btn-block">
+                View Plans
+              </Link>
+            </div>
+          </div>
+        </aside>
       </div>
+
+      {/* How It Works Section */}
+      <section className="how-it-works-section">
+        <div className="container">
+          <div className="section-header-center">
+            <h2>How It Works</h2>
+            <p>Fresh salads in three easy steps</p>
+          </div>
+          
+          <div className="steps-grid">
+            <div className="step-card">
+              <div className="step-number">1</div>
+              <h3>Choose Your Salad</h3>
+              <p>Browse our menu or build your own custom bowl</p>
+            </div>
+            <div className="step-card">
+              <div className="step-number">2</div>
+              <h3>We Prepare Fresh</h3>
+              <p>Our chefs prepare your order with premium ingredients</p>
+            </div>
+            <div className="step-card">
+              <div className="step-number">3</div>
+              <h3>Delivered to You</h3>
+              <p>Fast delivery right to your doorstep, fresh and ready</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="cta-section">
+        <div className="container">
+          <div className="cta-content">
+            <h2>Ready to Start Your Healthy Journey?</h2>
+            <p>Join thousands of happy customers enjoying fresh, delicious salads every day</p>
+            <div className="cta-buttons">
+              <Link to="/salad-explorer" className="btn btn-primary btn-large">
+                Start Ordering
+              </Link>
+              <Link to="/subscription" className="btn btn-outline-white btn-large">
+                View Subscriptions
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
