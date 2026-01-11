@@ -1,0 +1,174 @@
+.build-bowl-page {
+  padding: 60px 0;
+  min-height: 100vh;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.bowl-builder {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 2rem;
+}
+
+.ingredients-panel {
+  height: fit-content;
+}
+
+.ingredients-panel h2 {
+  margin-bottom: 1.5rem;
+}
+
+.ingredients-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.ingredients-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ingredients-list::-webkit-scrollbar-track {
+  background: var(--bg-light);
+  border-radius: 3px;
+}
+
+.ingredients-list::-webkit-scrollbar-thumb {
+  background: var(--primary-green);
+  border-radius: 3px;
+}
+
+.bowl-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.health-metrics {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem;
+}
+
+.metric-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.metric-card h3 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.score-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 8px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: border-color 0.5s ease;
+}
+
+.score-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  transition: color 0.5s ease;
+}
+
+.score-label {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 0.25rem;
+}
+
+.nutrition-meters {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.meter-item {
+  display: grid;
+  grid-template-columns: 80px 1fr 60px;
+  gap: 1rem;
+  align-items: center;
+}
+
+.meter-label {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.meter-bar {
+  height: 24px;
+  background: var(--bg-light);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.meter-fill {
+  height: 100%;
+  transition: width 0.5s ease;
+  border-radius: 12px;
+}
+
+.meter-fill.calories {
+  background: linear-gradient(90deg, #FF9800, #F44336);
+}
+
+.meter-fill.protein {
+  background: linear-gradient(90deg, #4CAF50, #2E7D32);
+}
+
+.meter-value {
+  font-weight: 700;
+  color: var(--text-dark);
+  text-align: right;
+}
+
+.bowl-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.bowl-actions .btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.bowl-actions .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 968px) {
+  .bowl-builder {
+    grid-template-columns: 1fr;
+  }
+
+  .health-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .bowl-actions {
+    flex-direction: column;
+  }
+}
