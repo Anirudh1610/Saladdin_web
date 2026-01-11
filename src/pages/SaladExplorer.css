@@ -3,6 +3,12 @@
   min-height: 100vh;
 }
 
+.salad-explorer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 .explorer-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -17,6 +23,9 @@
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .search-bar input {
@@ -28,6 +37,9 @@
 
 .allergen-section {
   margin-bottom: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .allergen-section h3 {
@@ -41,16 +53,24 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .allergen-btn {
-  padding: 8px 16px;
+  padding: 10px 20px;
   border: 2px solid var(--border-color);
   background: white;
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.allergen-btn:hover {
+  border-color: var(--accent-orange);
+  transform: translateY(-2px);
 }
 
 .allergen-btn.active {
@@ -64,6 +84,7 @@
   gap: 1rem;
   flex-wrap: wrap;
   margin-bottom: 3rem;
+  justify-content: center;
 }
 
 .filter-btn {
@@ -74,11 +95,14 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
+  white-space: nowrap;
+  width: fit-content;
 }
 
 .filter-btn:hover {
   border-color: var(--primary-green);
   color: var(--primary-green);
+  transform: translateY(-2px);
 }
 
 .filter-btn.active {
@@ -155,6 +179,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   margin-top: auto;
   padding-top: 1rem;
   border-top: 1px solid var(--border-color);
@@ -167,13 +192,28 @@
 }
 
 .btn-sm {
-  padding: 8px 16px;
+  padding: 10px 18px;
   font-size: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--primary-green);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.btn-sm:hover {
+  background-color: var(--dark-green);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
 }
 
 .no-results {
   text-align: center;
   padding: 4rem 2rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .no-results p {
@@ -192,5 +232,14 @@
   .filter-btn {
     padding: 8px 16px;
     font-size: 0.9rem;
+  }
+
+  .salad-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .salad-footer .btn {
+    width: 100%;
   }
 }

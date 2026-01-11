@@ -46,7 +46,8 @@
   align-items: center;
 }
 
-.profile-btn {
+.profile-btn,
+.cart-btn {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -58,9 +59,11 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
-.profile-btn:hover {
+.profile-btn:hover,
+.cart-btn:hover {
   background: var(--primary-green);
   color: white;
   transform: scale(1.05);
