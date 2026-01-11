@@ -57,15 +57,22 @@ p {
   line-height: 1.6;
 }
 
-/* Buttons */
+/* Buttons - Global Styles */
 .btn {
-  padding: 12px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 10px 20px;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none;
+  white-space: nowrap;
+  width: fit-content;
 }
 
 .btn-primary {
@@ -88,6 +95,32 @@ p {
 .btn-secondary:hover {
   background-color: var(--primary-green);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid currentColor;
+}
+
+.btn-outline:hover {
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.btn-large {
+  padding: 12px 28px;
+  font-size: 1.1rem;
+}
+
+.btn-block {
+  width: fit-content;
+  display: flex;
 }
 
 /* Cards */

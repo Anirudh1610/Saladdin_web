@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Star, Clock, Flame } from 'lucide-react';
 import './SaladDetail.css';
 
 const SaladDetail = () => {
   const params = useParams();
-  const [activeTab, setActiveTab] = useState('ingredients');
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('ingredients'); 
 
   // Sample data - in production, this would come from an API
   const salad = {
@@ -55,9 +56,9 @@ const SaladDetail = () => {
   return (
     <div className="salad-detail">
       <div className="container">
-        <Link to="/explorer" className="back-link">
-          <ArrowLeft size={20} /> Back to Explorer
-        </Link>
+        <button onClick={() => navigate(-1)} className="back-link">
+          <ArrowLeft size={20} /> Back
+        </button>
 
         <div className="detail-content fade-in">
           <div className="detail-header">
