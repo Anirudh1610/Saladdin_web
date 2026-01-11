@@ -291,7 +291,7 @@ const Home = () => {
 
                   <div className="featured-footer">
                     <span className="price">${salad.price}</span>
-                    <Link to="/salad-explorer" className="btn btn-primary btn-sm">
+                    <Link to="/explorer" className="btn btn-primary btn-sm">
                       Order Now
                     </Link>
                   </div>
@@ -301,7 +301,7 @@ const Home = () => {
           </div>
 
           <div className="section-cta">
-            <Link to="/salad-explorer" className="btn btn-primary btn-large">
+            <Link to="/explorer" className="btn btn-primary btn-large">
               View All Salads
             </Link>
           </div>
@@ -387,7 +387,7 @@ const Home = () => {
             <h2>Ready to Start Your Healthy Journey?</h2>
             <p>Join thousands of happy customers enjoying fresh, delicious salads every day</p>
             <div className="cta-buttons">
-              <Link to="/salad-explorer" className="btn btn-primary btn-large">
+              <Link to="/explorer" className="btn btn-primary btn-large">
                 Start Ordering
               </Link>
               <Link to="/subscription" className="btn btn-outline-white btn-large">
