@@ -1,0 +1,584 @@
+.profile-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem 0;
+}
+
+.profile-header {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-green, #4CAF50) 0%, #45a049 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.profile-header-info h1 {
+  margin: 0;
+  color: var(--text-dark, #333);
+  font-size: 2rem;
+}
+
+.profile-header-info p {
+  margin: 0.5rem 0 0 0;
+  color: #666;
+  font-size: 1rem;
+}
+
+.profile-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.tab {
+  background: white;
+  border: 2px solid #e0e0e0;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: var(--text-dark, #333);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  border-color: var(--primary-green, #4CAF50);
+  color: var(--primary-green, #4CAF50);
+}
+
+.tab.active {
+  background: var(--primary-green, #4CAF50);
+  border-color: var(--primary-green, #4CAF50);
+  color: white;
+}
+
+.profile-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section h2 {
+  color: var(--text-dark, #333);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Personal Information */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.info-item label {
+  display: block;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.info-item input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #f9f9f9;
+}
+
+/* Health Metrics */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+}
+
+.metric-icon {
+  font-size: 2rem;
+}
+
+.metric-info label {
+  display: block;
+  font-size: 0.85rem;
+  opacity: 0.9;
+  margin-bottom: 0.25rem;
+}
+
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.health-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detail-item label {
+  display: block;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.detail-item p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-dark, #333);
+}
+
+.tag-list {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: #ffebee;
+  color: #c62828;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Purchase History */
+.purchase-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.purchase-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.purchase-item:hover {
+  border-color: var(--primary-green, #4CAF50);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.purchase-date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+  min-width: 120px;
+}
+
+.purchase-details {
+  flex: 1;
+  padding: 0 1.5rem;
+}
+
+.purchase-details h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-dark, #333);
+}
+
+.purchase-price {
+  font-weight: 700;
+  color: var(--primary-green, #4CAF50);
+}
+
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-badge.delivered {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.active {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.status-badge.completed {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+/* Addresses */
+.address-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.address-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.address-card:hover {
+  border-color: var(--primary-green, #4CAF50);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.address-label {
+  font-weight: 700;
+  color: var(--text-dark, #333);
+  font-size: 1.1rem;
+}
+
+.default-badge {
+  background: var(--primary-green, #4CAF50);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.address-text {
+  margin: 0.5rem 0;
+  color: var(--text-dark, #333);
+}
+
+.address-city {
+  margin: 0.5rem 0 1rem 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.address-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--primary-green, #4CAF50);
+  background: white;
+  color: var(--primary-green, #4CAF50);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  background: var(--primary-green, #4CAF50);
+  color: white;
+}
+
+.action-btn.delete {
+  border-color: #f44336;
+  color: #f44336;
+}
+
+.action-btn.delete:hover {
+  background: #f44336;
+  color: white;
+}
+
+/* Subscription */
+.subscription-card {
+  border: 2px solid var(--primary-green, #4CAF50);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.subscription-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.subscription-header h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-dark, #333);
+}
+
+.subscription-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-green, #4CAF50);
+}
+
+.subscription-info {
+  margin-bottom: 1.5rem;
+}
+
+.subscription-info p {
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+.benefits-list h4 {
+  margin: 0 0 1rem 0;
+  color: var(--text-dark, #333);
+}
+
+.benefits-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.benefits-list li {
+  padding: 0.5rem 0;
+  color: #666;
+}
+
+.subscription-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Consultations */
+.consultation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.consultation-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.consultation-item:hover {
+  border-color: var(--primary-green, #4CAF50);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.consultation-date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+  min-width: 120px;
+}
+
+.consultation-details {
+  flex: 1;
+  padding: 0 1.5rem;
+}
+
+.consultation-details h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-dark, #333);
+}
+
+.consultation-details p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Buttons */
+.edit-btn {
+  background: var(--primary-green, #4CAF50);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.cancel-btn {
+  background: white;
+  color: #f44336;
+  border: 2px solid #f44336;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+  background: #f44336;
+  color: white;
+}
+
+.add-btn {
+  background: white;
+  color: var(--primary-green, #4CAF50);
+  border: 2px solid var(--primary-green, #4CAF50);
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.add-btn:hover {
+  background: var(--primary-green, #4CAF50);
+  color: white;
+}
+
+.view-more-btn {
+  background: white;
+  color: var(--primary-green, #4CAF50);
+  border: 2px solid var(--primary-green, #4CAF50);
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.view-more-btn:hover {
+  background: var(--primary-green, #4CAF50);
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 1rem 0;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-header-info h1 {
+    font-size: 1.5rem;
+  }
+
+  .profile-tabs {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+  }
+
+  .tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .profile-content {
+    padding: 1rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .purchase-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .purchase-details {
+    padding: 0;
+  }
+
+  .subscription-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .subscription-actions {
+    flex-direction: column;
+  }
+
+  .consultation-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .consultation-details {
+    padding: 0;
+  }
+
+  .address-list {
+    grid-template-columns: 1fr;
+  }
+}

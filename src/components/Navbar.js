@@ -23,9 +23,9 @@ const Navbar = () => {
           </div>
 
           <div className="nav-actions">
-            <button className="profile-btn">
+            <Link to="/profile" className="profile-btn">
               <User size={20} />
-            </button>
+            </Link>
           </div>
 
           <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)}>
