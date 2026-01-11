@@ -16,8 +16,10 @@ const Navbar = () => {
 
           <div className={`nav-links ${isOpen ? 'active' : ''}`}>
             <Link to="/" onClick={() => setIsOpen(false)}>Home</Link>
+            <Link to="/explorer" onClick={() => setIsOpen(false)}>Explorer</Link>
+            <Link to="/build-your-bowl" onClick={() => setIsOpen(false)}>Build Your Bowl</Link>
             <Link to="/subscription" onClick={() => setIsOpen(false)}>Plans</Link>
-            <Link to="/consultation" onClick={() => setIsOpen(false)}>Consultation</Link>
+            <Link to="/consultation" onClick={() => setIsOpen(false)}>Consult</Link>
           </div>
 
           <div className="nav-actions">

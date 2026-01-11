@@ -5,7 +5,7 @@ import './SaladDetail.css';
 
 const SaladDetail = () => {
   const params = useParams();
-  const [activeTab, setActiveTab] = useState('ingredients');
+  const [activeTab, setActiveTab] = useState('ingredients'); 
 
   // Sample data - in production, this would come from an API
   const salad = {
