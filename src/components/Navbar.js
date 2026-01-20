@@ -20,6 +20,7 @@ const Navbar = () => {
             <Link to="/build-your-bowl" onClick={() => setIsOpen(false)}>Build Your Bowl</Link>
             <Link to="/subscription" onClick={() => setIsOpen(false)}>Plans</Link>
             <Link to="/consultation" onClick={() => setIsOpen(false)}>Consult</Link>
+            <Link to="/blogs" onClick={() => setIsOpen(false)}>Blogs</Link>
           </div>
 
           <div className="nav-actions">
