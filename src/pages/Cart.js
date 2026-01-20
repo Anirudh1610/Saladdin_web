@@ -168,7 +168,7 @@ const Cart = () => {
             <div className="cart-features">
               <div className="feature-item">
                 <span className="feature-icon">✓</span>
-                <span>Free delivery on orders over $30</span>
+                <span>Free delivery on orders over ₹30</span>
               </div>
               <div className="feature-item">
                 <span className="feature-icon">✓</span>

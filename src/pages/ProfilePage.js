@@ -25,10 +25,10 @@ const ProfilePage = () => {
   };
 
   const purchaseHistory = [
-    { id: 1, date: '2025-01-08', item: 'Mediterranean Delight Bowl', price: '$12.99', status: 'Delivered' },
-    { id: 2, date: '2025-01-05', item: 'Build Your Bowl - Custom', price: '$14.50', status: 'Delivered' },
-    { id: 3, date: '2025-01-02', item: 'Asian Fusion Salad', price: '$11.99', status: 'Delivered' },
-    { id: 4, date: '2024-12-28', item: 'Premium Monthly Plan', price: '$89.99', status: 'Active' },
+    { id: 1, date: '2025-01-08', item: 'Mediterranean Delight Bowl', price: '₹12.99', status: 'Delivered' },
+    { id: 2, date: '2025-01-05', item: 'Build Your Bowl - Custom', price: '₹14.50', status: 'Delivered' },
+    { id: 3, date: '2025-01-02', item: 'Asian Fusion Salad', price: '₹11.99', status: 'Delivered' },
+    { id: 4, date: '2024-12-28', item: 'Premium Monthly Plan', price: '₹89.99', status: 'Active' },
   ];
 
   const savedAddresses = [
@@ -40,7 +40,7 @@ const ProfilePage = () => {
     plan: 'Premium Monthly',
     status: 'Active',
     nextBilling: '2025-02-08',
-    price: '$89.99/month',
+    price: '₹89.99/month',
     benefits: ['20 bowls per month', 'Free delivery', 'Priority consultation'],
   };
 

@@ -45,10 +45,10 @@ const ConsultationBooking = () => {
   ];
 
   const consultationTypes = [
-    { value: 'nutrition', label: 'Nutritional Consultation', duration: '60 min', price: '$99' },
-    { value: 'meal-plan', label: 'Personalized Meal Plan', duration: '90 min', price: '$149' },
-    { value: 'follow-up', label: 'Follow-up Session', duration: '30 min', price: '$49' },
-    { value: 'group', label: 'Group Workshop', duration: '120 min', price: '$75' }
+    { value: 'nutrition', label: 'Nutritional Consultation', duration: '60 min', price: '₹99' },
+    { value: 'meal-plan', label: 'Personalized Meal Plan', duration: '90 min', price: '₹149' },
+    { value: 'follow-up', label: 'Follow-up Session', duration: '30 min', price: '₹49' },
+    { value: 'group', label: 'Group Workshop', duration: '120 min', price: '₹75' }
   ];
 
   const timeSlots = [

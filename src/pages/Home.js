@@ -351,7 +351,7 @@ const Home = () => {
           <div className="promo-card card">
             <h3>🎉 Special Offers</h3>
             <div className="promo-content">
-              <p><strong>Free Delivery</strong> on orders over $30</p>
+              <p><strong>Free Delivery</strong> on orders over ₹30</p>
               <p><strong>15% Off</strong> your first subscription</p>
               <Link to="/subscription" className="btn btn-secondary btn-block">
                 View Plans

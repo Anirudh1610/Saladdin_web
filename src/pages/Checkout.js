@@ -56,7 +56,7 @@ const Checkout = () => {
 
   const subtotal = 52.47;
   const tax = 4.20;
-  const deliveryFee = 0; // Free delivery over $30
+  const deliveryFee = 0; // Free delivery over ₹30
   const total = 56.67;
 
   if (orderPlaced) {

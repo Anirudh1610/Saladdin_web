@@ -16,7 +16,7 @@ const SaladDetail = () => {
     protein: 35,
     carbs: 42,
     fats: 18,
-    price: '$12.99',
+    price: '₹12.99',
     rating: 4.8,
     reviewCount: 234,
     image: '🥗',

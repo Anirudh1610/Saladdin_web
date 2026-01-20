@@ -32,7 +32,7 @@ const SaladExplorer = () => {
       calories: 450,
       protein: 35,
       tags: ['High Protein', 'Muscle Gain'],
-      price: '$12.99',
+      price: '₹12.99',
       rating: 4.8,
       allergens: [],
       image: '🥗'
@@ -44,7 +44,7 @@ const SaladExplorer = () => {
       calories: 320,
       protein: 12,
       tags: ['Low Carb', 'Keto', 'Vegan'],
-      price: '$10.99',
+      price: '₹10.99',
       rating: 4.6,
       allergens: [],
       image: '🥑'
@@ -56,7 +56,7 @@ const SaladExplorer = () => {
       calories: 380,
       protein: 15,
       tags: ['Mediterranean', 'Weight Loss'],
-      price: '$11.99',
+      price: '₹11.99',
       rating: 4.9,
       allergens: ['dairy'],
       image: '🧀'
@@ -68,7 +68,7 @@ const SaladExplorer = () => {
       calories: 290,
       protein: 18,
       tags: ['Vegan', 'Weight Loss'],
-      price: '$10.49',
+      price: '₹10.49',
       rating: 4.7,
       allergens: ['soy', 'nuts'],
       image: '🥢'
@@ -80,7 +80,7 @@ const SaladExplorer = () => {
       calories: 420,
       protein: 25,
       tags: ['High Protein'],
-      price: '$11.49',
+      price: '₹11.49',
       rating: 4.5,
       allergens: ['dairy', 'gluten'],
       image: '🥬'
@@ -92,7 +92,7 @@ const SaladExplorer = () => {
       calories: 260,
       protein: 8,
       tags: ['Vegan', 'Low Carb'],
-      price: '$9.99',
+      price: '₹9.99',
       rating: 4.4,
       allergens: [],
       image: '🥭'
