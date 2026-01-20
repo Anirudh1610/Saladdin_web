@@ -295,7 +295,7 @@ const Home = () => {
                   </div>
 
                   <div className="featured-footer">
-                    <span className="price">${salad.price}</span>
+                    <span className="price">₹{salad.price}</span>
                     <Link 
                       to="/explorer" 
                       className="btn btn-primary btn-sm"
@@ -332,7 +332,7 @@ const Home = () => {
                           <Star fill="#FF9800" color="#FF9800" size={12} />
                           {item.rating}
                         </span>
-                        <span className="rec-price">${item.price}</span>
+                        <span className="rec-price">₹{item.price}</span>
                       </div>
                     </div>
                     <Link 

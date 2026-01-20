@@ -167,7 +167,7 @@ const BuildYourBowl = () => {
                   className="btn btn-primary"
                   disabled={bowlItems.length === 0}
                 >
-                  Add to Cart - ${(totalCalories * 0.02).toFixed(2)}
+                  Add to Cart - ₹{(totalCalories * 0.02).toFixed(2)}
                 </button>
               </div>
             </div>

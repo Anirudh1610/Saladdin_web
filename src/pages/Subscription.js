@@ -142,11 +142,11 @@ const Subscription = () => {
                 {plan.popular && <div className="popular-badge">Most Popular</div>}
                 <h3>{plan.name}</h3>
                 <div className="plan-price">
-                  <span className="currency">$</span>
+                  <span className="currency">₹</span>
                   <span className="amount">{plan.price}</span>
                   <span className="period">/{plan.value.replace('weekly', 'week').replace('biweekly', '2 weeks').replace('monthly', 'month')}</span>
                 </div>
-                <p className="per-meal">${plan.perMeal} per meal</p>
+                <p className="per-meal">₹{plan.perMeal} per meal</p>
                 <p className="deliveries"><Calendar size={16} /> {plan.deliveries}</p>
                 {plan.savings !== '0%' && (
                   <div className="savings-badge">Save {plan.savings}</div>
@@ -244,7 +244,7 @@ const Subscription = () => {
                 <div className="summary-divider"></div>
                 <div className="summary-row total">
                   <span>Total:</span>
-                  <strong>${selectedPlan?.price}</strong>
+                  <strong>₹{selectedPlan?.price}</strong>
                 </div>
                 <button className="btn btn-primary btn-large" onClick={handleSubscribe}>
                   Start Subscription

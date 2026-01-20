@@ -336,7 +336,7 @@ const Checkout = () => {
                       Back
                     </button>
                     <button type="submit" className="btn btn-primary btn-place-order">
-                      Place Order - ${total.toFixed(2)}
+                      Place Order - ₹{total.toFixed(2)}
                     </button>
                   </div>
                 </div>
@@ -354,7 +354,7 @@ const Checkout = () => {
                     <span className="item-name">{item.name}</span>
                     <span className="item-quantity">x{item.quantity}</span>
                   </div>
-                  <span className="item-total">${(item.price * item.quantity).toFixed(2)}</span>
+                  <span className="item-total">₹{(item.price * item.quantity).toFixed(2)}</span>
                 </div>
               ))}
             </div>
@@ -363,22 +363,22 @@ const Checkout = () => {
 
             <div className="summary-row">
               <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>₹{subtotal.toFixed(2)}</span>
             </div>
             <div className="summary-row">
               <span>Tax</span>
-              <span>${tax.toFixed(2)}</span>
+              <span>₹{tax.toFixed(2)}</span>
             </div>
             <div className="summary-row">
               <span>Delivery</span>
-              <span className="free-text">{deliveryFee === 0 ? 'FREE' : `$${deliveryFee.toFixed(2)}`}</span>
+              <span className="free-text">{deliveryFee === 0 ? 'FREE' : `₹${deliveryFee.toFixed(2)}`}</span>
             </div>
 
             <div className="summary-divider"></div>
 
             <div className="summary-row total">
               <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>₹{total.toFixed(2)}</span>
             </div>
 
             <div className="security-badges">

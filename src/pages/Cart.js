@@ -118,7 +118,7 @@ const Cart = () => {
                     </button>
                   </div>
                   <div className="item-price">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    ₹{(item.price * item.quantity).toFixed(2)}
                   </div>
                   <button 
                     className="remove-btn"
@@ -135,25 +135,25 @@ const Cart = () => {
             <h2>Order Summary</h2>
             <div className="summary-row">
               <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>₹{subtotal.toFixed(2)}</span>
             </div>
             <div className="summary-row">
               <span>Tax (8%)</span>
-              <span>${tax.toFixed(2)}</span>
+              <span>₹{tax.toFixed(2)}</span>
             </div>
             <div className="summary-row">
               <span>Delivery Fee</span>
-              <span>{deliveryFee === 0 ? 'FREE' : `$${deliveryFee.toFixed(2)}`}</span>
+              <span>{deliveryFee === 0 ? 'FREE' : `₹${deliveryFee.toFixed(2)}`}</span>
             </div>
             {deliveryFee > 0 && (
               <div className="free-delivery-notice">
-                Add ${(30 - subtotal).toFixed(2)} more for free delivery!
+                Add ₹{(30 - subtotal).toFixed(2)} more for free delivery!
               </div>
             )}
             <div className="summary-divider"></div>
             <div className="summary-row total">
               <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>₹{total.toFixed(2)}</span>
             </div>
 
             <Link to="/checkout" className="checkout-btn">
