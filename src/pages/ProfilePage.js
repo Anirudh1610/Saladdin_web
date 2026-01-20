@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Heart, ShoppingBag, MapPin, CreditCard, Settings, Calendar, TrendingUp, Package } from 'lucide-react';
+import { User, Heart, ShoppingBag, MapPin, Calendar, TrendingUp, Package } from 'lucide-react';
 import './ProfilePage.css';
 
 const ProfilePage = () => {

@@ -1,10 +1,10 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowLeft, Heart, Brain, Shield, TrendingUp } from 'lucide-react';
 import './IngredientPage.css';
 
 const IngredientPage = () => {
-  const params = useParams();
+  // const params = useParams(); // not used currently
 
   // Sample data - in production, this would come from an API
   const ingredientData = {

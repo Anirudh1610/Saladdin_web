@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Star, Flame, Heart, Leaf, Award, Truck, Users } from 'lucide-react';
+import { ShoppingCart, Star, Flame, Leaf, Award, Truck, Users } from 'lucide-react';
 import './Home.css';
 
 const Home = () => {

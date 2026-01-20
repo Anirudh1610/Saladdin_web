@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Star, Clock, Flame } from 'lucide-react';
 import './SaladDetail.css';
 
 const SaladDetail = () => {
-  const params = useParams();
+  // const params = useParams(); // not used currently
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('ingredients'); 
 
