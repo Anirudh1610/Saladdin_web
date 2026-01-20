@@ -4,7 +4,6 @@ import { ArrowLeft, Heart, Brain, Shield, TrendingUp } from 'lucide-react';
 import './IngredientPage.css';
 
 const IngredientPage = () => {
-  // const params = useParams(); // not used currently
 
   // Sample data - in production, this would come from an API
   const ingredientData = {

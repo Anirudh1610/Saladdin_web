@@ -4,7 +4,6 @@ import { ArrowLeft, Star, Clock, Flame } from 'lucide-react';
 import './SaladDetail.css';
 
 const SaladDetail = () => {
-  // const params = useParams(); // not used currently
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('ingredients'); 
 

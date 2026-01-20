@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PenSquare, Calendar, User, Heart, MessageCircle, Share2, Search } from 'lucide-react';
+import { PenSquare, Calendar, User, Heart, MessageCircle, Search } from 'lucide-react';
 import './Blogs.css';
 
 const Blogs = () => {
