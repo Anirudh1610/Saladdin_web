@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { User, Menu, X } from 'lucide-react';
 import './Navbar.css';
-import NavbarLogo from '../Assets/Navbar/Navbar_logo.svg';
+import { ReactComponent as NavbarLogo } from '../Assets/Navbar/Navbar_logo.svg';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,12 +14,12 @@ const Navbar = () => {
           {/* Left Section - Logo + Navigation */}
           <div className="nav-left-section">
             <Link to="/" className="logo">
-              <img src={NavbarLogo} alt="Saladin Logo" className="logo-image" />
+              <NavbarLogo className="logo-image" />
             </Link>
 
             <div className={`nav-links ${isOpen ? 'active' : ''}`}>
               <Link to="/" onClick={() => setIsOpen(false)}>Home</Link>
-              <Link to="/explorer" onClick={() => setIsOpen(false)}>Menu</Link>
+              <Link to="/menu" onClick={() => setIsOpen(false)}>Menu</Link>
               <Link to="/build-your-bowl" onClick={() => setIsOpen(false)}>Build your bowl</Link>
               <Link to="/subscription" onClick={() => setIsOpen(false)}>Subscription</Link>
               <Link to="/consultation" onClick={() => setIsOpen(false)}>Consultation</Link>

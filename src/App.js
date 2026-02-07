@@ -5,7 +5,7 @@ import './App.css';
 // Components
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
-import SaladExplorer from './pages/SaladExplorer';
+import Menu from './pages/Menu';
 import SaladDetail from './pages/SaladDetail';
 import IngredientPage from './pages/IngredientPage';
 import BuildYourBowl from './pages/BuildYourBowl';
@@ -25,7 +25,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/explorer" element={<SaladExplorer />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/explorer" element={<Menu />} />
           <Route path="/salad/:id" element={<SaladDetail />} />
           <Route path="/ingredient/:name" element={<IngredientPage />} />
           <Route path="/build-your-bowl" element={<BuildYourBowl />} />

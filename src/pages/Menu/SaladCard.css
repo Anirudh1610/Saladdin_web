@@ -1,0 +1,204 @@
+.salad-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.salad-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+}
+
+.salad-card-image {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #F5F9F0 0%, #E8F5E0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.salad-emoji {
+  font-size: 80px;
+  z-index: 1;
+}
+
+.salad-tags {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2;
+}
+
+.salad-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #FFFFFF;
+  color: #333333;
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.salad-rating {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.rating-value {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333333;
+}
+
+.salad-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.salad-name {
+  font-family: 'Manrope', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.salad-description {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #666666;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.salad-nutrition {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-top: 1px solid #F0F0F0;
+  border-bottom: 1px solid #F0F0F0;
+  margin-bottom: 16px;
+}
+
+.nutrition-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.nutrition-value {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.nutrition-label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: #999999;
+  text-transform: lowercase;
+}
+
+.salad-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.salad-price {
+  font-family: 'Manrope', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.salad-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.view-details-btn {
+  padding: 10px 16px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  background: #F5F9F0;
+  color: #2D5016;
+  border: 1.5px solid #E8F5E0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.view-details-btn:hover {
+  background: #E8F5E0;
+  border-color: #7CB342;
+}
+
+.add-to-cart-btn {
+  padding: 10px 16px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  background: #F9F3E8;
+  color: #8B6F47;
+  border: 1.5px solid #F9F3E8;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.add-to-cart-btn:hover {
+  background: #F3E8D3;
+  border-color: #D4A574;
+}
+
+@media (max-width: 768px) {
+  .salad-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .salad-actions {
+    flex-direction: column;
+  }
+
+  .view-details-btn,
+  .add-to-cart-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

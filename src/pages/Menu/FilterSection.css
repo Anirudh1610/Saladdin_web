@@ -1,0 +1,145 @@
+.filter-section {
+  padding: 0 20px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-pills {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.filter-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1.5px solid #E5E5E5;
+  border-radius: 25px;
+  background: #FFFFFF;
+  color: #333333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-pill:hover {
+  border-color: #7CB342;
+  background: #F5F9F0;
+}
+
+.filter-pill.active {
+  border-color: #7CB342;
+  background: #7CB342;
+  color: #FFFFFF;
+}
+
+.filter-icon {
+  font-size: 16px;
+}
+
+.filter-name {
+  font-weight: 500;
+}
+
+.veg-meat-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1.5px solid #E5E5E5;
+  border-radius: 25px;
+  background: #FFFFFF;
+  color: #333333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.veg-meat-toggle:hover {
+  border-color: #7CB342;
+  background: #F5F9F0;
+}
+
+.toggle-icon {
+  font-size: 16px;
+}
+
+.toggle-text {
+  font-weight: 500;
+}
+
+.toggle-switch {
+  width: 36px;
+  height: 20px;
+  background: #E5E5E5;
+  border-radius: 10px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.veg-meat-toggle.active .toggle-switch {
+  background: #7CB342;
+}
+
+.veg-meat-toggle.active .toggle-switch::after {
+  left: 18px;
+}
+
+@media (max-width: 768px) {
+  .filter-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-pills {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 8px;
+  }
+
+  .filter-pills::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .filter-pills::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  .filter-pills::-webkit-scrollbar-thumb {
+    background: #7CB342;
+    border-radius: 10px;
+  }
+
+  .veg-meat-toggle {
+    justify-content: center;
+  }
+}
