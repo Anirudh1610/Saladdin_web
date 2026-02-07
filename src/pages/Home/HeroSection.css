@@ -1,0 +1,253 @@
+/* Hero Section */
+.hero-section {
+  min-height: 100vh;
+  background: #FEFFDC;
+  padding-top: 100px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Manrope', sans-serif;
+}
+
+.hero-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  min-height: calc(100vh - 150px);
+}
+
+.hero-text {
+  padding-right: 2rem;
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+  font-family: 'Manrope', sans-serif;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  font-family: 'Manrope', sans-serif;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btn-order {
+  background: #2d5f3f;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.btn-order:hover {
+  background: #234a32;
+  transform: translateY(-2px);
+}
+
+.btn-build {
+  background: transparent;
+  color: #2d5f3f;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 2px solid #2d5f3f;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-build:hover {
+  background: #2d5f3f;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Hero Image Section */
+.hero-image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bowl-circle {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.rotating-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: rotate 20s linear infinite;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: #333;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bowl-img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* Decorative Elements */
+.decoration {
+  position: absolute;
+  font-size: 3rem;
+  pointer-events: none;
+  animation: float 6s ease-in-out infinite;
+}
+
+.decoration.carrot {
+  top: 15%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.decoration.orange-half {
+  top: 10%;
+  right: 15%;
+  animation-delay: 1s;
+}
+
+.decoration.orange-slice {
+  bottom: 20%;
+  left: 15%;
+  animation-delay: 2s;
+}
+
+.decoration.onion {
+  bottom: 15%;
+  right: 10%;
+  animation-delay: 1.5s;
+}
+
+.decoration.leaf {
+  top: 40%;
+  right: 5%;
+  animation-delay: 0.5s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+/* Floating Cart Button */
+.floating-cart-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #2d5f3f;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(45, 95, 63, 0.3);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.floating-cart-btn:hover {
+  background: #234a32;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(45, 95, 63, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+  }
+
+  .bowl-circle {
+    width: 400px;
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-container {
+    padding: 0 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bowl-circle {
+    width: 300px;
+    height: 300px;
+  }
+
+  .decoration {
+    font-size: 2rem;
+  }
+}
