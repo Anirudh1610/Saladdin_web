@@ -145,12 +145,28 @@
   color: #666;
 }
 
+.salad-name-link {
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.salad-name-link:hover {
+  transform: translateY(-2px);
+}
+
 .salad-name {
   font-size: 1.5rem;
   font-weight: 700;
   color: #1a1a1a;
   margin: 0 0 0.75rem 0;
   font-family: 'Manrope', sans-serif;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.salad-name-link:hover .salad-name {
+  color: #4A7C59;
 }
 
 .salad-description {

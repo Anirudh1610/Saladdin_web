@@ -106,7 +106,9 @@ const PopularSalads = () => {
                   ))}
                 </div>
                 
-                <h3 className="salad-name">{salad.name}</h3>
+                <Link to={`/salad/${salad.id}`} className="salad-name-link">
+                  <h3 className="salad-name">{salad.name}</h3>
+                </Link>
                 <p className="salad-description">{salad.description}</p>
                 
                 <div className="nutrition-info">
@@ -126,7 +128,7 @@ const PopularSalads = () => {
 
         {/* View All Button */}
         <div className="view-all-wrapper">
-          <Link to="/explorer" className="view-all-btn">
+          <Link to="/menu" className="view-all-btn">
             View all Salads
           </Link>
         </div>

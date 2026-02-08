@@ -1,8 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import './SaladCard.css';
 
 const SaladCard = ({ salad, onAddToCart }) => {
+  const navigate = useNavigate();
+
   const handleAddToCart = () => {
     if (onAddToCart) {
       onAddToCart(salad.id);
@@ -10,8 +13,7 @@ const SaladCard = ({ salad, onAddToCart }) => {
   };
 
   const handleViewDetails = () => {
-    console.log('View details for:', salad.name);
-    // Navigate to salad detail page
+    navigate(`/salad/${salad.id}`);
   };
 
   return (

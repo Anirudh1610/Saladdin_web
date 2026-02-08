@@ -6,7 +6,7 @@ import PremiumBanner from './Home/PremiumBanner';
 import BuildBowl from './Home/BuildBowl';
 import BlogsSection from './Home/BlogsSection';
 import AppDownload from './Home/AppDownload';
-import Footer from './Home/Footer';
+import Footer from '../components/Footer';
 import './Home.css';
 
 const Home = () => {
