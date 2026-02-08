@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SaladCard from './SaladCard';
+import SaladCard from '../../components/SaladCard';
 import './SaladGrid.css';
 
 const SaladGrid = () => {

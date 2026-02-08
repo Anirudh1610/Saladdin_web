@@ -6,7 +6,7 @@ import SaladGrid from './Menu/SaladGrid';
 import MenuFAQ from './Menu/MenuFAQ';
 import MenuPremiumBanner from './Menu/MenuPremiumBanner';
 import MenuAppDownload from './Menu/MenuAppDownload';
-import Footer from './Home/Footer';
+import Footer from '../components/Footer';
 import './Menu.css';
 
 const Menu = () => {
