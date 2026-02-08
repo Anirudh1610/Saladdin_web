@@ -6,10 +6,6 @@ const PremiumBanner = () => {
   return (
     <section className="premium-banner">
       <div className="banner-content">
-        <div className="banner-decoration carrot-deco">🥕</div>
-        <div className="banner-decoration orange-deco">🍊</div>
-        <div className="banner-decoration tomato-deco">🍅</div>
-
         <div className="banner-text">
           <h2 className="banner-title">Get Premium and</h2>
           <h3 className="banner-subtitle">save up to 20% on each order</h3>

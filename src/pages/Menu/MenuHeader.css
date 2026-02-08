@@ -1,29 +1,143 @@
 .menu-header {
+  min-height: 60vh;
+  background: #FEFFDC;
+  padding: 120px 20px 80px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-header-container {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.menu-header-content {
   text-align: center;
-  padding: 80px 20px 40px;
   max-width: 800px;
   margin: 0 auto;
 }
 
 .menu-title {
   font-family: 'Manrope', sans-serif;
-  font-size: 48px;
-  font-weight: 700;
+  font-size: 64px;
+  font-weight: 800;
+  font-style: normal;
   color: #1a1a1a;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  letter-spacing: -0.32px;
+  line-height: 100%;
+  text-align: center;
 }
 
 .menu-subtitle {
-  font-family: 'Manrope', sans-serif;
-  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
   font-weight: 400;
-  color: #666666;
-  line-height: 1.6;
+  font-style: normal;
+  color: #5E5252;
+  line-height: 100%;
+  letter-spacing: -0.32px;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.7;
+}
+
+/* Decorative Elements */
+.menu-decoration {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.fruits-decoration {
+  width: 150px;
+  height: auto;
+  top: -55%;
+  right: 5%;
+  opacity: 0.9;
+}
+
+.vegetables-decoration {
+  width: 120px;
+  height: auto;
+  bottom: -95%;
+  left: 3%;
+  opacity: 0.9;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .fruits-decoration {
+    width: 240px;
+    right: 2%;
+  }
+
+  .vegetables-decoration {
+    width: 220px;
+    left: 2%;
+  }
+}
+
+@media (max-width: 968px) {
+  .menu-header {
+    padding: 100px 20px 60px;
+    min-height: 50vh;
+  }
+
+  .menu-title {
+    font-size: 48px;
+  }
+
+  .menu-subtitle {
+    font-size: 16px;
+  }
+
+  .fruits-decoration {
+    width: 180px;
+    top: 10%;
+  }
+
+  .vegetables-decoration {
+    width: 160px;
+    bottom: 5%;
+  }
 }
 
 @media (max-width: 768px) {
   .menu-header {
-    padding: 60px 20px 30px;
+    padding: 80px 20px 50px;
+    min-height: 45vh;
+  }
+
+  .menu-title {
+    font-size: 40px;
+  }
+
+  .menu-subtitle {
+    font-size: 15px;
+  }
+
+  .fruits-decoration {
+    width: 140px;
+    opacity: 0.7;
+  }
+
+  .vegetables-decoration {
+    width: 130px;
+    opacity: 0.7;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-header {
+    padding: 70px 16px 40px;
   }
 
   .menu-title {
@@ -33,4 +147,17 @@
   .menu-subtitle {
     font-size: 14px;
   }
+
+  .fruits-decoration {
+    width: 100px;
+    opacity: 0.6;
+    top: 5%;
+  }
+
+  .vegetables-decoration {
+    width: 90px;
+    opacity: 0.6;
+    bottom: 2%;
+  }
 }
+

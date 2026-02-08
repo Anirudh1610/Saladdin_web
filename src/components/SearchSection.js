@@ -16,7 +16,6 @@ const SearchSection = ({ onSearch }) => {
     <div className="search-section">
       <div className="search-container">
         <div className="search-input-wrapper">
-          <Search className="search-icon" size={20} />
           <input
             type="text"
             className="search-input"
@@ -24,6 +23,7 @@ const SearchSection = ({ onSearch }) => {
             value={searchTerm}
             onChange={handleSearch}
           />
+          <Search className="search-icon" size={20} />
         </div>
       </div>
     </div>
