@@ -148,9 +148,6 @@ const Subscription = () => {
                 </div>
                 <p className="per-meal">₹{plan.perMeal} per meal</p>
                 <p className="deliveries"><Calendar size={16} /> {plan.deliveries}</p>
-                {plan.savings !== '0%' && (
-                  <div className="savings-badge">Save {plan.savings}</div>
-                )}
                 <ul className="plan-features">
                   <li><Check size={16} /> Free delivery</li>
                   <li><Check size={16} /> Customizable menu</li>
@@ -170,15 +167,34 @@ const Subscription = () => {
               
               <div className="form-group">
                 <label>Dietary Preference</label>
-                <select
-                  value={preferences.dietary}
-                  onChange={(e) => setPreferences({...preferences, dietary: e.target.value})}
-                >
-                  <option value="">Select dietary preference</option>
+                <div className="dietary-buttons">
                   {dietaryOptions.map(option => (
-                    <option key={option} value={option}>{option}</option>
+                    <button
+                      key={option}
+                      type="button"
+                      className={`dietary-toggle ${preferences.dietary === option ? 'active' : ''}`}
+                      onClick={() => setPreferences({...preferences, dietary: option})}
+                    >
+                      {option}
+                    </button>
                   ))}
-                </select>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>Frequency (No. of Meals)</label>
+                <div className="dietary-buttons">
+                  {subscriptionPlans.map(plan => (
+                    <button
+                      key={plan.value}
+                      type="button"
+                      className={`dietary-toggle ${frequency === plan.value ? 'active' : ''}`}
+                      onClick={() => setFrequency(plan.value)}
+                    >
+                      {plan.name}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <div className="form-group">
@@ -198,7 +214,10 @@ const Subscription = () => {
               </div>
 
               <div className="form-group">
-                <label>Daily Calorie Target: {preferences.calorieTarget} cal</label>
+                <div className="calorie-label-row">
+                  <label>Daily Calorie Target</label>
+                  <span className="calorie-value">{preferences.calorieTarget} Cal</span>
+                </div>
                 <input
                   type="range"
                   min="1200"
@@ -228,22 +247,21 @@ const Subscription = () => {
                   <strong>{selectedPlan?.name}</strong>
                 </div>
                 <div className="summary-row">
-                  <span>Deliveries:</span>
+                  <span>No of Meals:</span>
                   <strong>{selectedPlan?.deliveries}</strong>
                 </div>
                 <div className="summary-row">
-                  <span>Dietary:</span>
+                  <span>Dietary Preference:</span>
                   <strong>{preferences.dietary || 'No restrictions'}</strong>
                 </div>
                 {preferences.allergies.length > 0 && (
                   <div className="summary-row">
-                    <span>Avoiding:</span>
+                    <span>Allergens to Avoid:</span>
                     <strong>{preferences.allergies.join(', ')}</strong>
                   </div>
                 )}
-                <div className="summary-divider"></div>
                 <div className="summary-row total">
-                  <span>Total:</span>
+                  <span>Total Amount:</span>
                   <strong>₹{selectedPlan?.price}</strong>
                 </div>
                 <button className="btn btn-primary btn-large" onClick={handleSubscribe}>
@@ -257,27 +275,29 @@ const Subscription = () => {
 
         {/* Benefits */}
         <section className="benefits-section">
-          <h2>Subscription Benefits</h2>
-          <div className="benefits-grid">
-            <div className="benefit-item card">
-              <span className="benefit-emoji">🎯</span>
-              <h4>Goal-Oriented</h4>
-              <p>Meals designed specifically for your health objectives</p>
-            </div>
-            <div className="benefit-item card">
-              <span className="benefit-emoji">📊</span>
-              <h4>Progress Tracking</h4>
-              <p>Monitor your nutrition and health metrics over time</p>
-            </div>
-            <div className="benefit-item card">
-              <span className="benefit-emoji">🔄</span>
-              <h4>Flexible Changes</h4>
-              <p>Modify your plan, skip weeks, or cancel anytime</p>
-            </div>
-            <div className="benefit-item card">
-              <span className="benefit-emoji">💰</span>
-              <h4>Cost Savings</h4>
-              <p>Save up to 18% with longer subscription plans</p>
+          <div className="container">
+            <h2>Subscription Benefits</h2>
+            <div className="benefits-grid">
+              <div className="benefit-item">
+                <span className="benefit-emoji">🎯</span>
+                <h4>Goal-Oriented</h4>
+                <p>Meals designed specifically for your health objectives</p>
+              </div>
+              <div className="benefit-item">
+                <span className="benefit-emoji">📊</span>
+                <h4>Progress Tracking</h4>
+                <p>Monitor your nutrition and health metrics over time</p>
+              </div>
+              <div className="benefit-item">
+                <span className="benefit-emoji">🔄</span>
+                <h4>Flexible Changes</h4>
+                <p>Modify your plan, skip weeks, or cancel anytime</p>
+              </div>
+              <div className="benefit-item">
+                <span className="benefit-emoji">💰</span>
+                <h4>Cost Savings</h4>
+                <p>Save up to 18% with longer subscription plans</p>
+              </div>
             </div>
           </div>
         </section>
