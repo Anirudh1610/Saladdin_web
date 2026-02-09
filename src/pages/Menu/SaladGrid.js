@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import SaladCard from '../../components/SaladCard';
 import './SaladGrid.css';
+import saladImage1 from '../../Assets/Menu/Salad Grid/Rectangle 11.svg';
+import saladImage2 from '../../Assets/Menu/Salad Grid/Rectangle 11 (1).svg';
+import saladImage3 from '../../Assets/Menu/Salad Grid/Rectangle 11 (2).svg';
 
 const SaladGrid = () => {
   const [cartItems, setCartItems] = useState({});
@@ -10,85 +13,61 @@ const SaladGrid = () => {
       id: 1,
       name: 'Green Detox Bowl',
       tags: ['Detox', 'Vegan'],
-      description: 'A refreshing mix of leafy greens to support digestive cleanse',
-      price: 12.99,
+      vegTag: true,
+      description: 'A light, refreshing salad packed with greens to support digestion and fat loss.',
+      price: 154.99,
       rating: 4.8,
-      calories: 320,
-      protein: 8,
-      carbs: 22,
-      fat: 18,
+      calories: 280,
+      protein: 9,
+      carbs: 32,
+      fat: 10,
       fiber: 8,
-      image: '🥗'
+      image: saladImage1
     },
     {
       id: 2,
       name: 'Protein Power Salad',
-      tags: ['High Protein', 'Post Workout'],
-      description: 'Packed with grilled chicken, quinoa, and nutrient-dense greens',
-      price: 15.99,
+      tags: ['High Protein', 'Post-Workout'],
+      vegTag: false,
+      description: 'A protein-rich bowl designed to fuel workouts and support muscle recovery.',
+      price: 154.99,
       rating: 4.9,
-      calories: 450,
-      protein: 35,
-      carbs: 28,
-      fat: 15,
-      fiber: 7,
-      image: '🍗'
+      calories: 280,
+      protein: 9,
+      carbs: 32,
+      fat: 10,
+      fiber: 8,
+      image: saladImage2
     },
     {
       id: 3,
       name: 'Mediterranean Balance Bowl',
-      tags: ['Balanced', 'Heart-Healthy'],
+      tags: ['Balanced'],
+      vegTag: false,
       description: 'Mediterranean-inspired ingredients with extra virgin olive oil',
-      price: 13.99,
+      price: 154.99,
       rating: 4.7,
-      calories: 380,
-      protein: 18,
-      carbs: 31,
-      fat: 21,
-      fiber: 9,
-      image: '🫒'
+      calories: 280,
+      protein: 9,
+      carbs: 32,
+      fat: 10,
+      fiber: 8,
+      image: saladImage3
     },
     {
       id: 4,
       name: 'Avocado Keto Crunch',
       tags: ['Low Carb', 'Keto'],
+      vegTag: true,
       description: 'Creamy avocado with crunchy nuts for healthy fats',
-      price: 14.99,
+      price: 154.99,
       rating: 4.6,
-      calories: 420,
-      protein: 16,
-      carbs: 14,
-      fat: 36,
-      fiber: 12,
-      image: '🥑'
-    },
-    {
-      id: 5,
-      name: 'Rainbow Veggie Bowl',
-      tags: ['Vegan', 'Fiber-Rich'],
-      description: 'A colorful mix of roasted veggies packed with vitamins',
-      price: 11.99,
-      rating: 4.5,
-      calories: 290,
-      protein: 12,
-      carbs: 45,
-      fat: 9,
-      fiber: 14,
-      image: '🌈'
-    },
-    {
-      id: 6,
-      name: 'Chicken Caesar Lite Bowl',
-      tags: ['High Protein', 'Low Carb'],
-      description: 'A lighter take on classic with crispy romaine and real cheese',
-      price: 13.99,
-      rating: 4.8,
-      calories: 380,
-      protein: 32,
-      carbs: 22,
-      fat: 18,
-      fiber: 5,
-      image: '🥬'
+      calories: 280,
+      protein: 9,
+      carbs: 32,
+      fat: 10,
+      fiber: 8,
+      image: saladImage1
     }
   ];
 

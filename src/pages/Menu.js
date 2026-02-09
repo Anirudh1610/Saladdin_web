@@ -4,8 +4,7 @@ import SearchSection from '../components/SearchSection';
 import FilterSection from '../components/FilterSection';
 import SaladGrid from './Menu/SaladGrid';
 import MenuFAQ from './Menu/MenuFAQ';
-import MenuPremiumBanner from './Menu/MenuPremiumBanner';
-import MenuAppDownload from './Menu/MenuAppDownload';
+import AppDownload from '../components/AppDownload';
 import Footer from '../components/Footer';
 import './Menu.css';
 
@@ -18,8 +17,7 @@ const Menu = () => {
         <FilterSection />
         <SaladGrid />
         <MenuFAQ />
-        <MenuPremiumBanner />
-        <MenuAppDownload />
+        <AppDownload />
       </div>
       <Footer />
     </div>

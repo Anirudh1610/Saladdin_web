@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star } from 'lucide-react';
 import './SaladCard.css';
+import VegLabel from '../Assets/Menu/Salad Grid/Frame 96.svg';
 
 const SaladCard = ({ salad, onAddToCart }) => {
   const navigate = useNavigate();
@@ -18,58 +18,60 @@ const SaladCard = ({ salad, onAddToCart }) => {
 
   return (
     <div className="salad-card">
-      <div className="salad-card-image">
-        <span className="salad-emoji">{salad.image}</span>
-        {salad.tags && salad.tags.length > 0 && (
-          <div className="salad-tags">
-            {salad.tags.map((tag, index) => (
-              <span key={index} className="salad-tag">{tag}</span>
-            ))}
-          </div>
-        )}
-        <div className="salad-rating">
-          <Star size={14} fill="#FFB800" color="#FFB800" />
-          <span className="rating-value">{salad.rating}</span>
+      {salad.vegTag && (
+        <div className="veg-tag">
+          <img src={VegLabel} alt="Veg" className="veg-label-img" />
         </div>
+      )}
+      
+      <div className="salad-card-image">
+        <img src={salad.image} alt={salad.name} />
       </div>
 
       <div className="salad-card-content">
+        <div className="salad-header">
+          <div className="salad-tags">
+            {salad.tags && salad.tags.map((tag, index) => (
+              <span key={index} className="salad-tag">{tag}</span>
+            ))}
+          </div>
+        </div>
+
         <h3 className="salad-name">{salad.name}</h3>
         <p className="salad-description">{salad.description}</p>
+        
+        <div className="salad-price">₹{salad.price.toFixed(2)}</div>
 
         <div className="salad-nutrition">
           <div className="nutrition-item">
-            <span className="nutrition-value">{salad.calories}</span>
-            <span className="nutrition-label">kcal</span>
+            <span className="nutrition-value">{salad.calories} kcal</span>
+            <span className="nutrition-label">Calories</span>
           </div>
           <div className="nutrition-item">
-            <span className="nutrition-value">{salad.protein}g</span>
-            <span className="nutrition-label">protein</span>
+            <span className="nutrition-value">{salad.protein} g</span>
+            <span className="nutrition-label">Protein</span>
           </div>
           <div className="nutrition-item">
-            <span className="nutrition-value">{salad.carbs}g</span>
-            <span className="nutrition-label">carbs</span>
+            <span className="nutrition-value">{salad.carbs} g</span>
+            <span className="nutrition-label">Carbs</span>
           </div>
           <div className="nutrition-item">
-            <span className="nutrition-value">{salad.fat}g</span>
-            <span className="nutrition-label">fats</span>
+            <span className="nutrition-value">{salad.fat} g</span>
+            <span className="nutrition-label">Fats</span>
           </div>
           <div className="nutrition-item">
-            <span className="nutrition-value">{salad.fiber}g</span>
-            <span className="nutrition-label">fiber</span>
+            <span className="nutrition-value">{salad.fiber} g</span>
+            <span className="nutrition-label">Fiber</span>
           </div>
         </div>
 
         <div className="salad-card-footer">
-          <div className="salad-price">₹{salad.price.toFixed(2)}</div>
-          <div className="salad-actions">
-            <button className="view-details-btn" onClick={handleViewDetails}>
-              View Details
-            </button>
-            <button className="add-to-cart-btn" onClick={handleAddToCart}>
-              Add to Cart
-            </button>
-          </div>
+          <button className="view-details-btn" onClick={handleViewDetails}>
+            View Details
+          </button>
+          <button className="add-to-cart-btn" onClick={handleAddToCart}>
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>

@@ -23,7 +23,7 @@ const SearchSection = ({ onSearch }) => {
             value={searchTerm}
             onChange={handleSearch}
           />
-          <Search className="search-icon" size={20} />
+          <Search className="search-icon search-icon-right" size={20} />
         </div>
       </div>
     </div>

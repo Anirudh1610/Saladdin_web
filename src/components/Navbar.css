@@ -129,6 +129,17 @@
   background: #f0f0f0;
 }
 
+.app-store-icon,
+.google-play-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.account-icon {
+  width: 18px;
+  height: 18px;
+}
+
 .account-btn {
   display: flex;
   align-items: center;
