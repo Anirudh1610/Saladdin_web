@@ -1,6 +1,6 @@
 .granular-salad-page {
   min-height: 100vh;
-  background: linear-gradient(to bottom, #FFFEF0 0%, #FFFFFF 100%);
+  background: #FFFFFF;
   padding: 100px 20px 80px;
 }
 
@@ -18,13 +18,13 @@
   font-family: 'Manrope', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  background: #FFFFFF;
+  background: #F2F2F2;
   color: #333333;
   border: 1.5px solid #E5E5E5;
-  border-radius: 50px;
+  border-radius: 60px;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
 }
 
 .back-to-menu-btn:hover {
@@ -46,12 +46,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.veg-badge-detail {
+  display: flex;
+  align-items: center;
+}
+
+.veg-label-detail-img {
+  display: block;
+  height: auto;
+  width: auto;
 }
 
 .salad-detail-image {
-  width: 100%;
-  max-width: 500px;
-  aspect-ratio: 1;
+  width: 320px !important;
+  height: 320px !important;
+  min-width: 320px;
+  min-height: 320px;
+  max-width: 320px;
+  max-height: 320px;
   background: linear-gradient(135deg, #FFE4E4 0%, #FFD6D6 100%);
   border-radius: 24px;
   overflow: hidden;
@@ -59,11 +74,16 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
 }
 
 .salad-detail-image img {
-  width: 100%;
-  height: 100%;
+  width: 320px !important;
+  height: 320px !important;
+  min-width: 320px;
+  min-height: 320px;
+  max-width: 320px;
+  max-height: 320px;
   object-fit: cover;
 }
 
@@ -86,7 +106,7 @@
   gap: 6px;
   padding: 8px 16px;
   background: #FFFFFF;
-  border-radius: 50px;
+  border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
@@ -106,9 +126,16 @@
 
 .salad-tags-header {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.tags-left {
+  display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
 }
 
 .tag-badge {
@@ -119,7 +146,7 @@
   font-weight: 600;
   background: #F5F5F5;
   color: #333333;
-  border-radius: 20px;
+  border-radius: 4px;
 }
 
 .veg-badge {
@@ -132,7 +159,7 @@
   font-weight: 600;
   background: #E8F5E0;
   color: #2D5016;
-  border-radius: 20px;
+  border-radius: 4px;
   border: 1.5px solid #7CB342;
 }
 

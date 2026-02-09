@@ -39,12 +39,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Decorative Elements */}
-      <div className="decoration carrot">🥕</div>
-      <div className="decoration orange-half">🍊</div>
-      <div className="decoration orange-slice">🍊</div>
-      <div className="decoration onion">🧅</div>
-      <div className="decoration leaf">🍃</div>
+
 
       {/* Floating View Cart Button */}
       <Link to="/cart" className="floating-cart-btn">

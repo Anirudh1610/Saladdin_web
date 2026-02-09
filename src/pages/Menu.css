@@ -1,4 +1,11 @@
 .menu-page-wrapper {
   min-height: 100vh;
   background: linear-gradient(to bottom, #FFFEF0 0%, #FFFFFF 100%);
+  position: relative;
+}
+
+.menu-content-wrapper {
+  position: relative;
+  padding-top: 30px;
+  background: #FFFFFF;
 }

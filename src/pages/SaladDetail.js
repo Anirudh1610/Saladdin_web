@@ -1,6 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import GranularSaladPage from '../components/GranularSaladPage';
+import saladImage1 from '../Assets/Menu/Salad Grid/Rectangle 11.svg';
+import saladImage2 from '../Assets/Menu/Salad Grid/Rectangle 11 (1).svg';
+import saladImage3 from '../Assets/Menu/Salad Grid/Rectangle 11 (2).svg';
 
 const SaladDetail = () => {
   const { id } = useParams();
@@ -11,7 +14,7 @@ const SaladDetail = () => {
       id: 1,
       name: 'Green Detox Bowl',
       description: 'A light, refreshing salad packed with greens to support digestion and fat loss.',
-      image: '/placeholder-salad.jpg',
+      image: saladImage1,
       rating: 4.9,
       reviewCount: 234,
       tags: ['Detox', 'Vegan'],
@@ -95,7 +98,7 @@ const SaladDetail = () => {
       id: 2,
       name: 'Protein Power Salad',
       description: 'Packed with grilled chicken, quinoa, and nutrient-dense greens to fuel your workouts.',
-      image: '/placeholder-salad-2.jpg',
+      image: saladImage2,
       rating: 4.9,
       reviewCount: 189,
       tags: ['High Protein', 'Post Workout'],

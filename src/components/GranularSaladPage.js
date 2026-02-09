@@ -2,92 +2,94 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, ShoppingCart } from 'lucide-react';
 import './GranularSaladPage.css';
+import saladImage1 from '../Assets/Menu/Salad Grid/Rectangle 11.svg';
+import VegLabel from '../Assets/Menu/Salad Grid/Frame 96.svg';
 
 const GranularSaladPage = ({ salad }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('ingredients');
   const [quantity, setQuantity] = useState(1);
 
-  // Default salad data if none provided
-  const defaultSalad = {
-    id: 1,
-    name: 'Green Detox Bowl',
-    description: 'A light, refreshing salad packed with greens to support digestion and fat loss.',
-    image: '/placeholder-salad.jpg',
-    rating: 4.9,
-    reviewCount: 234,
-    tags: ['Detox', 'Vegan'],
-    isVeg: true,
-    nutrition: {
-      calories: 280,
-      protein: 9,
-      carbs: 32,
-      fats: 10,
-      fiber: 8
-    },
-    ingredients: [
-      {
-        id: 1,
-        name: 'Mixed Greens',
-        description: 'Vitamin-rich leafy greens',
-        calories: 25,
-        protein: 2
-      },
-      {
-        id: 2,
-        name: 'Cucumber',
-        description: 'Hydrating and cooling',
-        calories: 16,
-        protein: 1
-      },
-      {
-        id: 3,
-        name: 'Broccoli Florets',
-        description: 'Fiber-rich detox veggie',
-        calories: 35,
-        protein: 3
-      },
-      {
-        id: 4,
-        name: 'Sprouts (Moong/Alfalfa)',
-        description: 'Fiber-rich detox veggie',
-        calories: 35,
-        protein: 3
-      },
-      {
-        id: 5,
-        name: 'Avocado',
-        description: 'Healthy fats for satiety',
-        calories: 35,
-        protein: 3
-      },
-      {
-        id: 6,
-        name: 'Lemon Herb Dressing',
-        description: 'Light, refreshing detox dressing',
-        calories: 60,
-        protein: 0
-      }
-    ],
-    reviews: [
-      {
-        id: 1,
-        user: 'Sarah K.',
-        rating: 5,
-        date: 'Jan 15, 2026',
-        comment: 'Absolutely delicious! The perfect balance of flavors and super fresh.'
-      },
-      {
-        id: 2,
-        user: 'Mike R.',
-        rating: 4,
-        date: 'Jan 10, 2026',
-        comment: 'Great salad, very filling. Would love a bit more dressing.'
-      }
-    ]
-  };
+  // // Default salad data if none provided
+  // const defaultSalad = {
+  //   id: 1,
+  //   name: 'Green Detox Bowl',
+  //   description: 'A light, refreshing salad packed with greens to support digestion and fat loss.',
+  //   image: saladImage1,
+  //   rating: 4.9,
+  //   reviewCount: 234,
+  //   tags: ['Detox', 'Vegan'],
+  //   isVeg: true,
+  //   nutrition: {
+  //     calories: 280,
+  //     protein: 9,
+  //     carbs: 32,
+  //     fats: 10,
+  //     fiber: 8
+  //   },
+  //   ingredients: [
+  //     {
+  //       id: 1,
+  //       name: 'Mixed Greens',
+  //       description: 'Vitamin-rich leafy greens',
+  //       calories: 25,
+  //       protein: 2
+  //     },
+  //     {
+  //       id: 2,
+  //       name: 'Cucumber',
+  //       description: 'Hydrating and cooling',
+  //       calories: 16,
+  //       protein: 1
+  //     },
+  //     {
+  //       id: 3,
+  //       name: 'Broccoli Florets',
+  //       description: 'Fiber-rich detox veggie',
+  //       calories: 35,
+  //       protein: 3
+  //     },
+  //     {
+  //       id: 4,
+  //       name: 'Sprouts (Moong/Alfalfa)',
+  //       description: 'Fiber-rich detox veggie',
+  //       calories: 35,
+  //       protein: 3
+  //     },
+  //     {
+  //       id: 5,
+  //       name: 'Avocado',
+  //       description: 'Healthy fats for satiety',
+  //       calories: 35,
+  //       protein: 3
+  //     },
+  //     {
+  //       id: 6,
+  //       name: 'Lemon Herb Dressing',
+  //       description: 'Light, refreshing detox dressing',
+  //       calories: 60,
+  //       protein: 0
+  //     }
+  //   ],
+  //   reviews: [
+  //     {
+  //       id: 1,
+  //       user: 'Sarah K.',
+  //       rating: 5,
+  //       date: 'Jan 15, 2026',
+  //       comment: 'Absolutely delicious! The perfect balance of flavors and super fresh.'
+  //     },
+  //     {
+  //       id: 2,
+  //       user: 'Mike R.',
+  //       rating: 4,
+  //       date: 'Jan 10, 2026',
+  //       comment: 'Great salad, very filling. Would love a bit more dressing.'
+  //     }
+  //   ]
+  // };
 
-  const saladData = salad || defaultSalad;
+  const saladData = salad;
 
   const handleBackToMenu = () => {
     navigate('/menu');
@@ -129,14 +131,15 @@ const GranularSaladPage = ({ salad }) => {
 
             {/* Tags */}
             <div className="salad-tags-header">
-              {saladData.tags.map((tag, index) => (
-                <span key={index} className="tag-badge">{tag}</span>
-              ))}
+              <div className="tags-left">
+                {saladData.tags.map((tag, index) => (
+                  <span key={index} className="tag-badge">{tag}</span>
+                ))}
+              </div>
               {saladData.isVeg && (
-                <span className="veg-badge">
-                  <span className="veg-icon">🌱</span>
-                  Veg
-                </span>
+                <div className="veg-badge-detail">
+                  <img src={VegLabel} alt="Veg" className="veg-label-detail-img" />
+                </div>
               )}
             </div>
 

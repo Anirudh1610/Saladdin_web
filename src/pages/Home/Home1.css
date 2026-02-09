@@ -167,68 +167,11 @@
   }
 }
 
-/* Decorative Elements */
-.decoration {
-  position: absolute;
-  animation: float 4s ease-in-out infinite;
-}
-
-.decoration.carrot {
-  top: 20%;
-  left: 5%;
-  font-size: 4rem;
-  animation-delay: 0s;
-}
-
-.decoration.carrot::before {
-  content: '🥕';
-}
-
-.decoration.orange-half {
-  top: 10%;
-  right: 8%;
-  font-size: 5rem;
-  animation-delay: 0.5s;
-}
-
-.decoration.orange-half::before {
-  content: '🍊';
-  filter: brightness(1.1);
-}
-
-.decoration.orange-slice {
-  bottom: 25%;
-  left: 8%;
-  font-size: 4.5rem;
-  animation-delay: 1s;
-}
-
-.decoration.orange-slice::before {
-  content: '🍊';
-  transform: rotate(45deg);
-  display: inline-block;
-}
-
-.decoration.orange-fruit {
-  bottom: 15%;
-  right: 5%;
-  font-size: 5.5rem;
-  animation-delay: 1.5s;
-}
-
-.decoration.orange-fruit::before {
-  content: '🍊';
-}
-
-.decoration.apple {
-  bottom: 5%;
-  left: 2%;
-  font-size: 6rem;
-  animation-delay: 2s;
-}
-
-.decoration.apple::before {
-  content: '🍎';
+/* Decorative emoji elements removed for homepage visuals */
+.decoration,
+.decoration-item,
+.banner-decoration {
+  display: none !important;
 }
 
 /* Floating Cart Button */

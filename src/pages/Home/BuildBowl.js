@@ -63,24 +63,7 @@ const BuildBowl = () => {
   return (
     <section className="build-bowl-section">
       <div className="build-bowl-container">
-        {/* Top Section with Decorative Elements */}
-        <div className="build-top-decoration">
-          <div className="decoration-item carrot">🥕</div>
-          <div className="decoration-item orange">🍊</div>
-          <div className="decoration-item orange-slice">🍊</div>
-          <div className="decoration-item tomato">🍅</div>
-          <div className="decoration-item blueberry">🫐</div>
-          
-          <div className="dotted-line vertical-line"></div>
-          
-          <div className="peanut-decoration">
-            <span className="peanut">🥜</span>
-            <span className="dots">••••••••••••</span>
-            <span className="peanut">🥜</span>
-            <span className="dots">••••••••••••</span>
-            <span className="peanut">🥜</span>
-          </div>
-        </div>
+        {/* Top Section (decorative emojis removed) */}
 
         {/* Main Title */}
         <div className="build-header">
