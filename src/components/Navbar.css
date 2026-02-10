@@ -11,7 +11,7 @@
 }
 
 .navbar-container {
-  max-width: 1300px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -21,9 +21,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 0.5rem;
+  padding: 0;
   background: transparent;
   border-radius: 0;
+  width: 100%;
 }
 
 .nav-left-section {
@@ -50,29 +51,41 @@
   object-fit: contain;
 }
 
+.nav-separator {
+  width: 1px;
+  height: 24px;
+  background: #000000;
+  margin: 0 1rem;
+  opacity: 32%;
+}
+
 .nav-links {
   display: flex;
   gap: 2rem;
   align-items: center;
-  background: #f8f8f8;
-  padding: 0.75rem 2rem;
-  border-radius: 12px;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
   margin: 0;
 }
 
 .nav-links a {
   text-decoration: none;
   color: #1a1a1a;
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 16px;
   transition: color 0.3s ease;
   white-space: nowrap;
   position: relative;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .nav-links a:hover {
   color: #4a7c59;
+}
+
+.nav-links a.active {
+  font-weight: 600;
 }
 
 .nav-links a::after {
@@ -84,24 +97,29 @@
   align-items: center;
   gap: 1rem;
   flex-shrink: 0;
+}
+
+.mobile-app-container {
   background: white;
-  padding: 0.5rem 0.75rem 0.5rem 1.5rem;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  width: 216px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mobile-app-section {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding-right: 1rem;
-  border-right: 1px solid #e5e5e5;
 }
 
 .mobile-app-text {
-  font-weight: 500;
-  font-size: 14px;
-  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 16px;
+  color: #000000;
   font-family: 'Manrope', sans-serif;
 }
 
@@ -112,9 +130,9 @@
 }
 
 .app-store-link {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
+  width: auto;
+  height: auto;
+  border-radius: 0;
   background: transparent;
   display: flex;
   align-items: center;
@@ -122,17 +140,25 @@
   color: #1a1a1a;
   transition: all 0.2s ease;
   text-decoration: none;
+  border: none;
+  outline: none;
+  padding: 0;
 }
 
 .app-store-link:hover {
   transform: scale(1.05);
-  background: #f0f0f0;
+  background: transparent;
+}
+
+.app-store-link:focus {
+  outline: none;
+  border: none;
 }
 
 .app-store-icon,
 .google-play-icon {
-  width: 20px;
-  height: 20px;
+  width: auto;
+  height: auto;
 }
 
 .account-icon {
@@ -143,8 +169,10 @@
 .account-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.6rem 1.5rem;
+  width: 138px;
+  height: 60px;
   background: #1a1a1a;
   color: white;
   border-radius: 10px;

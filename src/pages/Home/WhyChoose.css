@@ -1,8 +1,23 @@
 /* Why Choose Section */
 .why-choose {
-  padding: 5rem 3rem;
-  background: white;
+  padding: 6rem 0;
+  background: #ffffff;
   font-family: 'Manrope', sans-serif;
+}
+
+.why-choose-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.why-choose-image {
+  width: 992px;
+  height: 1147px;
+  display: block;
 }
 
 .reasons-grid {

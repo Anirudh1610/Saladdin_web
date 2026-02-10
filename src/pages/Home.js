@@ -3,21 +3,20 @@ import HeroSection from './Home/HeroSection';
 import PopularSalads from './Home/PopularSalads';
 import WhyChoose from './Home/WhyChoose';
 import BuildBowl from './Home/BuildBowl';
-import BlogsSection from './Home/BlogsSection';
 import AppDownload from '../components/AppDownload';
 import Footer from '../components/Footer';
-import './Home.css';
+import ViewCartButton from '../components/ViewCartButton';
 
 const Home = () => {
   return (
-    <div className="home-page-wrapper">
+    <div style={{ width: '100%', overflowX: 'hidden' }}>
       <HeroSection />
       <PopularSalads />
       <WhyChoose />
       <BuildBowl />
-      <BlogsSection />
       <AppDownload />
       <Footer />
+      <ViewCartButton />
     </div>
   );
 };
