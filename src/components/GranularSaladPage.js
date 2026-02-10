@@ -4,6 +4,7 @@ import { ArrowLeft, Star, ShoppingCart } from 'lucide-react';
 import './GranularSaladPage.css';
 import saladImage1 from '../Assets/Menu/Salad Grid/Rectangle 11.svg';
 import VegLabel from '../Assets/Menu/Salad Grid/Frame 96.svg';
+import AddToCartButton from '../Assets/Menu/Salad Grid/Frame 99.svg';
 
 const GranularSaladPage = ({ salad }) => {
   const navigate = useNavigate();
@@ -104,10 +105,12 @@ const GranularSaladPage = ({ salad }) => {
     <div className="granular-salad-page">
       <div className="granular-salad-container">
         {/* Back Button */}
-        <button className="back-to-menu-btn" onClick={handleBackToMenu}>
-          <ArrowLeft size={20} />
-          <span>Back to Menu</span>
-        </button>
+        <div className="back-button-wrapper">
+          <button className="back-to-menu-btn" onClick={handleBackToMenu}>
+            <ArrowLeft size={20} />
+            <span>Back to Menu</span>
+          </button>
+        </div>
 
         {/* Main Content */}
         <div className="salad-detail-content">
@@ -150,8 +153,8 @@ const GranularSaladPage = ({ salad }) => {
             {/* Nutrition Info */}
             <div className="nutrition-stats">
               <div className="nutrition-stat">
-                <span className="stat-value">{saladData.nutrition.calories}</span>
-                <span className="stat-label">kcal<br/>Calories</span>
+                <span className="stat-value">{saladData.nutrition.calories} kcal</span>
+                <span className="stat-label">Calories</span>
               </div>
               <div className="nutrition-stat">
                 <span className="stat-value">{saladData.nutrition.protein}g</span>
@@ -172,9 +175,13 @@ const GranularSaladPage = ({ salad }) => {
             </div>
 
             {/* Add to Cart Button */}
-            <button className="add-to-cart-main-btn" onClick={handleAddToCart}>
-              Add to Cart
-            </button>
+            <img 
+              src={AddToCartButton} 
+              alt="Add to Cart" 
+              className="add-to-cart-main-btn"
+              onClick={handleAddToCart}
+              style={{ cursor: 'pointer' }}
+            />
           </div>
         </div>
 
@@ -219,7 +226,10 @@ const GranularSaladPage = ({ salad }) => {
                     <div className="review-header">
                       <div className="review-user-info">
                         <div className="review-avatar">
-                          {review.user.charAt(0)}
+                          <img 
+                            src={`https://ui-avatars.com/api/?name=${encodeURIComponent(review.user)}&background=random&size=40`} 
+                            alt={review.user}
+                          />
                         </div>
                         <div className="review-meta">
                           <span className="review-user">{review.user}</span>
@@ -230,9 +240,9 @@ const GranularSaladPage = ({ salad }) => {
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
-                            size={14}
-                            fill={i < review.rating ? "#FFB800" : "none"}
-                            color={i < review.rating ? "#FFB800" : "#E0E0E0"}
+                            size={16}
+                            fill={i < review.rating ? "#FFD700" : "none"}
+                            color={i < review.rating ? "#FFD700" : "#E0E0E0"}
                           />
                         ))}
                       </div>
