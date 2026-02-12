@@ -177,8 +177,8 @@ const BlogDetail = () => {
   return (
     <div className="blog-detail-page">
       <div className="blog-detail-container">
-        <button onClick={() => navigate('/blogs')} className="back-link">
-          <ArrowLeft size={20} /> Back to Blogs
+        <button onClick={() => navigate(-1)} className="back-link">
+          <ArrowLeft size={20} /> Back
         </button>
 
         <article className="blog-article">
