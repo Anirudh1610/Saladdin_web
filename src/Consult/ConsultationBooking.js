@@ -1,6 +1,7 @@
 import React from 'react';
 import './ConsultationBooking.css';
 import MeetNutritionists from './components/MeetNutritionists';
+import ScheduleSession from './components/ScheduleSession';
 
 const ConsultationBooking = () => {
   return (
@@ -13,6 +14,8 @@ const ConsultationBooking = () => {
       </div>
 
       <MeetNutritionists />
+      
+      <ScheduleSession />
     </div>
   );
 };
