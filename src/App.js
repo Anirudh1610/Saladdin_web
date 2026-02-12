@@ -9,7 +9,7 @@ import Menu from './pages/Menu';
 import SaladDetail from './pages/SaladDetail';
 import IngredientPage from './pages/IngredientPage';
 import BuildYourBowl from './pages/BuildYourBowl';
-import ConsultationBooking from './pages/ConsultationBooking';
+import ConsultationBooking from './Consult/ConsultationBooking';
 import ConsultationChat from './pages/ConsultationChat';
 import Subscription from './pages/Subscription';
 import Blogs from './pages/Blogs';

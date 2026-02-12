@@ -247,7 +247,7 @@ const Blogs = () => {
   return (
     <div className="blogs-page">
       {/* Hero Section */}
-      <section className="blogs-hero">
+      <section className="blogs-hero fade-in">
         <div className="container">
           <h1>Blogs & Articles</h1>
           <p>Healthy, delicious bowls made fresh every day so you can feel lighter, happier, and better.</p>
