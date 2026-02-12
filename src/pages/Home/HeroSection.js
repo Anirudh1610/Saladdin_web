@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Salad, ShoppingCart } from 'lucide-react';
 import './HeroSection.css';
+import RotatingText from '../../Assets/Home/Hero/Once upon a time, someone tried salad for breakfast… and never looked back..svg';
+import BowlImage from '../../Assets/Home/Hero/vibrant-rainbow-veggie-bowl-delicious-healthy-meal 1.svg';
+import MaskGroup from '../../Assets/Home/Hero/Mask group.svg';
+import OrderButton from '../../Assets/Home/Hero/Order.svg';
+import BuildBowlButton from '../../Assets/Home/Hero/BuildYourBowl.svg';
 
 const HeroSection = () => {
   return (
@@ -19,33 +23,23 @@ const HeroSection = () => {
             </p>
             <div className="hero-buttons">
               <Link to="/explorer" className="btn-order">
-                Order Now
+                <img src={OrderButton} alt="Order Now" />
               </Link>
               <Link to="/build-your-bowl" className="btn-build">
-                <Salad size={20} />
-                Build your Bowl
+                <img src={BuildBowlButton} alt="Build your Bowl" />
               </Link>
             </div>
           </div>
           
           <div className="hero-image">
-            <div className="bowl-circle">
-              <div className="rotating-text">
-                ONCE UPON A TIME, SOMEONE TRIED SALAD FOR BREAKFAST, AND NEVER LOOKED BACK
-              </div>
-              <img src="/api/placeholder/400/400" alt="Healthy Bowl" className="bowl-img" />
+            <div className="hero-image-stack">
+              <img src={RotatingText} alt="Rotating Text" className="rotating-text-svg" />
+              <img src={BowlImage} alt="Veggie Bowl" className="bowl-svg" />
+              <img src={MaskGroup} alt="Mask Group" className="mask-group-svg" />
             </div>
           </div>
         </div>
       </div>
-
-
-
-      {/* Floating View Cart Button */}
-      <Link to="/cart" className="floating-cart-btn">
-        <ShoppingCart size={20} />
-        View Cart
-      </Link>
     </section>
   );
 };

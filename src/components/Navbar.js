@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import './Navbar.css';
 import { ReactComponent as NavbarLogo } from '../Assets/Navbar/Navbar_logo.svg';
@@ -20,27 +20,31 @@ const Navbar = () => {
               <NavbarLogo className="logo-image" />
             </Link>
 
+            <div className="nav-separator"></div>
+
             <div className={`nav-links ${isOpen ? 'active' : ''}`}>
-              <Link to="/" onClick={() => setIsOpen(false)}>Home</Link>
-              <Link to="/menu" onClick={() => setIsOpen(false)}>Menu</Link>
-              <Link to="/build-your-bowl" onClick={() => setIsOpen(false)}>Build your bowl</Link>
-              <Link to="/subscription" onClick={() => setIsOpen(false)}>Subscription</Link>
-              <Link to="/consultation" onClick={() => setIsOpen(false)}>Consultation</Link>
-              <Link to="/blogs" onClick={() => setIsOpen(false)}>Blogs</Link>
+              <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
+              <NavLink to="/menu" onClick={() => setIsOpen(false)}>Menu</NavLink>
+              <NavLink to="/build-your-bowl" onClick={() => setIsOpen(false)}>Build your bowl</NavLink>
+              <NavLink to="/subscription" onClick={() => setIsOpen(false)}>Subscription</NavLink>
+              <NavLink to="/consultation" onClick={() => setIsOpen(false)}>Consultation</NavLink>
+              <NavLink to="/blogs" onClick={() => setIsOpen(false)}>Blogs</NavLink>
             </div>
           </div>
 
           {/* Right Section - Mobile App + Account */}
           <div className="nav-right">
-            <div className="mobile-app-section">
-              <span className="mobile-app-text">Mobile App</span>
-              <div className="app-store-icons">
-                <a href="#" className="app-store-link" aria-label="Download on App Store">
-                  <AppStoreLogo className="app-store-icon" />
-                </a>
-                <a href="#" className="app-store-link" aria-label="Get it on Google Play">
-                  <GooglePlayLogo className="google-play-icon" />
-                </a>
+            <div className="mobile-app-container">
+              <div className="mobile-app-section">
+                <span className="mobile-app-text">Mobile App</span>
+                <div className="app-store-icons">
+                  <a href="#" className="app-store-link" aria-label="Download on App Store">
+                    <AppStoreLogo className="app-store-icon" />
+                  </a>
+                  <a href="#" className="app-store-link" aria-label="Get it on Google Play">
+                    <GooglePlayLogo className="google-play-icon" />
+                  </a>
+                </div>
               </div>
             </div>
 

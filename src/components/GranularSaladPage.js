@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, ShoppingCart } from 'lucide-react';
 import './GranularSaladPage.css';
+import Footer from './Footer';
 import saladImage1 from '../Assets/Menu/Salad Grid/Rectangle 11.svg';
 import VegLabel from '../Assets/Menu/Salad Grid/Frame 96.svg';
 import AddToCartButton from '../Assets/Menu/Salad Grid/Frame 99.svg';
@@ -102,8 +103,9 @@ const GranularSaladPage = ({ salad }) => {
   };
 
   return (
-    <div className="granular-salad-page">
-      <div className="granular-salad-container">
+    <>
+      <div className="granular-salad-page">
+        <div className="granular-salad-container">
         {/* Back Button */}
         <div className="back-button-wrapper">
           <button className="back-to-menu-btn" onClick={handleBackToMenu}>
@@ -262,8 +264,10 @@ const GranularSaladPage = ({ salad }) => {
             <span>View Cart</span>
           </button>
         </div>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

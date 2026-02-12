@@ -1,7 +1,7 @@
 /* Build Bowl Section */
 .build-bowl-section {
   padding: 6rem 0;
-  background: #2A2A2A;
+  background: #1F1F1F;
   color: white;
   font-family: 'Manrope', sans-serif;
   position: relative;
@@ -15,406 +15,254 @@
   position: relative;
 }
 
-/* Top Decorations */
-.build-top-decoration {
-  position: absolute;
-  top: -3rem;
-  left: 0;
-  right: 0;
+/* Top Decoration */
+.build-decoration {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  z-index: 1;
+  margin-bottom: 2rem;
 }
 
-.decoration-item {
-  position: absolute;
-  font-size: 2.5rem;
-  animation: float 6s ease-in-out infinite;
-}
-
-.decoration-item.carrot {
-  top: 2rem;
-  left: 10%;
-  animation-delay: 0s;
-}
-
-.decoration-item.orange {
-  top: 5rem;
-  left: 25%;
-  animation-delay: 0.5s;
-}
-
-.decoration-item.orange-slice {
-  top: 3rem;
-  right: 20%;
-  animation-delay: 1s;
-}
-
-.decoration-item.tomato {
-  top: 2rem;
-  right: 10%;
-  animation-delay: 1.5s;
-}
-
-.decoration-item.blueberry {
-  top: 4rem;
-  right: 30%;
-  animation-delay: 2s;
-}
-
-.dotted-line {
-  position: absolute;
-  background-image: linear-gradient(to bottom, #4A7C59 50%, transparent 50%);
-  background-size: 3px 15px;
-  background-repeat: repeat-y;
-  width: 3px;
-}
-
-.vertical-line {
-  top: 6rem;
-  left: 50%;
-  height: 200px;
-  transform: translateX(-50%);
-}
-
-.peanut-decoration {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 3rem;
-  justify-content: center;
-  font-size: 1.5rem;
-  margin-top: 8rem;
-}
-
-.peanut {
-  font-size: 2rem;
-  transform: rotate(-15deg);
-}
-
-.dots {
-  color: #4A7C59;
-  letter-spacing: 2px;
-  font-size: 1.2rem;
+.build-group-icon {
+  width: auto;
+  height: auto;
+  max-width: 100%;
 }
 
 /* Header */
 .build-header {
   text-align: center;
   margin-bottom: 4rem;
-  padding-top: 10rem;
   position: relative;
   z-index: 2;
 }
 
 .build-title {
-  font-size: 3.5rem;
-  font-weight: 700;
+  font-size: 64px;
+  font-weight: 800;
   color: #ffffff;
   margin-bottom: 1rem;
   font-family: 'Manrope', sans-serif;
 }
 
 .build-subtitle {
-  font-size: 1.1rem;
+  font-size: 20px;
   color: #cccccc;
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  opacity: 70%;
 }
 
 /* Steps Grid */
 .steps-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  margin-bottom: 3rem;
+  gap: 1px;
+  margin-bottom: 5rem;
 }
 
 .step-card {
   text-align: center;
-  padding: 1.5rem;
+  padding: 1rem;
+  cursor: default;
+  pointer-events: none;
 }
 
 .step-icon {
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   margin: 0 auto 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
-  transition: all 0.3s ease;
+  padding: 0;
 }
 
-.step-card:hover .step-icon {
-  background: rgba(74, 124, 89, 0.3);
-  transform: translateY(-5px);
+.step-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .step-title {
-  font-size: 1.2rem;
+  font-size: 24px;
   font-weight: 700;
-  color: #ffffff;
+  color: #F2E8CF;
   margin-bottom: 0.75rem;
+  font-family: 'Manrope', sans-serif;
 }
 
 .step-description {
-  font-size: 0.95rem;
-  color: #aaaaaa;
+  font-size: 14px;
+  color: #F2E8CFB2;
   line-height: 1.5;
   margin: 0;
+  font-family: 'Inter', sans-serif;
+  opacity: 70%;
 }
 
 /* CTA Button */
 .build-cta {
   text-align: center;
-  margin: 3rem 0;
+  margin: 5rem 0;
 }
 
 .btn-build-now {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  background: #4A7C59;
-  color: white;
-  padding: 1rem 2.5rem;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
+  display: inline-block;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 .btn-build-now:hover {
-  background: #3d6449;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(74, 124, 89, 0.4);
+}
+
+.build-button-img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  display: block;
 }
 
 /* Bowl Showcase */
 .bowl-showcase {
-  position: relative;
   max-width: 900px;
-  margin: 5rem auto;
-  min-height: 600px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.vertical-center {
-  top: 0;
-  left: 50%;
-  height: 100%;
-  transform: translateX(-50%);
-}
-
-/* Ingredient Tags */
-.ingredient-tag {
-  position: absolute;
-  background: rgba(42, 42, 42, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 0.75rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  z-index: 3;
-}
-
-.ingredient-tag:hover {
-  transform: scale(1.05);
-  background: rgba(74, 124, 89, 0.9);
-}
-
-.tag-icon {
-  font-size: 1.8rem;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-}
-
-.tag-text {
+  margin: 15rem auto 5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-}
-
-.tag-text strong {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.tag-amount {
-  font-size: 0.8rem;
-  color: #aaaaaa;
-}
-
-.tag-add {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: #4A7C59;
-  color: white;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
   align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
+  position: relative;
 }
 
-.tag-add:hover {
-  background: #3d6449;
-  transform: scale(1.1);
-}
-
-/* Positioning of ingredient tags */
-.tag-chicken {
-  top: 25%;
-  left: 5%;
-}
-
-.tag-whey {
-  top: 40%;
-  left: 0;
-}
-
-.tag-avocado {
-  top: 20%;
-  right: 5%;
-}
-
-.tag-grapes {
-  top: 35%;
-  right: 0;
-}
-
-/* Bowl Image */
-.bowl-image {
-  width: 500px;
-  height: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.vegetable-salad-image {
+  width: 622px;
+  height: 438px;
+  display: block;
   position: relative;
   z-index: 2;
 }
 
-.bowl-placeholder {
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, rgba(74, 124, 89, 0.1) 0%, rgba(42, 42, 42, 0.3) 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15rem;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+.mask-group-image {
+  width: 563px;
+  height: 431px;
+  display: block;
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* Group Decorations */
+.group-decoration {
+  position: absolute;
+  width: auto;
+  height: auto;
+  z-index: 3;
+}
+
+.group-19 {
+  top: -50px;
+  left: 50px;
+}
+
+.group-20 {
+  top: -50px;
+  right: 50px;
+}
+
+.group-21 {
+  top: 100px;
+  left: -50px;
+}
+
+.group-22 {
+  top: 100px;
+  right: -50px;
 }
 
 /* Ingredients Section */
 .ingredients-section {
   margin-top: 8rem;
-  text-align: center;
+  text-align: left;
 }
 
 .ingredients-title {
-  font-size: 3.5rem;
+  font-size: 48px;
+  font-family: 'Manrope', sans-serif;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 1rem;
   line-height: 1.2;
+  margin-left: 4rem;
 }
 
 .ingredients-subtitle {
-  font-size: 1.1rem;
+  font-size: 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  opacity: 70%;
   color: #cccccc;
-  max-width: 700px;
-  margin: 0 auto 4rem;
+  margin: 0 0 4rem 4rem;
   line-height: 1.6;
+  white-space: nowrap;
 }
 
 /* Quality Grid */
 .quality-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(4, 276px);
+  gap: 24px;
   margin-top: 3rem;
+  justify-content: center;
 }
 
 .quality-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 2.5rem 1.5rem;
+  position: relative;
+  background: transparent;
+  border: none;
+  padding: 0;
   text-align: center;
-  transition: all 0.3s ease;
+  width: 276px;
+  height: 335px;
 }
 
-.quality-card:hover {
-  background: rgba(74, 124, 89, 0.2);
-  border-color: rgba(74, 124, 89, 0.5);
-  transform: translateY(-5px);
+.quality-feature-image {
+  width: 276px;
+  height: 335px;
+  display: block;
+  object-fit: cover;
 }
 
-.quality-icon-wrapper {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 1.5rem;
-}
-
-.quality-icon {
-  width: 100px;
-  height: 100px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  position: relative;
-  z-index: 2;
-}
-
-.ripple-effect {
+.quality-text-overlay {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120px;
-  height: 120px;
-  border: 2px solid rgba(74, 124, 89, 0.3);
-  border-radius: 50%;
-  animation: ripple 3s infinite;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(152.11deg, #F2E8CF 5.45%, #3A3A3A 94.09%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2rem 3.5rem 2rem 1rem;
 }
 
 .quality-title {
-  font-size: 1.2rem;
+  font-size: 24px;
   font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 0.75rem;
-}
-
-.quality-description {
-  font-size: 0.95rem;
-  color: #aaaaaa;
-  line-height: 1.5;
-  margin: 0;
+  margin-bottom: 0;
+  font-family: 'Manrope', sans-serif;
+  text-align: left;
 }
 
 /* Animations */
@@ -424,21 +272,6 @@
   }
   50% {
     transform: translateY(-20px);
-  }
-}
-
-@keyframes ripple {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 0.3;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.6;
   }
 }
 

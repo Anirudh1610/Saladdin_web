@@ -6,6 +6,7 @@ import SaladGrid from './Menu/SaladGrid';
 import MenuFAQ from './Menu/MenuFAQ';
 import AppDownload from '../components/AppDownload';
 import Footer from '../components/Footer';
+import ViewCartButton from '../components/ViewCartButton';
 import './Menu.css';
 
 const Menu = () => {
@@ -20,6 +21,7 @@ const Menu = () => {
         <AppDownload />
       </div>
       <Footer />
+      <ViewCartButton />
     </div>
   );
 };
