@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PenSquare, Calendar, User, Heart, MessageCircle, Search } from 'lucide-react';
+import { PenSquare, ArrowRight } from 'lucide-react';
 import './Blogs.css';
 
 const Blogs = () => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchTerm, setSearchTerm] = useState('');
 
   // Sample blog data - in a real app, this would come from a backend
   const blogs = [
@@ -246,52 +244,13 @@ const Blogs = () => {
     }
   ];
 
-  const categories = ['All', 'Nutrition', 'Wellness', 'Fitness', 'Digestive Health', 'Health Conditions'];
-
-  const filteredBlogs = blogs.filter(blog => {
-    const matchesCategory = selectedCategory === 'All' || blog.category === selectedCategory;
-    const matchesSearch = blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          blog.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          blog.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
   return (
     <div className="blogs-page">
       {/* Hero Section */}
       <section className="blogs-hero">
         <div className="container">
-          <h1>Health & Wellness Blog</h1>
-          <p>Expert insights from our network of healthcare professionals</p>
-          
-          {/* Search Bar */}
-          <div className="search-container">
-            <Search className="search-icon" size={20} />
-            <input
-              type="text"
-              placeholder="Search articles by title, author, or topic..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Categories */}
-      <section className="categories-section">
-        <div className="container">
-          <div className="categories">
-            {categories.map(category => (
-              <button
-                key={category}
-                className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
-                onClick={() => setSelectedCategory(category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          <h1>Blogs & Articles</h1>
+          <p>Healthy, delicious bowls made fresh every day so you can feel lighter, happier, and better.</p>
         </div>
       </section>
 
@@ -299,70 +258,43 @@ const Blogs = () => {
       <section className="blogs-grid-section">
         <div className="container">
           <div className="blogs-grid">
-            {filteredBlogs.map(blog => (
+            {blogs.map(blog => (
               <article 
                 key={blog.id} 
                 className="blog-card"
                 onClick={() => navigate(`/blog/${blog.id}`)}
               >
-                <div className="blog-image">
-                  <img src={blog.image} alt={blog.title} />
-                  <span className="blog-category">{blog.category}</span>
-                </div>
-                
-                <div className="blog-content">
-                  <div className="blog-meta">
-                    <span className="read-time">{blog.readTime}</span>
-                    <span className="blog-date">
-                      <Calendar size={14} />
-                      {blog.date}
-                    </span>
+                <div className="blog-card-inner">
+                  <div className="blog-image">
+                    <img src={blog.image} alt={blog.title} />
                   </div>
                   
-                  <h2 className="blog-title">{blog.title}</h2>
-                  
-                  <div className="blog-author">
-                    <User size={16} />
-                    <div>
-                      <strong>{blog.author}</strong>
-                      <span>{blog.authorSpecialty}</span>
-                    </div>
-                  </div>
-                  
-                  <p className="blog-excerpt">{blog.excerpt}</p>
-                  
-                  <div className="blog-footer">
-                    <div className="blog-stats">
-                      <span>
-                        <Heart size={16} />
-                        {blog.likes}
-                      </span>
-                      <span>
-                        <MessageCircle size={16} />
-                        {blog.comments}
-                      </span>
+                  <div className="blog-text-area">
+                    <div className="blog-text-content">
+                      <h2 className="blog-title">{blog.title}</h2>
+                      <p className="blog-excerpt">{blog.excerpt}</p>
                     </div>
                     
-                    <button 
-                      className="read-more-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/blog/${blog.id}`);
-                      }}
-                    >
-                      Read More
-                    </button>
+                    <div className="blog-footer">
+                      <div className="blog-divider"></div>
+                      <div className="blog-footer-content">
+                        <button 
+                          className="read-more-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/blog/${blog.id}`);
+                          }}
+                        >
+                          View more
+                          <ArrowRight size={16} />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </article>
             ))}
           </div>
-
-          {filteredBlogs.length === 0 && (
-            <div className="no-results">
-              <p>No blogs found matching your criteria.</p>
-            </div>
-          )}
         </div>
       </section>
 
