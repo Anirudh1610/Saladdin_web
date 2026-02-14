@@ -32,7 +32,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
   width: 387px;
 }
 
@@ -194,18 +194,18 @@
 
 /* Selected Bowl Content */
 .selected-bowl-content {
-  padding: 24px;
+  padding: 16px;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   overflow-y: auto;
 }
 
 .bowl-header-section {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: flex-start;
   flex-shrink: 0;
 }
@@ -222,7 +222,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .bowl-tags {
@@ -263,7 +263,8 @@
 .change-base-btn {
   display: flex;
   align-items: center;
-  gap: 10px9px 24px;
+  padding: 9px 24px;
+  gap: 10px;
   background: #F2E8CF;
   border-radius: 12px;
   border: none;
@@ -275,8 +276,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
-  flex-shrink: 0s ease;
-  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .change-base-btn:hover {
@@ -292,9 +292,9 @@
 .addons-section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   flex-shrink: 0;
-  padding-top: 12px;
+  padding-top: 8px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -345,7 +345,7 @@
 .ingredient-chip {
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: 8px;
   padding: 10px 12px 10px 8px;
   background: #FEFFDC;
   border: 1px solid rgba(0, 0, 0, 0.1);

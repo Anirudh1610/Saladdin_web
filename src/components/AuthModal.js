@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './AuthModal.css';
 
 const AuthModal = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [savePassword, setSavePassword] = useState(false);
+  const navigate = useNavigate();
 
   if (!isOpen) return null;
 
@@ -12,21 +14,31 @@ const AuthModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     // Handle login logic here
     console.log('Login submitted:', { email, password, savePassword });
+    
+    // Close modal and navigate to profile page
+    onClose();
+    navigate('/profile');
   };
 
   const handleGoogleLogin = () => {
     console.log('Google login clicked');
     // Implement Google OAuth
+    onClose();
+    navigate('/profile');
   };
 
   const handleFacebookLogin = () => {
     console.log('Facebook login clicked');
     // Implement Facebook OAuth
+    onClose();
+    navigate('/profile');
   };
 
   const handleAppleLogin = () => {
     console.log('Apple login clicked');
     // Implement Apple OAuth
+    onClose();
+    navigate('/profile');
   };
 
   const handleCreateAccount = () => {
