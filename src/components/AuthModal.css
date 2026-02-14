@@ -1,0 +1,383 @@
+/* Modal Overlay */
+.auth-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Modal Container */
+.auth-modal {
+  position: relative;
+  width: 440px;
+  height: 729px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+  overflow: hidden;
+}
+
+/* Modal Header */
+.auth-modal-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #000000;
+  border-radius: 20px 20px 0px 0px;
+  height: 59px;
+}
+
+.auth-modal-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.32px;
+  color: #FFFFFF;
+}
+
+.auth-modal-close {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.32px;
+  color: #FFFFFF;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.auth-modal-close:hover {
+  opacity: 1;
+}
+
+/* Modal Body */
+.auth-modal-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 32px 20px 20px;
+  height: calc(729px - 59px);
+  overflow-y: auto;
+}
+
+.auth-modal-content {
+  width: 400px;
+  padding: 24px 20px;
+  background: #FFFFFF;
+  border-radius: 12px;
+}
+
+.auth-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+/* Heading */
+.auth-modal-heading {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 33px;
+  text-align: center;
+  letter-spacing: -0.32px;
+  color: #000000;
+  margin: 0;
+}
+
+/* Form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.auth-form-fields {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  width: 360px;
+}
+
+/* Input Groups */
+.auth-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+}
+
+.auth-password-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+}
+
+.auth-label {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000000;
+  margin-bottom: 0;
+}
+
+.auth-input {
+  width: 100%;
+  height: 50px;
+  background: #F2F2F2;
+  border: none;
+  border-radius: 12px;
+  padding: 0 16px;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #000000;
+  transition: background 0.2s ease;
+}
+
+.auth-input:focus {
+  outline: none;
+  background: #E8E8E8;
+}
+
+.auth-input::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+/* Options Row (Checkbox + Forgot Password) */
+.auth-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.auth-checkbox-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-checkbox {
+  width: 16px;
+  height: 16px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.auth-checkbox-label {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+}
+
+.auth-forgot-link {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: #4E65FF;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.auth-forgot-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* Continue Button */
+.auth-continue-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 360px;
+  height: 60px;
+  background: #386641;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  color: #F2E8CF;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.auth-continue-btn:hover {
+  background: #2d5032;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(56, 102, 65, 0.3);
+}
+
+.auth-continue-btn:active {
+  transform: translateY(0);
+}
+
+/* Divider */
+.auth-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 360px;
+  position: relative;
+}
+
+.auth-divider-line {
+  width: 66px;
+  height: 1px;
+  background: #000000;
+}
+
+.auth-divider-text {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
+  color: #000000;
+}
+
+/* Social Login Buttons */
+.auth-social-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.auth-social-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  background: #F2F2F2;
+  border: none;
+  border-radius: 70px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.auth-social-btn:hover {
+  background: #E0E0E0;
+  transform: scale(1.05);
+}
+
+.auth-social-btn:active {
+  transform: scale(0.98);
+}
+
+.auth-social-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Signup Prompt */
+.auth-signup-prompt {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: -0.32px;
+}
+
+.auth-signup-text {
+  color: #000000;
+}
+
+.auth-signup-link {
+  color: #4E65FF;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.auth-signup-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .auth-modal {
+    width: 90vw;
+    height: auto;
+    max-height: 90vh;
+  }
+
+  .auth-modal-body {
+    padding: 20px 10px;
+  }
+
+  .auth-modal-content {
+    width: 100%;
+    padding: 16px;
+  }
+
+  .auth-form-fields,
+  .auth-continue-btn,
+  .auth-divider {
+    width: 100%;
+  }
+
+  .auth-modal-heading {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}

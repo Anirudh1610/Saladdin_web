@@ -6,9 +6,11 @@ import { ReactComponent as NavbarLogo } from '../Assets/Navbar/Navbar_logo.svg';
 import { ReactComponent as AppStoreLogo } from '../Assets/Navbar/app-store 1.svg';
 import { ReactComponent as GooglePlayLogo } from '../Assets/Navbar/google-play-store-icon 1.svg';
 import { ReactComponent as AccountIcon } from '../Assets/Navbar/Vector.svg';
+import AuthModal from './AuthModal';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   return (
     <nav className="navbar">
@@ -48,10 +50,13 @@ const Navbar = () => {
               </div>
             </div>
 
-            <Link to="/profile" className="account-btn">
+            <button 
+              className="account-btn" 
+              onClick={() => setIsAuthModalOpen(true)}
+            >
               <AccountIcon className="account-icon" />
               <span>Account</span>
-            </Link>
+            </button>
           </div>
 
           {/* Mobile Toggle */}
@@ -60,6 +65,12 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+      />
     </nav>
   );
 };
