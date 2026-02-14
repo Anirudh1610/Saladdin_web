@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import GranularSaladPage from '../components/GranularSaladPage';
 import saladImage1 from '../Assets/Menu/Salad Grid/Rectangle 11.svg';
 import saladImage2 from '../Assets/Menu/Salad Grid/Rectangle 11 (1).svg';
-import saladImage3 from '../Assets/Menu/Salad Grid/Rectangle 11 (2).svg';
 
 const SaladDetail = () => {
   const { id } = useParams();

@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star, ShoppingCart } from 'lucide-react';
+import { ArrowLeft, Star } from 'lucide-react';
 import './GranularSaladPage.css';
 import Footer from './Footer';
-import saladImage1 from '../Assets/Menu/Salad Grid/Rectangle 11.svg';
 import VegLabel from '../Assets/Menu/Salad Grid/Frame 96.svg';
 
 const GranularSaladPage = ({ salad }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('ingredients');
-  const [quantity, setQuantity] = useState(1);
+  const [quantity] = useState(1);
 
   // // Default salad data if none provided
   // const defaultSalad = {
