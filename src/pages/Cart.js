@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, ArrowLeft } from 'lucide-react';
 import './Cart.css';
 
 const Cart = () => {
+  const navigate = useNavigate();
+  
   // Mock cart items
   const [cartItems, setCartItems] = useState([
     {
@@ -12,7 +14,7 @@ const Cart = () => {
       description: 'Fresh greens, feta, olives, tomatoes',
       price: 12.99,
       quantity: 2,
-      image: '🥗',
+      image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=400&fit=crop',
       calories: 350,
       protein: 15
     },
@@ -22,7 +24,7 @@ const Cart = () => {
       description: 'Spinach, chicken, avocado, quinoa',
       price: 14.50,
       quantity: 1,
-      image: '🥑',
+      image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop',
       calories: 420,
       protein: 32
     },
@@ -32,7 +34,7 @@ const Cart = () => {
       description: 'Edamame, sesame, cabbage, ginger soy',
       price: 11.99,
       quantity: 1,
-      image: '🥢',
+      image: 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=400&h=400&fit=crop',
       calories: 310,
       protein: 18
     }
@@ -81,16 +83,18 @@ const Cart = () => {
   return (
     <div className="cart-page">
       <div className="container">
-        <div className="cart-header">
-          <h1>Shopping Cart</h1>
-          <p>{cartItems.length} {cartItems.length === 1 ? 'item' : 'items'} in your cart</p>
-        </div>
-
+        <button className="back-button" onClick={() => navigate(-1)}>
+          <ArrowLeft size={20} />
+          <span>Back</span>
+        </button>
         <div className="cart-layout">
           <div className="cart-items">
+            <h2 className="cart-items-header">Items in Cart ({cartItems.length})</h2>
             {cartItems.map(item => (
               <div key={item.id} className="cart-item">
-                <div className="item-image">{item.image}</div>
+                <div className="item-image">
+                  <img src={item.image} alt={item.name} />
+                </div>
                 <div className="item-details">
                   <h3>{item.name}</h3>
                   <p className="item-description">{item.description}</p>
@@ -132,53 +136,43 @@ const Cart = () => {
           </div>
 
           <div className="cart-summary">
-            <h2>Order Summary</h2>
-            <div className="summary-row">
-              <span>Subtotal</span>
-              <span>₹{subtotal.toFixed(2)}</span>
-            </div>
-            <div className="summary-row">
-              <span>Tax (8%)</span>
-              <span>₹{tax.toFixed(2)}</span>
-            </div>
-            <div className="summary-row">
-              <span>Delivery Fee</span>
-              <span>{deliveryFee === 0 ? 'FREE' : `₹${deliveryFee.toFixed(2)}`}</span>
-            </div>
-            {deliveryFee > 0 && (
-              <div className="free-delivery-notice">
-                Add ₹{(30 - subtotal).toFixed(2)} more for free delivery!
+            <h2>Cart Summary</h2>
+            <div className="summary-details">
+              <div className="summary-row">
+                <span>Items Count:</span>
+                <span className="summary-value">2 Items</span>
               </div>
-            )}
-            <div className="summary-divider"></div>
-            <div className="summary-row total">
-              <span>Total</span>
-              <span>₹{total.toFixed(2)}</span>
+              <div className="summary-row">
+                <span>Total Bowls / Quantity</span>
+                <span className="summary-value">3</span>
+              </div>
+              <div className="summary-row">
+                <span>No of Meals:</span>
+                <span className="summary-value">14 meals/2 weeks</span>
+              </div>
+              <div className="summary-row">
+                <span>Dietary Preference:</span>
+                <span className="summary-value">Vegetarian</span>
+              </div>
+              <div className="summary-row">
+                <span>Allergens to Avoid:</span>
+                <span className="summary-value">Shellfish</span>
+              </div>
             </div>
 
-            <Link to="/checkout" className="checkout-btn">
-              Proceed to Checkout
-              <ArrowRight size={20} />
-            </Link>
-
-            <Link to="/explorer" className="continue-shopping">
-              Continue Shopping
-            </Link>
-
-            <div className="cart-features">
-              <div className="feature-item">
-                <span className="feature-icon">✓</span>
-                <span>Free delivery on orders over ₹30</span>
+            <div className="summary-total-section">
+              <div className="summary-total-box">
+                <div className="summary-row total">
+                  <span>Total Amount:</span>
+                  <span className="total-price">₹{total.toFixed(2)}</span>
+                </div>
+                <Link to="/checkout" className="checkout-btn">
+                  Confirm & Schedule Booking
+                </Link>
               </div>
-              <div className="feature-item">
-                <span className="feature-icon">✓</span>
-                <span>Fresh ingredients guaranteed</span>
-              </div>
-              <div className="feature-item">
-                <span className="feature-icon">✓</span>
-                <span>Prepared with care</span>
-              </div>
+              <p className="cancel-notice">Cancel or modify anytime</p>
             </div>
+
           </div>
         </div>
       </div>
