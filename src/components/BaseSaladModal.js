@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import './BaseSaladModal.css';
 import SaladCard from './SaladCard';
 

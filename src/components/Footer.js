@@ -21,13 +21,13 @@ const Footer = () => {
             <div className="footer-social">
               <p className="social-label">Social Links:</p>
               <div className="social-icons">
-                <a href="#" className="social-icon whatsapp" aria-label="WhatsApp">
+                <a href="https://wa.me/" className="social-icon whatsapp" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
                   <i className="fab fa-whatsapp"></i>
                 </a>
-                <a href="#" className="social-icon instagram" aria-label="Instagram">
+                <a href="https://instagram.com" className="social-icon instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                   <i className="fab fa-instagram"></i>
                 </a>
-                <a href="#" className="social-icon facebook" aria-label="Facebook">
+                <a href="https://facebook.com" className="social-icon facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                   <i className="fab fa-facebook-f"></i>
                 </a>
               </div>
