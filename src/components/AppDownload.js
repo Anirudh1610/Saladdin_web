@@ -27,10 +27,10 @@ const AppDownload = () => {
             </p>
 
             <div className="app-download-buttons">
-              <a href="#" className="app-download-btn play-store-btn">
+              <a href="https://play.google.com/store" className="app-download-btn play-store-btn" target="_blank" rel="noopener noreferrer">
                 <img src={PlayStoreButton} alt="Google Play Store" className="store-button-img" />
               </a>
-              <a href="#" className="app-download-btn app-store-btn">
+              <a href="https://www.apple.com/app-store/" className="app-download-btn app-store-btn" target="_blank" rel="noopener noreferrer">
                 <img src={AppStoreButton} alt="Apple App Store" className="store-button-img" />
               </a>
             </div>

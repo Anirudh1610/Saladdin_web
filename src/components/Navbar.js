@@ -38,10 +38,10 @@ const Navbar = () => {
               <div className="mobile-app-section">
                 <span className="mobile-app-text">Mobile App</span>
                 <div className="app-store-icons">
-                  <a href="#" className="app-store-link" aria-label="Download on App Store">
+                  <a href="https://www.apple.com/app-store/" className="app-store-link" aria-label="Download on App Store" target="_blank" rel="noopener noreferrer">
                     <AppStoreLogo className="app-store-icon" />
                   </a>
-                  <a href="#" className="app-store-link" aria-label="Get it on Google Play">
+                  <a href="https://play.google.com/store" className="app-store-link" aria-label="Get it on Google Play" target="_blank" rel="noopener noreferrer">
                     <GooglePlayLogo className="google-play-icon" />
                   </a>
                 </div>
