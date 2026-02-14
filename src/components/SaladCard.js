@@ -6,7 +6,8 @@ import VegLabel from '../Assets/Menu/Salad Grid/Frame 96.svg';
 const SaladCard = ({ salad, onAddToCart }) => {
   const navigate = useNavigate();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e) => {
+    e.stopPropagation(); // Prevent card click navigation
     if (onAddToCart) {
       onAddToCart(salad.id);
     }
@@ -16,8 +17,12 @@ const SaladCard = ({ salad, onAddToCart }) => {
     navigate(`/salad/${salad.id}`);
   };
 
+  const handleCardClick = () => {
+    navigate(`/salad/${salad.id}`);
+  };
+
   return (
-    <div className="salad-card">
+    <div className="salad-card" onClick={handleCardClick}>
       {salad.vegTag && (
         <div className="veg-tag">
           <img src={VegLabel} alt="Veg" className="veg-label-img" />
