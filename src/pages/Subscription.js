@@ -5,6 +5,7 @@ import PageHeader from '../components/PageHeader';
 import AppDownload from '../components/AppDownload';
 import Footer from '../components/Footer';
 import ViewCartButton from '../components/ViewCartButton';
+import AuthModal from '../components/AuthModal';
 
 const Subscription = () => {
   const [selectedGoal, setSelectedGoal] = useState('weight-loss');
@@ -14,6 +15,7 @@ const Subscription = () => {
     allergies: [],
     calorieTarget: 2000,
   });
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const healthGoals = [
     {
@@ -92,7 +94,7 @@ const Subscription = () => {
   };
 
   const handleSubscribe = () => {
-    alert(`Subscription created!\nGoal: ${selectedGoal}\nFrequency: ${frequency}\nDietary: ${preferences.dietary || 'No restrictions'}`);
+    setIsAuthModalOpen(true);
   };
 
   const selectedPlan = subscriptionPlans.find(plan => plan.value === frequency);
@@ -310,6 +312,10 @@ const Subscription = () => {
       <AppDownload />
       <Footer />
       <ViewCartButton />
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+      />
     </div>
   );
 };
