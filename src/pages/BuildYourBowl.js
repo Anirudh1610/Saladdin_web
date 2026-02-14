@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import './BuildYourBowl.css';
 import BaseSaladModal from '../components/BaseSaladModal';
+import PageHeader from '../components/PageHeader';
+import AppDownload from '../components/AppDownload';
+import Footer from '../components/Footer';
+import ViewCartButton from '../components/ViewCartButton';
+import emptyBowlIcon from '../Assets/BYB/salad (1) 1.svg';
+import baseBowlIcon from '../Assets/BYB/salad 1.svg';
 
 const BuildYourBowl = () => {
   const [addonType, setAddonType] = useState('all');
@@ -77,41 +83,25 @@ const BuildYourBowl = () => {
 
   return (
     <div className="build-your-bowl-page">
+      <PageHeader 
+        title="Build Your Bowl"
+        subtitle="Browse from our exclusive collection of salads and we will make them ready for you and deliver to your doorstep"
+      />
+      
       <div className="container">
-        <div className="page-header fade-in">
-          <h1>Build Your Bowl</h1>
-          <p>Browse from our exclusive collection of salads and we will make the ready for yoy and deliver to your doorstep</p>
-        </div>
-
         <div className="build-bowl-content">
           <div className="base-bowl-section">
             {!selectedSalad ? (
               <div className="bowl-center-content">
                 <div className="bowl-icon">
-                  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="40" cy="59" rx="38.5" ry="15" fill="#E9E3D5"/>
-                    <ellipse cx="50" cy="62" rx="38" ry="13" fill="#D3CDBF"/>
-                    <circle cx="15" cy="30" r="6" fill="#4FE267"/>
-                    <circle cx="30" cy="28" r="5" fill="#FF5368"/>
-                    <circle cx="45" cy="25" r="4" fill="#FFCF5D"/>
-                    <circle cx="60" cy="30" r="6" fill="#4FE267"/>
-                    <circle cx="25" cy="35" r="3" fill="#FF7E40"/>
-                    <circle cx="50" cy="35" r="3" fill="#FF7E40"/>
-                    <circle cx="10" cy="40" r="3" fill="#FF7E40"/>
-                    <circle cx="65" cy="35" r="4" fill="#C5324F"/>
-                    <circle cx="40" cy="32" r="3" fill="#FFCF5D"/>
-                  </svg>
+                  <img src={emptyBowlIcon} alt="Empty Bowl" width="80" height="80" />
                 </div>
                 <div className="bowl-text">
                   <h2>Add Base Bowl</h2>
                   <p>Choose a base bowl to start with and add addons on top of it</p>
                 </div>
                 <button className="add-base-bowl-btn" onClick={() => setIsModalOpen(true)}>
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1.71 14.99C1.71 17.75 3.96 20 6.72 20H13.28C16.04 20 18.29 17.75 18.29 14.99" fill="#386641"/>
-                    <path d="M15.24 8.74C16.03 7.39 14.81 5.74 13.28 5.74C12.79 3.07 9.21 3.07 8.72 5.74C7.19 5.74 5.97 7.39 6.76 8.74" fill="#386641"/>
-                    <path d="M4.5 11.15C5.21 10.12 4.49 8.74 3.23 8.74C2.87 6.67 0.13 6.67 -0.23 8.74C-1.49 8.74 -2.21 10.12 -1.5 11.15" fill="#386641"/>
-                  </svg>
+                  <img src={baseBowlIcon} alt="Base Bowl" width="20" height="20" />
                   Add Base Bowl
                 </button>
               </div>
@@ -244,6 +234,10 @@ const BuildYourBowl = () => {
           onSelectSalad={handleSaladSelect}
         />
       </div>
+      
+      <AppDownload />
+      <Footer />
+      <ViewCartButton />
     </div>
   );
 };

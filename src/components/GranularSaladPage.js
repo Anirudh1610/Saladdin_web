@@ -256,14 +256,6 @@ const GranularSaladPage = ({ salad }) => {
             )}
           </div>
         </div>
-
-        {/* Floating Cart Button */}
-        <div className="floating-cart-wrapper">
-          <button className="view-cart-floating-btn" onClick={() => navigate('/cart')}>
-            <ShoppingCart size={20} />
-            <span>View Cart</span>
-          </button>
-        </div>
         </div>
       </div>
       <Footer />
