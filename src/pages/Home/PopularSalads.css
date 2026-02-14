@@ -1,0 +1,375 @@
+/* Popular Salads Section */
+.popular-salads {
+  padding: 6rem 0;
+  background: #ffffff;
+  font-family: 'Manrope', sans-serif;
+}
+
+.popular-salads-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+.popular-salads-container > * {
+  border: none !important;
+  border-bottom: none !important;
+}
+
+/* Section Header */
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none !important;
+  border-bottom: none !important;
+  position: relative;
+  box-shadow: none !important;
+}
+
+.section-header::after {
+  display: none !important;
+  content: none !important;
+}
+
+.header-decoration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  border: none !important;
+}
+
+.group-icon {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+}
+
+
+.popular-salads .section-title {
+  font-size: 64px !important;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: 'Manrope', sans-serif;
+  text-align: center;
+  border: none !important;
+  border-bottom: none !important;
+  border-top: none !important;
+  position: relative;
+  box-shadow: none !important;
+  outline: none !important;
+  line-height: 1.1;
+}
+
+.popular-salads .section-title::after,
+.popular-salads .section-title::before {
+  display: none !important;
+  content: none !important;
+}
+
+.section-title .highlight {
+  color: #4A7C59;
+}
+
+/* Salads Grid */
+.salads-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  margin-bottom: 3rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 968px) {
+  .salads-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Salad Card */
+.salad-card {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: row;
+  height: 280px;
+}
+
+.salad-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Salad Image */
+.salad-image-wrapper {
+  width: 240px;
+  min-width: 240px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.salad-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: #ffffff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1.2rem;
+}
+
+.salad-image-placeholder {
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-circle {
+  width: 160px;
+  height: 160px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.salad-emoji {
+  font-size: 4rem;
+}
+
+/* Salad Content */
+.salad-content {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.salad-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tag {
+  background: #f5f5f5;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #666;
+}
+
+.salad-name-link {
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.salad-name-link:hover {
+  transform: translateY(-2px);
+}
+
+.salad-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 0.75rem 0;
+  font-family: 'Manrope', sans-serif;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.salad-name-link:hover .salad-name {
+  color: #4A7C59;
+}
+
+.salad-description {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.5;
+  margin: 0 0 1.25rem 0;
+  flex: 1;
+}
+
+/* Nutrition Info */
+.nutrition-info {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.nutrition-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nutrition-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.nutrition-label {
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: capitalize;
+}
+
+/* Add to Cart Button */
+.add-to-cart-btn {
+  width: 100%;
+  padding: 0.9rem;
+  background: transparent;
+  border: 2px solid #e5e5e5;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Manrope', sans-serif;
+}
+
+.add-to-cart-btn:hover {
+  background: #4A7C59;
+  border-color: #4A7C59;
+  color: #ffffff;
+}
+
+/* View All Button */
+.view-all-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.view-all-btn {
+  background: #4A7C59;
+  color: #ffffff;
+  padding: 1rem 3rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: 'Manrope', sans-serif;
+}
+
+.view-all-btn:hover {
+  background: #3d6449;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(74, 124, 89, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .salads-grid {
+    gap: 1.5rem;
+  }
+  
+  .salad-card {
+    height: auto;
+    flex-direction: column;
+  }
+  
+  .salad-image-wrapper {
+    width: 100%;
+    min-width: auto;
+    height: 240px;
+  }
+  
+  .nutrition-info {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .popular-salads {
+    padding: 4rem 0;
+  }
+  
+  .popular-salads-container {
+    padding: 0 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+  }
+  
+  .salads-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .salad-card {
+    height: auto;
+  }
+  
+  .salad-content {
+    padding: 1.5rem;
+  }
+  
+  .nutrition-info {
+    gap: 0.75rem;
+  }
+  
+  .nutrition-item {
+    min-width: calc(33.333% - 0.5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .header-decoration {
+    font-size: 1rem;
+  }
+  
+  .banana-icon {
+    font-size: 1.5rem;
+  }
+  
+  .salad-name {
+    font-size: 1.25rem;
+  }
+  
+  .salad-description {
+    font-size: 0.9rem;
+  }
+  
+  .nutrition-info {
+    gap: 0.5rem;
+  }
+  
+  .nutrition-item {
+    min-width: calc(50% - 0.25rem);
+  }
+}

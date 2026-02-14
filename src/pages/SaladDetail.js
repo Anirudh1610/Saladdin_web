@@ -1,192 +1,183 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Star, Clock, Flame } from 'lucide-react';
-import './SaladDetail.css';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import GranularSaladPage from '../components/GranularSaladPage';
+import saladImage1 from '../Assets/Menu/Salad Grid/Rectangle 11.svg';
+import saladImage2 from '../Assets/Menu/Salad Grid/Rectangle 11 (1).svg';
+import saladImage3 from '../Assets/Menu/Salad Grid/Rectangle 11 (2).svg';
 
 const SaladDetail = () => {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('ingredients'); 
+  const { id } = useParams();
 
-  // Sample data - in production, this would come from an API
-  const salad = {
-    id: 1,
-    name: 'Power Protein Bowl',
-    description: 'A nutrient-packed salad designed for muscle growth and sustained energy',
-    calories: 450,
-    protein: 35,
-    carbs: 42,
-    fats: 18,
-    price: '₹12.99',
-    rating: 4.8,
-    reviewCount: 234,
-    image: '🥗',
-    ingredients: [
-      { name: 'Grilled Chicken', calories: 165, protein: 31, description: 'Lean protein source' },
-      { name: 'Quinoa', calories: 120, protein: 4, description: 'Complete protein grain' },
-      { name: 'Chickpeas', calories: 90, protein: 5, description: 'Plant-based protein' },
-      { name: 'Mixed Greens', calories: 25, protein: 2, description: 'Vitamin-rich leafy greens' },
-      { name: 'Cherry Tomatoes', calories: 20, protein: 1, description: 'Antioxidant-rich' },
-      { name: 'Avocado', calories: 80, protein: 1, description: 'Healthy fats' },
-    ],
-    testimonials: [
-      {
-        name: 'Sarah Johnson',
-        rating: 5,
-        comment: 'This salad has become my post-workout staple! The protein content is perfect.',
-        date: '2 weeks ago'
+  // Sample salad data - in production, fetch based on ID
+  const saladsData = {
+    1: {
+      id: 1,
+      name: 'Green Detox Bowl',
+      description: 'A light, refreshing salad packed with greens to support digestion and fat loss.',
+      image: saladImage1,
+      price: 154.99,
+      rating: 4.9,
+      reviewCount: 234,
+      tags: ['Detox', 'Vegan'],
+      isVeg: true,
+      nutrition: {
+        calories: 280,
+        protein: 9,
+        carbs: 32,
+        fats: 10,
+        fiber: 8
       },
-      {
-        name: 'Mike Chen',
-        rating: 5,
-        comment: 'Delicious and filling. Lost 10 pounds in a month!',
-        date: '1 month ago'
+      ingredients: [
+        {
+          id: 1,
+          name: 'Mixed Greens',
+          description: 'Vitamin-rich leafy greens',
+          calories: 25,
+          protein: 2
+        },
+        {
+          id: 2,
+          name: 'Cucumber',
+          description: 'Hydrating and cooling',
+          calories: 16,
+          protein: 1
+        },
+        {
+          id: 3,
+          name: 'Broccoli Florets',
+          description: 'Fiber-rich detox veggie',
+          calories: 35,
+          protein: 3
+        },
+        {
+          id: 4,
+          name: 'Sprouts (Moong/Alfalfa)',
+          description: 'Fiber-rich detox veggie',
+          calories: 35,
+          protein: 3
+        },
+        {
+          id: 5,
+          name: 'Avocado',
+          description: 'Healthy fats for satiety',
+          calories: 35,
+          protein: 3
+        },
+        {
+          id: 6,
+          name: 'Lemon Herb Dressing',
+          description: 'Light, refreshing detox dressing',
+          calories: 60,
+          protein: 0
+        }
+      ],
+      reviewsList: [
+        {
+          id: 1,
+          user: 'Sarah K.',
+          rating: 5,
+          date: 'Jan 15, 2026',
+          comment: 'Absolutely delicious! The perfect balance of flavors and super fresh.'
+        },
+        {
+          id: 2,
+          user: 'Mike R.',
+          rating: 4,
+          date: 'Jan 10, 2026',
+          comment: 'Great salad, very filling. Would love a bit more dressing.'
+        },
+        {
+          id: 3,
+          user: 'Emma L.',
+          rating: 5,
+          date: 'Jan 5, 2026',
+          comment: 'This has become my go-to detox salad. Love it!'
+        }
+      ]
+    },
+    2: {
+      id: 2,
+      name: 'Protein Power Salad',
+      description: 'Packed with grilled chicken, quinoa, and nutrient-dense greens to fuel your workouts.',
+      image: saladImage2,
+      price: 154.99,
+      rating: 4.9,
+      reviewCount: 189,
+      tags: ['High Protein', 'Post Workout'],
+      isVeg: false,
+      nutrition: {
+        calories: 450,
+        protein: 35,
+        carbs: 28,
+        fats: 15,
+        fiber: 7
       },
-      {
-        name: 'Emily Rodriguez',
-        rating: 4,
-        comment: 'Great taste, wish it had a bit more dressing.',
-        date: '3 weeks ago'
-      },
-    ],
-    expires: '3 days after delivery',
-    bestBefore: 'Consume within 24 hours for optimal freshness'
+      ingredients: [
+        {
+          id: 1,
+          name: 'Grilled Chicken',
+          description: 'Lean protein source',
+          calories: 165,
+          protein: 31
+        },
+        {
+          id: 2,
+          name: 'Quinoa',
+          description: 'Complete protein grain',
+          calories: 120,
+          protein: 4
+        },
+        {
+          id: 3,
+          name: 'Chickpeas',
+          description: 'Plant-based protein boost',
+          calories: 90,
+          protein: 5
+        },
+        {
+          id: 4,
+          name: 'Mixed Greens',
+          description: 'Vitamin-rich base',
+          calories: 25,
+          protein: 2
+        },
+        {
+          id: 5,
+          name: 'Cherry Tomatoes',
+          description: 'Antioxidant-rich',
+          calories: 20,
+          protein: 1
+        },
+        {
+          id: 6,
+          name: 'Balsamic Vinaigrette',
+          description: 'Tangy protein dressing',
+          calories: 30,
+          protein: 0
+        }
+      ],
+      reviewsList: [
+        {
+          id: 1,
+          user: 'John D.',
+          rating: 5,
+          date: 'Feb 1, 2026',
+          comment: 'Perfect post-workout meal! The protein content is exactly what I need.'
+        },
+        {
+          id: 2,
+          user: 'Lisa M.',
+          rating: 5,
+          date: 'Jan 28, 2026',
+          comment: 'Best protein salad I have ever had. So filling and tasty!'
+        }
+      ]
+    }
   };
 
-  return (
-    <div className="salad-detail">
-      <div className="container">
-        <button onClick={() => navigate(-1)} className="back-link">
-          <ArrowLeft size={20} /> Back
-        </button>
+  const salad = saladsData[id] || saladsData[1];
 
-        <div className="detail-content fade-in">
-          <div className="detail-header">
-            <div className="salad-hero">
-              <div className="salad-image-large">{salad.image}</div>
-            </div>
-            
-            <div className="salad-main-info">
-              <h1>{salad.name}</h1>
-              <div className="rating-section">
-                <Star fill="#FF9800" color="#FF9800" size={20} />
-                <span className="rating-value">{salad.rating}</span>
-                <span className="review-count">({salad.reviewCount} reviews)</span>
-              </div>
-              <p className="description">{salad.description}</p>
-              
-              <div className="nutrition-summary">
-                <div className="nutrition-item">
-                  <Flame color="#FF9800" size={24} />
-                  <div>
-                    <strong>{salad.calories}</strong>
-                    <span>Calories</span>
-                  </div>
-                </div>
-                <div className="nutrition-item">
-                  <div>
-                    <strong>{salad.protein}g</strong>
-                    <span>Protein</span>
-                  </div>
-                </div>
-                <div className="nutrition-item">
-                  <div>
-                    <strong>{salad.carbs}g</strong>
-                    <span>Carbs</span>
-                  </div>
-                </div>
-                <div className="nutrition-item">
-                  <div>
-                    <strong>{salad.fats}g</strong>
-                    <span>Fats</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="freshness-info">
-                <Clock size={18} />
-                <div>
-                  <strong>Freshness Guarantee:</strong> {salad.expires}
-                  <br />
-                  <small>{salad.bestBefore}</small>
-                </div>
-              </div>
-
-              <div className="action-section">
-                <span className="price-large">{salad.price}</span>
-                <button className="btn btn-primary btn-large">Add to Cart</button>
-              </div>
-            </div>
-          </div>
-
-          {/* Tabs */}
-          <div className="detail-tabs">
-            <button
-              className={`tab-btn ${activeTab === 'ingredients' ? 'active' : ''}`}
-              onClick={() => setActiveTab('ingredients')}
-            >
-              Ingredients
-            </button>
-            <button
-              className={`tab-btn ${activeTab === 'reviews' ? 'active' : ''}`}
-              onClick={() => setActiveTab('reviews')}
-            >
-              Reviews
-            </button>
-          </div>
-
-          {/* Tab Content */}
-          <div className="tab-content">
-            {activeTab === 'ingredients' && (
-              <div className="ingredients-section">
-                <h2>Ingredient Breakdown</h2>
-                <div className="ingredients-grid">
-                  {salad.ingredients.map((ingredient, index) => (
-                    <Link
-                      to={`/ingredient/${ingredient.name.toLowerCase().replace(' ', '-')}`}
-                      key={index}
-                      className="ingredient-card card"
-                    >
-                      <h3>{ingredient.name}</h3>
-                      <p>{ingredient.description}</p>
-                      <div className="ingredient-stats">
-                        <span>{ingredient.calories} cal</span>
-                        <span>{ingredient.protein}g protein</span>
-                      </div>
-                      <div className="learn-more">Learn more →</div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'reviews' && (
-              <div className="reviews-section">
-                <h2>Customer Reviews</h2>
-                <div className="reviews-list">
-                  {salad.testimonials.map((review, index) => (
-                    <div key={index} className="review-card card">
-                      <div className="review-header">
-                        <div>
-                          <strong>{review.name}</strong>
-                          <div className="review-rating">
-                            {[...Array(review.rating)].map((_, i) => (
-                              <Star key={i} fill="#FF9800" color="#FF9800" size={16} />
-                            ))}
-                          </div>
-                        </div>
-                        <span className="review-date">{review.date}</span>
-                      </div>
-                      <p>{review.comment}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <GranularSaladPage salad={salad} />;
 };
 
 export default SaladDetail;
