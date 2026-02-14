@@ -1,5 +1,10 @@
 import React from 'react';
 import './MeetNutritionists.css';
+import sarahImage from '../../Assets/Consultation/Sarah.svg';
+import jamesImage from '../../Assets/Consultation/James.svg';
+import emilyImage from '../../Assets/Consultation/Emily.svg';
+import starsIcon from '../../Assets/Consultation/Frame 49.svg';
+import sessionsIcon from '../../Assets/Consultation/Frame 50.svg';
 
 const MeetNutritionists = () => {
   const nutritionists = [
@@ -10,7 +15,7 @@ const MeetNutritionists = () => {
       description: '15 years of experience helping athletes and fitness enthusiasts optimize their nutrition.',
       rating: 4.9,
       sessions: '500+ sessions',
-      image: null
+      image: sarahImage
     },
     {
       id: 2,
@@ -19,7 +24,7 @@ const MeetNutritionists = () => {
       description: 'Specialized in managing diabetes, heart disease, and digestive health through nutrition.',
       rating: 4.9,
       sessions: '500+ sessions',
-      image: null
+      image: jamesImage
     },
     {
       id: 3,
@@ -28,7 +33,7 @@ const MeetNutritionists = () => {
       description: 'Expert in vegan and vegetarian diets, helping clients transition to plant-based lifestyles.',
       rating: 4.9,
       sessions: '500+ sessions',
-      image: null
+      image: emilyImage
     }
   ];
 
@@ -61,14 +66,8 @@ const MeetNutritionists = () => {
               <div className="stats-section">
                 <hr className="divider" />
                 <div className="stats">
-                  <div className="stat-badge rating-badge">
-                    <span className="stat-value">{nutritionist.rating}</span>
-                    <span className="star-icon">⭐</span>
-                  </div>
-                  <div className="stat-badge sessions-badge">
-                    <span className="stat-value">{nutritionist.sessions}</span>
-                    <span className="session-icon">💬</span>
-                  </div>
+                  <img src={starsIcon} alt="Rating" className="stat-badge-img" />
+                  <img src={sessionsIcon} alt="Sessions" className="stat-badge-img" />
                 </div>
               </div>
             </div>

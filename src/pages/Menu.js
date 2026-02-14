@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuHeader from './Menu/MenuHeader';
+import PageHeader from '../components/PageHeader';
 import SearchSection from '../components/SearchSection';
 import FilterSection from '../components/FilterSection';
 import SaladGrid from './Menu/SaladGrid';
@@ -12,7 +12,10 @@ import './Menu.css';
 const Menu = () => {
   return (
     <div className="menu-page-wrapper">
-      <MenuHeader />
+      <PageHeader 
+        title="Explore Salads"
+        subtitle="Browse from our exclusive collection of salads and we will make them ready for you and deliver to your doorstep"
+      />
       <SearchSection />
       <div className="menu-content-wrapper">
         <FilterSection />

@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PenSquare, ArrowRight } from 'lucide-react';
 import './Blogs.css';
+import PageHeader from '../components/PageHeader';
+import AppDownload from '../components/AppDownload';
+import Footer from '../components/Footer';
+import ViewCartButton from '../components/ViewCartButton';
 
 const Blogs = () => {
   const navigate = useNavigate();
@@ -246,13 +250,10 @@ const Blogs = () => {
 
   return (
     <div className="blogs-page">
-      {/* Hero Section */}
-      <section className="blogs-hero fade-in">
-        <div className="container">
-          <h1>Blogs & Articles</h1>
-          <p>Healthy, delicious bowls made fresh every day so you can feel lighter, happier, and better.</p>
-        </div>
-      </section>
+      <PageHeader 
+        title="Blogs & Articles"
+        subtitle="Healthy, delicious bowls made fresh every day so you can feel lighter, happier, and better."
+      />
 
       {/* Blog Grid */}
       <section className="blogs-grid-section">
@@ -309,6 +310,10 @@ const Blogs = () => {
           </div>
         </div>
       </section>
+      
+      <AppDownload />
+      <Footer />
+      <ViewCartButton />
     </div>
   );
 };

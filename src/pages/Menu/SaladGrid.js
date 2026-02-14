@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SaladCard from '../../components/SaladCard';
 import './SaladGrid.css';
 import saladImage1 from '../../Assets/Menu/Salad Grid/Rectangle 11.svg';
@@ -6,8 +6,6 @@ import saladImage2 from '../../Assets/Menu/Salad Grid/Rectangle 11 (1).svg';
 import saladImage3 from '../../Assets/Menu/Salad Grid/Rectangle 11 (2).svg';
 
 const SaladGrid = () => {
-  const [cartItems, setCartItems] = useState({});
-
   const salads = [
     {
       id: 1,
@@ -72,18 +70,9 @@ const SaladGrid = () => {
   ];
 
   const handleAddToCart = (saladId) => {
-    setCartItems(prev => ({
-      ...prev,
-      [saladId]: (prev[saladId] || 0) + 1
-    }));
+    console.log('Added to cart:', saladId);
+    // Add to cart logic here
   };
-
-  const handleViewCart = () => {
-    console.log('View cart clicked', cartItems);
-    // Navigate to cart page
-  };
-
-  const totalItems = Object.values(cartItems).reduce((sum, count) => sum + count, 0);
 
   return (
     <div className="salad-grid-section">
@@ -97,16 +86,6 @@ const SaladGrid = () => {
             />
           ))}
         </div>
-
-        {totalItems > 0 && (
-          <div className="floating-cart-button">
-            <button className="view-cart-btn" onClick={handleViewCart}>
-              <span className="cart-icon">🛒</span>
-              <span className="cart-text">View Cart</span>
-              <span className="cart-badge">{totalItems}</span>
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

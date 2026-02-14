@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Check, TrendingDown, TrendingUp, Heart, Calendar } from 'lucide-react';
 import './Subscription.css';
+import PageHeader from '../components/PageHeader';
+import AppDownload from '../components/AppDownload';
+import Footer from '../components/Footer';
+import ViewCartButton from '../components/ViewCartButton';
 
 const Subscription = () => {
   const [selectedGoal, setSelectedGoal] = useState('weight-loss');
@@ -95,12 +99,12 @@ const Subscription = () => {
 
   return (
     <div className="subscription-page">
+      <PageHeader 
+        title="Smart Meal Prep Subscription"
+        subtitle="Set your health goals and receive automated weekly deliveries tailored to your needs"
+      />
+      
       <div className="container">
-        <div className="page-header fade-in">
-          <h1>Smart Meal Prep Subscription</h1>
-          <p>Set your health goals and receive automated weekly deliveries tailored to your needs</p>
-        </div>
-
         {/* Health Goals */}
         <section className="goals-section">
           <h2>Choose Your Health Goal</h2>
@@ -302,6 +306,10 @@ const Subscription = () => {
           </div>
         </section>
       </div>
+      
+      <AppDownload />
+      <Footer />
+      <ViewCartButton />
     </div>
   );
 };
