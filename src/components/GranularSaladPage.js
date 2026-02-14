@@ -92,7 +92,7 @@ const GranularSaladPage = ({ salad }) => {
   const saladData = salad;
 
   const handleBackToMenu = () => {
-    navigate('/menu');
+    navigate(-1);
   };
 
   const handleAddToCart = () => {
@@ -108,7 +108,7 @@ const GranularSaladPage = ({ salad }) => {
         <div className="back-button-wrapper">
           <button className="back-to-menu-btn" onClick={handleBackToMenu}>
             <ArrowLeft size={20} />
-            <span>Back to Menu</span>
+            <span>Back</span>
           </button>
         </div>
 

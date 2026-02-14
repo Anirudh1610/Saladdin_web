@@ -1,3 +1,9 @@
+.salad-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .salad-card {
   background: #FFFFFF;
   border-radius: 8px;
@@ -10,9 +16,10 @@
   width: 590px;
   height: 298px;
   position: relative;
+  cursor: pointer;
 }
 
-.salad-card:hover {
+.salad-card-link:hover .salad-card {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
 }
