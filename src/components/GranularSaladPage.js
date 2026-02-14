@@ -5,7 +5,6 @@ import './GranularSaladPage.css';
 import Footer from './Footer';
 import saladImage1 from '../Assets/Menu/Salad Grid/Rectangle 11.svg';
 import VegLabel from '../Assets/Menu/Salad Grid/Frame 96.svg';
-import AddToCartButton from '../Assets/Menu/Salad Grid/Frame 99.svg';
 
 const GranularSaladPage = ({ salad }) => {
   const navigate = useNavigate();
@@ -176,14 +175,19 @@ const GranularSaladPage = ({ salad }) => {
               </div>
             </div>
 
-            {/* Add to Cart Button */}
-            <img 
-              src={AddToCartButton} 
-              alt="Add to Cart" 
-              className="add-to-cart-main-btn"
-              onClick={handleAddToCart}
-              style={{ cursor: 'pointer' }}
-            />
+            {/* Add to Cart Section */}
+            <div className="add-to-cart-section">
+              <div className="price-display">
+                <span className="price-label">Price:</span>
+                <span className="price-value">₹{saladData.price ? saladData.price.toFixed(2) : '0.00'}</span>
+              </div>
+              <button 
+                className="add-to-cart-main-btn"
+                onClick={handleAddToCart}
+              >
+                Add to Cart
+              </button>
+            </div>
           </div>
         </div>
 
