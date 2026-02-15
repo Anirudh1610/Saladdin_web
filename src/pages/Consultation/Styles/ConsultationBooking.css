@@ -1,0 +1,10 @@
+.consultation-page {
+  min-height: 100vh;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+}
+
+.consultation-page .container {
+  margin-bottom: 100px;
+}
