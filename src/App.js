@@ -1,32 +1,28 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 // Components
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Menu from './pages/Menu';
-import SaladDetail from './pages/SaladDetail';
-import IngredientPage from './pages/IngredientPage';
-import BuildYourBowl from './pages/BuildYourBowl';
-import ConsultationBooking from './Consult/ConsultationBooking';
-import ConsultationChat from './pages/ConsultationChat';
-import Subscription from './pages/Subscription';
-import Blogs from './pages/Blogs';
-import BlogDetail from './pages/BlogDetail';
-import ProfilePage from './pages/ProfilePage';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
+import MainLayout from './Layouts/MainLayout';
+import Home from './pages/Home/Home';
+import Menu from './pages/Menu/Menu';
+import SaladDetail from './pages/Salads/SaladDetail';
+import IngredientPage from './pages/Salads/Components/IngredientPage';
+import BuildYourBowl from './pages/BYB/BuildYourBowl';
+import ConsultationBooking from './pages/Consultation/ConsultationBooking';
+import ConsultationChat from './pages/Consultation/Components/ConsultationChat';
+import Subscription from './pages/Subscriptions/Subscription';
+import Blogs from './pages/Blogs/Blogs';
+import BlogDetail from './pages/Blogs/Components/BlogDetail';
+import ProfilePage from './pages/Profile/ProfilePage';
+import Cart from './pages/Cart/Cart';
+import Checkout from './pages/Cart/Components/Checkout';
 
-function AppContent() {
-  const location = useLocation();
-  const hideNavbarRoutes = [];
-  const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
-
+function App() {
   return (
-    <div className="App">
-      {shouldShowNavbar && <Navbar />}
-      <Routes>
+    <Router>
+      <MainLayout>
+        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/explorer" element={<Menu />} />
@@ -42,14 +38,7 @@ function AppContent() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
         </Routes>
-      </div>
-  );
-}
-
-function App() {
-  return (
-    <Router>
-      <AppContent />
+      </MainLayout>
     </Router>
   );
 }
