@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import GranularSaladPage from '../components/GranularSaladPage';
+import ViewCartButton from '../components/ViewCartButton';
 import saladImage1 from '../Assets/Menu/Salad Grid/Rectangle 11.svg';
 import saladImage2 from '../Assets/Menu/Salad Grid/Rectangle 11 (1).svg';
 
@@ -176,7 +177,12 @@ const SaladDetail = () => {
 
   const salad = saladsData[id] || saladsData[1];
 
-  return <GranularSaladPage salad={salad} />;
+  return (
+    <>
+      <GranularSaladPage salad={salad} />
+      <ViewCartButton />
+    </>
+  );
 };
 
 export default SaladDetail;

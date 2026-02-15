@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 
 // Components
@@ -18,12 +18,15 @@ import ProfilePage from './pages/ProfilePage';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const hideNavbarRoutes = [];
+  const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
+
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <Routes>
+    <div className="App">
+      {shouldShowNavbar && <Navbar />}
+      <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/explorer" element={<Menu />} />
@@ -40,6 +43,13 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }
