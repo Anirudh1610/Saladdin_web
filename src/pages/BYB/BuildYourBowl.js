@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './Styles/BuildYourBowl.css';
 import BaseSaladModal from './Components/BaseSaladModal';
-// import emptyBowlIcon from '../Assets/BYB/salad (1) 1.svg';
-// import baseBowlIcon from '../Assets/BYB/salad 1.svg';
+import emptyBowlIcon from '../../Assets/BYB/salad (1) 1.svg';
+import baseBowlIcon from '../../Assets/BYB/salad 1.svg';
 
 const BuildYourBowl = () => {
   const [addonType, setAddonType] = useState('all');
@@ -86,14 +86,14 @@ const BuildYourBowl = () => {
             {!selectedSalad ? (
               <div className="bowl-center-content">
                 <div className="bowl-icon">
-                  <img src="placeholder.svg" alt="Empty Bowl" width="80" height="80" />
+                  <img src={emptyBowlIcon} alt="Empty Bowl" width="80" height="80" />
                 </div>
                 <div className="bowl-text">
                   <h2>Add Base Bowl</h2>
                   <p>Choose a base bowl to start with and add addons on top of it</p>
                 </div>
                 <button className="add-base-bowl-btn" onClick={() => setIsModalOpen(true)}>
-                  <img src="placeholder.svg" alt="Base Bowl" width="20" height="20" />
+                  <img src={baseBowlIcon} alt="Base Bowl" width="20" height="20" />
                   Add Base Bowl
                 </button>
               </div>
