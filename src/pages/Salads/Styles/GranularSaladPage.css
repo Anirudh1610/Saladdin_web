@@ -374,6 +374,7 @@
   flex-direction: column;
   gap: 12px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .ingredient-card:hover {
