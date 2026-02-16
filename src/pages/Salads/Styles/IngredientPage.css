@@ -1,218 +1,483 @@
+/* Ingredient Page Design - Matching Salad Page Design Language */
 .ingredient-page {
-  padding: 60px 0;
   min-height: 100vh;
+  background: #FFFFFF;
+  padding: 100px 20px 80px;
 }
 
+.ingredient-page .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Back Link */
+.ingredient-page .back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  background: #F2F2F2;
+  color: #333333;
+  border: 1.5px solid #E5E5E5;
+  border-radius: 60px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  margin-bottom: 40px;
+}
+
+.ingredient-page .back-link:hover {
+  border-color: #7CB342;
+  background: #F5F9F0;
+  color: #2D5016;
+}
+
+/* Fade In Animation */
+.ingredient-content.fade-in {
+  animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header Section */
 .ingredient-header {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 3rem;
-  margin-bottom: 4rem;
+  grid-template-columns: 320px 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ingredient-visual {
-  position: sticky;
-  top: 100px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .ingredient-image-large {
-  font-size: 10rem;
-  text-align: center;
-  background: white;
-  padding: 3rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  height: 320px;
+  font-size: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FFE4E4 0%, #FFD6D6 100%);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.ingredient-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Tags and Availability Section */
+.ingredient-tags-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  background: #E8F5E0;
+  color: #2D5016;
+  border-radius: 6px;
+  border: 1.5px solid #7CB342;
+}
+
+.ingredient-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ingredient-tag {
+  display: inline-block;
+  padding: 6px 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  background: #F2F2F2;
+  color: #333333;
+  border-radius: 6px;
+}
+
+.ingredient-main h1 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.1;
 }
 
 .ingredient-description {
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #666666;
+  line-height: 1.5;
+  margin: 0;
 }
 
+/* Card Styling */
+.card {
+  background: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.card h2, .card h3 {
+  font-family: 'Manrope', sans-serif;
+  color: #1a1a1a;
+  margin: 0 0 20px 0;
+}
+
+.card h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.card h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Nutrition Facts */
 .nutrition-facts {
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(46, 125, 50, 0.1) 100%);
-}
-
-.nutrition-facts h3 {
-  margin-bottom: 1.5rem;
-  color: var(--dark-green);
+  margin-top: 20px;
 }
 
 .nutrition-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .nutrition-fact {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
-  background: white;
+  justify-content: center;
+  gap: 4px;
+  background: #F5F5F5;
+  padding: 12px 16px;
   border-radius: 8px;
+  min-width: 90px;
+  flex: 1;
 }
 
 .nutrition-fact .value {
-  font-size: 2rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 20px;
   font-weight: 700;
-  color: var(--primary-green);
+  color: #1a1a1a;
+  line-height: 1;
 }
 
 .nutrition-fact .label {
-  font-size: 0.9rem;
-  color: var(--text-light);
-  margin-top: 0.5rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #999999;
+  text-align: center;
+  line-height: 1.2;
 }
 
+/* Health Benefits Section */
 .health-benefits-section {
-  margin-bottom: 4rem;
+  margin-bottom: 60px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .health-benefits-section h2 {
-  margin-bottom: 2rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 24px;
+  text-align: center;
 }
 
 .benefits-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .benefit-card {
   text-align: center;
+  padding: 32px 24px;
+}
+
+.benefit-card:hover {
+  border-color: #7CB342;
+  background: #F5F9F0;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(124, 179, 66, 0.2);
 }
 
 .benefit-icon {
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
   display: flex;
   justify-content: center;
 }
 
+.benefit-card h3 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+
+.benefit-card p {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Vitamins Section */
 .vitamins-section {
-  margin-bottom: 4rem;
+  margin-bottom: 60px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .vitamins-content {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 24px;
+}
+
+.vitamins-card h2,
+.pairs-well-card h2 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 20px;
 }
 
 .vitamins-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 20px;
 }
 
 .vitamin-item {
   display: grid;
-  grid-template-columns: 2fr 3fr auto;
-  gap: 1rem;
+  grid-template-columns: 140px 1fr auto;
+  gap: 16px;
   align-items: center;
 }
 
 .vitamin-info {
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 
 .vitamin-info strong {
-  color: var(--text-dark);
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
 }
 
 .vitamin-info span {
-  font-size: 0.85rem;
-  color: var(--text-light);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #999999;
 }
 
 .vitamin-bar {
   height: 8px;
-  background: var(--border-color);
+  background: #F5F5F5;
   border-radius: 4px;
   overflow: hidden;
 }
 
 .vitamin-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--light-green), var(--primary-green));
-  transition: width 0.5s ease;
+  background: linear-gradient(90deg, #A5D6A7, #7CB342);
+  transition: width 0.8s ease;
+  border-radius: 4px;
 }
 
 .vitamin-amount {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
   font-weight: 700;
-  color: var(--primary-green);
+  color: #7CB342;
+  min-width: 50px;
+  text-align: right;
 }
 
-.pairs-well-card h2 {
-  margin-bottom: 1.5rem;
-}
-
+/* Pairs Well With */
 .pairs-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
+  gap: 10px;
+  margin-bottom: 24px;
 }
 
 .pair-item {
-  padding: 0.75rem 1rem;
-  background: var(--bg-light);
+  padding: 12px 16px;
+  background: #F5F5F5;
   border-radius: 8px;
   text-decoration: none;
-  color: var(--text-dark);
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
   font-weight: 500;
+  color: #333333;
   transition: all 0.3s ease;
+  display: block;
 }
 
 .pair-item:hover {
-  background: var(--primary-green);
-  color: white;
-  transform: translateX(4px);
+  background: #7CB342;
+  color: #FFFFFF;
+  transform: translateX(8px);
 }
 
+/* Fun Fact */
 .fun-fact {
-  background: #FFF3E0;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border-left: 4px solid var(--accent-orange);
+  background: #FFF9E6;
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 4px solid #FFB800;
 }
 
 .fun-fact h3 {
-  color: var(--accent-orange);
-  margin-bottom: 0.75rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 8px;
 }
 
+.fun-fact p {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* CTA Section */
 .cta-section {
-  margin-top: 4rem;
+  margin-top: 60px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cta-card {
   text-align: center;
-  padding: 3rem;
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(46, 125, 50, 0.1) 100%);
+  padding: 48px 32px;
+  background: linear-gradient(135deg, rgba(124, 179, 66, 0.1) 0%, rgba(165, 214, 167, 0.1) 100%);
+  border: 1px solid #E5E5E5;
 }
 
 .cta-card h2 {
-  margin-bottom: 1rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12px;
 }
 
 .cta-card p {
-  margin-bottom: 2rem;
-  font-size: 1.1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #666666;
+  margin-bottom: 28px;
+  line-height: 1.5;
 }
 
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: #F2E8CF;
+  color: #386641;
+  border: 1px solid rgba(56, 102, 65, 0.2);
+}
+
+.btn-primary:hover {
+  background: #F5F9E8;
+  border-color: #7CB342;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124, 179, 66, 0.2);
+}
+
+/* Responsive Design */
 @media (max-width: 968px) {
-  .ingredient-header {
-    grid-template-columns: 1fr;
+  .ingredient-page {
+    padding: 80px 20px 60px;
   }
 
-  .ingredient-visual {
-    position: static;
+  .ingredient-header {
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
 
   .ingredient-image-large {
+    width: 100%;
+    max-width: 280px;
+    height: 280px;
     font-size: 6rem;
+    margin: 0 auto;
+  }
+
+  .ingredient-main h1 {
+    font-size: 32px;
   }
 
   .nutrition-grid {
@@ -224,11 +489,70 @@
   }
 
   .vitamin-item {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
+    grid-template-columns: 100px 1fr auto;
+    gap: 12px;
   }
 
   .benefits-grid {
     grid-template-columns: 1fr;
+  }
+
+  .health-benefits-section h2 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  .ingredient-page {
+    padding: 70px 16px 50px;
+  }
+
+  .ingredient-image-large {
+    max-width: 240px;
+    height: 240px;
+    font-size: 5rem;
+  }
+
+  .ingredient-main h1 {
+    font-size: 28px;
+  }
+
+  .ingredient-tags-header {
+    gap: 8px;
+  }
+
+  .availability-badge {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+
+  .ingredient-tag {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .nutrition-fact {
+    min-width: 70px;
+  }
+
+  .vitamin-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .vitamin-bar {
+    order: 3;
+  }
+
+  .vitamin-amount {
+    text-align: left;
+  }
+
+  .cta-card {
+    padding: 32px 24px;
+  }
+
+  .cta-card h2 {
+    font-size: 24px;
   }
 }

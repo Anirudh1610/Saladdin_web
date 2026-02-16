@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Star } from 'lucide-react';
 import '../Styles/GranularSaladPage.css';
 // import VegLabel from '../Assets/Menu/Salad Grid/Frame 96.svg';
@@ -211,14 +211,19 @@ const GranularSaladPage = ({ salad }) => {
             {activeTab === 'ingredients' && (
               <div className="ingredients-grid">
                 {saladData.ingredients.map((ingredient) => (
-                  <div key={ingredient.id} className="ingredient-card">
+                  <Link 
+                    key={ingredient.id} 
+                    to={`/ingredient/${ingredient.name.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="ingredient-card"
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
                     <h3 className="ingredient-name">{ingredient.name}</h3>
                     <p className="ingredient-description">{ingredient.description}</p>
                     <div className="ingredient-nutrition">
                       <span className="ingredient-cal">{ingredient.calories} cal</span>
                       <span className="ingredient-protein">{ingredient.protein}g protein</span>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}

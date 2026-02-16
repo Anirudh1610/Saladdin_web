@@ -1,15 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Heart, Brain, Shield, TrendingUp } from 'lucide-react';
 import '../Styles/IngredientPage.css';
 
 const IngredientPage = () => {
+  const navigate = useNavigate();
 
   // Sample data - in production, this would come from an API
   const ingredientData = {
     name: 'Grilled Chicken',
     description: 'Premium organic chicken breast, perfectly grilled to retain maximum nutrients',
     image: '🍗',
+    availability: 'In Season',
+    tags: ['High Protein', 'Low Carb', 'Organic'],
     nutritionPer100g: {
       calories: 165,
       protein: 31,
@@ -57,9 +60,9 @@ const IngredientPage = () => {
   return (
     <div className="ingredient-page">
       <div className="container">
-        <Link to="/explorer" className="back-link">
-          <ArrowLeft size={20} /> Back to Explorer
-        </Link>
+        <button onClick={() => navigate(-1)} className="back-link">
+          <ArrowLeft size={20} /> Back
+        </button>
 
         <div className="ingredient-content fade-in">
           <div className="ingredient-header">
@@ -68,6 +71,14 @@ const IngredientPage = () => {
             </div>
             
             <div className="ingredient-main">
+              <div className="ingredient-tags-header">
+                <span className="availability-badge">{ingredientData.availability}</span>
+                <div className="ingredient-tags">
+                  {ingredientData.tags.map((tag, index) => (
+                    <span key={index} className="ingredient-tag">{tag}</span>
+                  ))}
+                </div>
+              </div>
               <h1>{ingredientData.name}</h1>
               <p className="ingredient-description">{ingredientData.description}</p>
               
