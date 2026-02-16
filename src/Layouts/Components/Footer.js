@@ -1,0 +1,82 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import '../Styles/Footer.css';
+import Logo from '../../Assets/Logo.svg';
+import StarIcon from '../../Assets/Footer/Star.svg';
+import BackgroundText from '../../Assets/Footer/Saladdin.svg';
+
+const Footer = () => {
+  return (
+    <footer className="footer">
+      <div className="footer-container">
+        <div className="footer-content">
+          {/* Left Section - Logo and Tagline */}
+          <div className="footer-left">
+            <img src={Logo} alt="Saladdin" className="footer-logo" />
+            <h2 className="footer-tagline">
+              Eat<br />
+              Clean<br />
+              Everyday
+            </h2>
+            <div className="footer-social">
+              <p className="social-label">Social Links:</p>
+              <div className="social-icons">
+                <a href="https://wa.me/" className="social-icon whatsapp" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+                  <i className="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://instagram.com" className="social-icon instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                  <i className="fab fa-instagram"></i>
+                </a>
+                <a href="https://facebook.com" className="social-icon facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                  <i className="fab fa-facebook-f"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Middle Section - Features */}
+          <div className="footer-middle">
+            <div className="footer-feature">
+              <img src={StarIcon} alt="" className="feature-icon" />
+              <p>Saladdin brings you fresh, home-prepared salad bowls made daily.</p>
+            </div>
+            <div className="footer-feature">
+              <img src={StarIcon} alt="" className="feature-icon" />
+              <p>Each bowl is crafted using handpicked ingredients and hygienic prep.</p>
+            </div>
+            <div className="footer-feature">
+              <img src={StarIcon} alt="" className="feature-icon" />
+              <p>Personalize your meals based on your goals, taste, and lifestyle.</p>
+            </div>
+          </div>
+
+          {/* Right Section - Navigation Links */}
+          <div className="footer-right">
+            <nav className="footer-nav">
+              <Link to="/">Home</Link>
+              <Link to="/about">About</Link>
+              <Link to="/menu">Menu</Link>
+              <Link to="/build-your-bowl">Build your bowl</Link>
+              <Link to="/blogs">Blogs</Link>
+              <Link to="/faq">Faq's</Link>
+            </nav>
+          </div>
+        </div>
+
+        {/* Large Background Text */}
+        <div className="footer-background-wrapper">
+          <img src={BackgroundText} alt="" className="footer-background-text" />
+        </div>
+
+        {/* Bottom Section */}
+        <div className="footer-bottom">
+          <Link to="/terms">Terms & Conditions</Link>
+          <span className="separator">|</span>
+          <Link to="/privacy">Privacy policy</Link>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
