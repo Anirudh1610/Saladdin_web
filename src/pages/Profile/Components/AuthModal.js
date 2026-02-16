@@ -114,9 +114,9 @@ const AuthModal = ({ isOpen, onClose }) => {
                           Save Password
                         </label>
                       </div>
-                      <a href="#" className="auth-forgot-link">
+                      <button type="button" className="auth-forgot-link" onClick={(e) => e.preventDefault()}>
                         Forgot Password?
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -176,9 +176,9 @@ const AuthModal = ({ isOpen, onClose }) => {
               {/* Create Account Link */}
               <div className="auth-signup-prompt">
                 <span className="auth-signup-text">New to Saladdin? </span>
-                <a href="#" className="auth-signup-link" onClick={handleCreateAccount}>
+                <button type="button" className="auth-signup-link" onClick={handleCreateAccount}>
                   Create an Account
-                </a>
+                </button>
               </div>
             </div>
           </div>

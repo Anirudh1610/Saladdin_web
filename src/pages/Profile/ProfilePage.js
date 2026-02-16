@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Heart, ShoppingBag, MapPin, Calendar, TrendingUp, Package, ArrowLeft } from 'lucide-react';
+import { Heart, Calendar, TrendingUp, ArrowLeft } from 'lucide-react';
 import './Styles/ProfilePage.css'
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState('orders');
@@ -108,13 +108,13 @@ const ProfilePage = () => {
     { id: 2, label: 'Work', address: '456 Business Ave, Suite 200', city: 'New York, NY 10002', isDefault: false },
   ];
 
-  const subscriptionData = {
-    plan: 'Premium Monthly',
-    status: 'Active',
-    nextBilling: '2025-02-08',
-    price: '₹89.99/month',
-    benefits: ['20 bowls per month', 'Free delivery', 'Priority consultation'],
-  };
+  // const subscriptionData = {
+  //   plan: 'Premium Monthly',
+  //   status: 'Active',
+  //   nextBilling: '2025-02-08',
+  //   price: '₹89.99/month',
+  //   benefits: ['20 bowls per month', 'Free delivery', 'Priority consultation'],
+  // };
 
   const consultationHistory = [
     { id: 1, date: '2025-01-03', doctor: 'Dr. Sarah Miller', topic: 'Dietary Planning', status: 'Completed' },
@@ -173,61 +173,61 @@ const ProfilePage = () => {
     </>
   );
 
-  const renderHealthMetrics = () => (
-    <div className="profile-section">
-      <h2><Heart size={24} /> Health Metrics</h2>
-      <div className="metrics-grid">
-        <div className="metric-card">
-          <div className="metric-icon">⚖️</div>
-          <div className="metric-info">
-            <label>Weight</label>
-            <span className="metric-value">{healthMetrics.weight}</span>
-          </div>
-        </div>
-        <div className="metric-card">
-          <div className="metric-icon">📏</div>
-          <div className="metric-info">
-            <label>Height</label>
-            <span className="metric-value">{healthMetrics.height}</span>
-          </div>
-        </div>
-        <div className="metric-card">
-          <div className="metric-icon">📊</div>
-          <div className="metric-info">
-            <label>BMI</label>
-            <span className="metric-value">{healthMetrics.bmi}</span>
-          </div>
-        </div>
-        <div className="metric-card">
-          <div className="metric-icon">🎯</div>
-          <div className="metric-info">
-            <label>Daily Calories</label>
-            <span className="metric-value">{healthMetrics.dailyCalories}</span>
-          </div>
-        </div>
-      </div>
-      
-      <div className="health-details">
-        <div className="detail-item">
-          <label>Dietary Goal</label>
-          <p>{healthMetrics.dietaryGoal}</p>
-        </div>
-        <div className="detail-item">
-          <label>Allergies</label>
-          <div className="tag-list">
-            {healthMetrics.allergies.map((allergy, index) => (
-              <span key={index} className="tag">{allergy}</span>
-            ))}
-          </div>
-        </div>
-        <div className="detail-item">
-          <label>Daily Water Intake</label>
-          <p>{healthMetrics.waterIntake}</p>
-        </div>
-      </div>
-      <button className="edit-btn">Update Metrics</button>
-    </div>
-  );
+  // const renderHealthMetrics = () => (
+  //   <div className="profile-section">
+  //     <h2><Heart size={24} /> Health Metrics</h2>
+  //     <div className="metrics-grid">
+  //       <div className="metric-card">
+  //         <div className="metric-icon">⚖️</div>
+  //         <div className="metric-info">
+  //           <label>Weight</label>
+  //           <span className="metric-value">{healthMetrics.weight}</span>
+  //         </div>
+  //       </div>
+  //       <div className="metric-card">
+  //         <div className="metric-icon">📏</div>
+  //         <div className="metric-info">
+  //           <label>Height</label>
+  //           <span className="metric-value">{healthMetrics.height}</span>
+  //         </div>
+  //       </div>
+  //       <div className="metric-card">
+  //         <div className="metric-icon">📊</div>
+  //         <div className="metric-info">
+  //           <label>BMI</label>
+  //           <span className="metric-value">{healthMetrics.bmi}</span>
+  //         </div>
+  //       </div>
+  //       <div className="metric-card">
+  //         <div className="metric-icon">🎯</div>
+  //         <div className="metric-info">
+  //           <label>Daily Calories</label>
+  //           <span className="metric-value">{healthMetrics.dailyCalories}</span>
+  //         </div>
+  //       </div>
+  //     </div>
+  //     
+  //     <div className="health-details">
+  //       <div className="detail-item">
+  //         <label>Dietary Goal</label>
+  //         <p>{healthMetrics.dietaryGoal}</p>
+  //       </div>
+  //       <div className="detail-item">
+  //         <label>Allergies</label>
+  //         <div className="tag-list">
+  //           {healthMetrics.allergies.map((allergy, index) => (
+  //             <span key={index} className="tag">{allergy}</span>
+  //           ))}
+  //         </div>
+  //       </div>
+  //       <div className="detail-item">
+  //         <label>Daily Water Intake</label>
+  //         <p>{healthMetrics.waterIntake}</p>
+  //       </div>
+  //     </div>
+  //     <button className="edit-btn">Update Metrics</button>
+  //   </div>
+  // );
 
   const renderOrderCard = (order) => (
     <div key={order.id} className="order-card">
@@ -322,30 +322,30 @@ const ProfilePage = () => {
     </div>
   );
 
-  const renderAddresses = () => (
-    <div className="profile-section">
-      <h2>Saved Addresses</h2>
-      <div className="address-list">
-        {savedAddresses.map((address) => (
-          <div key={address.id} className="address-card">
-            <div className="address-header">
-              <span className="address-label">{address.label}</span>
-              {address.isDefault && <span className="default-badge">Default</span>}
-            </div>
-            <div className="address-content">
-              <p className="address-text">{address.address}</p>
-              <p className="address-city">{address.city}</p>
-            </div>
-            <div className="address-actions">
-              <button className="action-btn">Edit</button>
-              <button className="action-btn delete">Delete</button>
-            </div>
-          </div>
-        ))}
-      </div>
-      <button className="add-btn">+ Add New Address</button>
-    </div>
-  );
+  // const renderAddresses = () => (
+  //   <div className="profile-section">
+  //     <h2>Saved Addresses</h2>
+  //     <div className="address-list">
+  //       {savedAddresses.map((address) => (
+  //         <div key={address.id} className="address-card">
+  //           <div className="address-header">
+  //             <span className="address-label">{address.label}</span>
+  //             {address.isDefault && <span className="default-badge">Default</span>}
+  //           </div>
+  //           <div className="address-content">
+  //             <p className="address-text">{address.address}</p>
+  //             <p className="address-city">{address.city}</p>
+  //           </div>
+  //           <div className="address-actions">
+  //             <button className="action-btn">Edit</button>
+  //             <button className="action-btn delete">Delete</button>
+  //           </div>
+  //         </div>
+  //       ))}
+  //     </div>
+  //     <button className="add-btn">+ Add New Address</button>
+  //   </div>
+  // );
 
   const renderSubscription = () => (
     <div className="bowls-container">
@@ -435,29 +435,29 @@ const ProfilePage = () => {
     </div>
   );
 
-  const renderConsultations = () => (
-    <div className="profile-section">
-      <h2><TrendingUp size={24} /> Consultation History</h2>
-      <div className="consultation-list">
-        {consultationHistory.map((consultation) => (
-          <div key={consultation.id} className="consultation-item">
-            <div className="consultation-date">
-              <Calendar size={16} />
-              {consultation.date}
-            </div>
-            <div className="consultation-details">
-              <h4>{consultation.doctor}</h4>
-              <p>{consultation.topic}</p>
-            </div>
-            <span className={`status-badge ${consultation.status.toLowerCase()}`}>
-              {consultation.status}
-            </span>
-          </div>
-        ))}
-      </div>
-      <button className="edit-btn">Book New Consultation</button>
-    </div>
-  );
+  // const renderConsultations = () => (
+  //   <div className="profile-section">
+  //     <h2><TrendingUp size={24} /> Consultation History</h2>
+  //     <div className="consultation-list">
+  //       {consultationHistory.map((consultation) => (
+  //         <div key={consultation.id} className="consultation-item">
+  //           <div className="consultation-date">
+  //             <Calendar size={16} />
+  //             {consultation.date}
+  //           </div>
+  //           <div className="consultation-details">
+  //             <h4>{consultation.doctor}</h4>
+  //             <p>{consultation.topic}</p>
+  //           </div>
+  //           <span className={`status-badge ${consultation.status.toLowerCase()}`}>
+  //             {consultation.status}
+  //           </span>
+  //         </div>
+  //       ))}
+  //     </div>
+  //     <button className="edit-btn">Book New Consultation</button>
+  //   </div>
+  // );
 
   return (
     <div className="profile-page">
