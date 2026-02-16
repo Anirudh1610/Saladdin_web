@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Calendar, TrendingUp, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import './Styles/ProfilePage.css'
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState('orders');
@@ -15,15 +15,15 @@ const ProfilePage = () => {
     profileImage: null,
   };
 
-  const healthMetrics = {
-    weight: '70 kg',
-    height: '175 cm',
-    bmi: '22.9',
-    dietaryGoal: 'Weight Management',
-    allergies: ['Nuts', 'Dairy'],
-    dailyCalories: '1800 kcal',
-    waterIntake: '2.5 L',
-  };
+  // const healthMetrics = {
+  //   weight: '70 kg',
+  //   height: '175 cm',
+  //   bmi: '22.9',
+  //   dietaryGoal: 'Weight Management',
+  //   allergies: ['Nuts', 'Dairy'],
+  //   dailyCalories: '1800 kcal',
+  //   waterIntake: '2.5 L',
+  // };
 
   const currentOrders = [
     {
@@ -116,10 +116,10 @@ const ProfilePage = () => {
   //   benefits: ['20 bowls per month', 'Free delivery', 'Priority consultation'],
   // };
 
-  const consultationHistory = [
-    { id: 1, date: '2025-01-03', doctor: 'Dr. Sarah Miller', topic: 'Dietary Planning', status: 'Completed' },
-    { id: 2, date: '2024-12-15', doctor: 'Dr. James Wilson', topic: 'Weight Management', status: 'Completed' },
-  ];
+  // const consultationHistory = [
+  //   { id: 1, date: '2025-01-03', doctor: 'Dr. Sarah Miller', topic: 'Dietary Planning', status: 'Completed' },
+  //   { id: 2, date: '2024-12-15', doctor: 'Dr. James Wilson', topic: 'Weight Management', status: 'Completed' },
+  // ];
 
   const renderPersonalInfo = () => (
     <>
