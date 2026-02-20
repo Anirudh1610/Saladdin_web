@@ -37,6 +37,13 @@
   align-items: start;
 }
 
+@media (max-width: 1024px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
+}
+
 /* Checkout Form */
 .checkout-form {
   background: white;
@@ -415,6 +422,7 @@
 @media (max-width: 1024px) {
   .checkout-layout {
     grid-template-columns: 1fr;
+    padding: 0 20px;
   }
 
   .order-summary {
@@ -425,31 +433,34 @@
 
 @media (max-width: 768px) {
   .checkout-page {
-    padding: 1rem 0;
+    padding: 40px 0;
   }
 
   .checkout-header h1 {
     font-size: 2rem;
+    text-align: center;
   }
 
   .checkout-form {
     padding: 1.5rem;
   }
 
-  .progress-steps {
-    margin-bottom: 2rem;
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .step-label {
-    display: none;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
+    display: none; /* Hide labels if they overlap too much */
   }
 
   .button-group {
     flex-direction: column;
+    gap: 10px;
+  }
+
+  .button-group button {
+    width: 100%;
   }
 
   .order-success {

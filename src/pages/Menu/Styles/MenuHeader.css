@@ -65,23 +65,25 @@
 }
 
 .vegetables-decoration {
-  width: 120px;
+  position: absolute;
+  top: 50%;
+  right: -5%;
+  transform: translateY(-50%);
+  width: 450px;
   height: auto;
-  bottom: -95%;
-  left: 3%;
-  opacity: 0.9;
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* Responsive Styles */
 @media (max-width: 1200px) {
   .fruits-decoration {
-    width: 240px;
-    right: 2%;
+    width: 350px;
+    left: -5%;
   }
-
   .vegetables-decoration {
-    width: 220px;
-    left: 2%;
+    width: 350px;
+    right: -5%;
   }
 }
 
@@ -125,13 +127,20 @@
   }
 
   .fruits-decoration {
-    width: 140px;
-    opacity: 0.7;
+    width: 200px;
+    left: -30px;
+    top: -20px;
+    transform: rotate(-15deg);
+    opacity: 0.6;
   }
 
   .vegetables-decoration {
-    width: 130px;
-    opacity: 0.7;
+    width: 200px;
+    right: -30px;
+    bottom: -20px;
+    top: auto;
+    transform: rotate(15deg);
+    opacity: 0.6;
   }
 }
 
@@ -149,15 +158,11 @@
   }
 
   .fruits-decoration {
-    width: 100px;
-    opacity: 0.6;
-    top: 5%;
+    width: 150px;
   }
 
   .vegetables-decoration {
-    width: 90px;
-    opacity: 0.6;
-    bottom: 2%;
+    width: 150px;
   }
 }
 

@@ -66,20 +66,21 @@
   width: 40px;
   height: 40px;
   background: transparent;
-  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
   text-decoration: none;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 
-.social-icon:hover {
-  background: transparent;
-  transform: translateY(-2px);
-  color: #4A7C59;
+.social-icon svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+.social-icon:hover svg {
+  color: #4A7C59 !important;
+  stroke: #4A7C59 !important;
 }
 
 /* Middle Section */
@@ -155,6 +156,11 @@
   color: #4A7C59;
 }
 
+/* Mobile Only Bottom */
+.mobile-only-bottom {
+  display: none;
+}
+
 /* Background Text */
 .footer-background-wrapper {
   width: 100%;
@@ -179,7 +185,7 @@
 }
 
 /* Footer Bottom */
-.footer-bottom {
+.footer-container .footer-bottom {
   text-align: center;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
@@ -219,51 +225,208 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .footer-content {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
   }
 
-  .footer-right {
-    justify-content: flex-start;
-  }
-
-  .footer-nav {
-    align-items: flex-start;
-  }
-
-  .footer-background-text {
-    font-size: 180px;
+  .footer-middle {
+    display: none; /* Hide middle features on small desktops/tablets if needed, or keep them */
   }
 }
 
 @media (max-width: 768px) {
   .footer {
-    padding: 3rem 0 1.5rem;
+    padding: 2rem 0 0; /* Removed bottom padding */
+    min-height: auto;
   }
 
   .footer-container {
-    padding: 0 2rem;
+    padding: 0 1.5rem 0; /* Removed bottom padding */
+    margin-bottom: 0;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-bottom: 7rem; /* Increased margin to push links higher up from the bottom */
+    text-align: left;
+  }
+
+  .footer-left {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+      "logo logo"
+      "tagline social";
+    gap: 1rem;
+    align-items: flex-end;
+    width: 100%;
+  }
+
+  .footer-logo {
+    grid-area: logo;
+    width: 150px;
+    height: auto;
+    justify-self: flex-start;
+    margin-bottom: 0.5rem;
   }
 
   .footer-tagline {
-    font-size: 36px;
+    grid-area: tagline;
+    font-size: 24px;
+    margin: 0;
+    line-height: 1.1;
+    text-align: left;
   }
 
-  .footer-nav a {
+  .footer-social {
+    grid-area: social;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-self: flex-end;
+  }
+
+  .social-label {
+    font-size: 11px;
+    margin-bottom: 0.25rem;
+    color: #999;
+  }
+
+  .social-icons {
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  .social-icon {
+    width: 32px;
+    height: 32px;
     font-size: 16px;
   }
 
+  .footer-middle {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 0;
+  }
+
+  .footer-feature {
+    justify-content: flex-start;
+    text-align: left;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .feature-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .footer-feature p {
+    font-size: 13px;
+    line-height: 1.5;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .footer-right {
+    justify-content: center;
+    padding-top: 0.5rem;
+  }
+
+  .footer-nav {
+    align-items: center;
+    justify-items: center;
+    padding-top: 1.5rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-nav a {
+    font-size: 14px;
+    text-align: center;
+    padding: 0.25rem;
+    width: 100%;
+  }
+
+  .footer-container .footer-bottom {
+    display: none !important;
+  }
+
+  .mobile-only-bottom {
+    display: flex;
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    background: #000000;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    width: fit-content;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin: 0;
+    white-space: nowrap;
+    border-radius: 4px 4px 0 0;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .mobile-only-bottom a {
+    font-size: 11px;
+    margin: 0;
+    padding: 0;
+    color: #999999;
+    text-decoration: none;
+  }
+
+  .footer-background-wrapper {
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    overflow: visible;
+  }
+
   .footer-background-text {
-    font-size: 120px;
+    width: 105vw !important;
+    min-width: 105vw !important;
+    max-width: none !important;
+    height: auto;
+    min-height: 151.89px; /* Added min-height to make it taller (roughly 60% of original desktop height) */
+    object-fit: fill; /* Allows stretching to height if needed */
+    opacity: 1 !important;
+    filter: brightness(4) !important;
+    display: block;
+    margin: 0;
+  }
+
+  .separator {
+    display: inline;
+    opacity: 0.4;
   }
 }
 
 @media (max-width: 480px) {
-  .footer-tagline {
-    font-size: 28px;
-  }
-
-  .footer-background-text {
-    font-size: 80px;
+  .footer-nav {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
   }
 }
+

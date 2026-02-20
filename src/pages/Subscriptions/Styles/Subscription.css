@@ -14,7 +14,7 @@
   margin-top: 60px;
 }
 
-.goals-section h2 {
+.goals-section h2, .plans-section h2 {
   text-align: center;
   margin-bottom: 2rem;
   font-family: 'Manrope', sans-serif;
@@ -22,6 +22,18 @@
   font-size: 48px;
   line-height: 100%;
   letter-spacing: -0.32px;
+}
+
+@media (max-width: 1024px) {
+  .goals-section h2, .plans-section h2 {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .goals-section h2, .plans-section h2 {
+    font-size: 28px;
+  }
 }
 
 .goals-grid {
@@ -415,6 +427,7 @@
   border-radius: 40px;
   outline: none;
   -webkit-appearance: none;
+  appearance: none;
   background: #FEFFDC;
   border: 1px solid rgba(0, 0, 0, 0.1);
   position: relative;
@@ -422,6 +435,7 @@
 
 .calorie-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
+  appearance: none;
   width: 24px;
   height: 24px;
   border-radius: 12px;
@@ -653,10 +667,78 @@
 
   .summary-card {
     position: static;
+    margin-top: 2rem;
   }
 
   .goals-grid,
   .plans-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  .goals-section h2, .plans-section h2 {
+    font-size: 36px;
+  }
+
+  .preferences-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .preferences-form {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .subscription-page {
+    padding-top: 20px;
+  }
+
+  .goals-section h2,
+  .plans-section h2,
+  .benefits-section h2,
+  .subscription-header h1 {
+    font-size: 32px !important;
+    margin-bottom: 1.5rem;
+    padding: 0 20px;
+  }
+
+  .goal-card h3 {
+    font-size: 24px;
+  }
+
+  .plan-price, .currency, .amount {
+    font-size: 32px;
+    line-height: normal;
+  }
+  
+  .period {
+    font-size: 18px;
+  }
+
+  .goal-card p {
+    font-size: 16px;
+  }
+
+  .benefit-item h4 {
+    font-size: 20px;
+  }
+
+  .goals-section,
+  .plans-section,
+  .benefits-section {
+    margin-bottom: 3rem;
+    padding: 0 15px;
+  }
+
+  .summary-row.total {
+    margin-top: 30px;
+    padding: 15px;
+  }
+
+  .summary-row.total strong {
+    font-size: 20px;
   }
 }

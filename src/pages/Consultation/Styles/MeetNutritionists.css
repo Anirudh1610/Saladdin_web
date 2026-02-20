@@ -182,30 +182,33 @@
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .nutritionists-grid {
-    flex-direction: column;
-    max-width: 600px;
-  }
-  
   .section-title {
     font-size: 36px;
-    line-height: 48px;
+    line-height: 1.2;
+    margin-bottom: 24px;
   }
-}
-
-@media (max-width: 768px) {
-  .section-title {
-    font-size: 32px;
-    line-height: 40px;
+  
+  .nutritionists-grid {
+    gap: 20px;
   }
   
   .nutritionist-name {
     font-size: 24px;
-    line-height: 32px;
+    line-height: 1.2;
   }
-  
-  .nutritionist-specialty {
-    font-size: 16px;
-    line-height: 20px;
+}
+
+@media (max-width: 768px) {
+  .nutritionists-grid {
+    flex-direction: column;
+    padding: 0 10px;
+  }
+
+  .nutritionist-card {
+    width: 100%;
+  }
+
+  .section-title {
+    font-size: 28px;
   }
 }

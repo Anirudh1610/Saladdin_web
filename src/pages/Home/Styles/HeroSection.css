@@ -4,7 +4,7 @@
   background: #FEFFDC;
   padding-top: 100px;
   position: relative;
-  overflow: visible;
+  overflow: hidden; /* Changed from visible to prevent horizontal scroll from oversized mobile images */
   font-family: 'Manrope', sans-serif;
   z-index: 1;
 }
@@ -108,7 +108,9 @@
   justify-content: center;
   align-items: center;
   width: 600px;
-  height: 600px;
+  max-width: 100%;
+  aspect-ratio: 1/1;
+  height: auto;
 }
 
 .hero-image-stack {
@@ -122,10 +124,10 @@
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-0.84deg);
-  width: 453.63619926681906px;
-  height: 453.63619926681906px;
+  width: 75.6%;
+  height: auto;
   opacity: 1;
-  z-index: 1;
+  z-index: 3; /* Moved to top so bowl doesn't overlap it */
 }
 
 .bowl-svg {
@@ -133,9 +135,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: auto;
+  width: 65%; /* Reduced from 80% to restore original visual scale */
   height: auto;
-  max-width: 80%;
   z-index: 2;
 }
 
@@ -144,10 +145,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-12deg);
-  width: 490px;
-  height: 490px;
+  width: 81.6%;
+  height: auto;
   opacity: 1;
-  z-index: 0;
+  z-index: 1; /* Mask group at the bottom */
 }
 
 /* Decorative Elements */
@@ -217,47 +218,114 @@
   box-shadow: 0 6px 16px rgba(45, 95, 63, 0.4);
 }
 
-/* Responsive Design */
+/* Dynamic Responsive Styles */
+@media (max-width: 1200px) {
+  .hero-container {
+    padding: 0 2rem;
+  }
+  
+  .hero-title {
+    font-size: 52px;
+  }
+}
+
 @media (max-width: 1024px) {
   .hero-content {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 3rem;
+    padding-top: 2rem;
+    text-align: center;
+  }
+
+  .hero-text {
+    padding-right: 0;
+    order: 1;
+  }
+
+  .hero-image {
+    order: 2;
+    width: 100%;
+    max-width: 500px;
+    margin: 2rem auto 0;
+    position: relative;
+    transform: scale(1.15); /* Scale entire unit while keeping it centered */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-buttons {
+    justify-content: center;
   }
 
   .hero-title {
-    font-size: 3.5rem;
-  }
-
-  .bowl-circle {
-    width: 400px;
-    height: 400px;
+    font-size: 48px;
   }
 }
 
 @media (max-width: 768px) {
+  .hero-section {
+    padding-top: 80px;
+    min-height: auto;
+    padding-bottom: 4rem;
+  }
+
   .hero-container {
     padding: 0 1.5rem;
   }
 
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 36px;
+    margin-bottom: 1rem;
   }
 
   .hero-subtitle {
-    font-size: 1rem;
+    font-size: 16px;
+    margin-bottom: 2rem;
   }
 
   .hero-buttons {
     flex-direction: column;
-    align-items: stretch;
+    gap: 1.5rem;
   }
 
-  .bowl-circle {
-    width: 300px;
-    height: 300px;
+  .hero-image {
+    width: 100%;
+    max-width: 450px;
+    margin: 2rem auto 0;
+    position: relative;
+    transform: scale(1.2); /* Grow centered unit significantly on tablets */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .decoration {
-    font-size: 2rem;
+    display: none; /* Hide heavy decorations on small mobile for cleaner look */
+  }
+
+  .decoration.top-right,
+  .decoration.bottom-left {
+    display: block;
+    width: 60px;
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-container {
+    padding: 0 1rem;
+  }
+
+  .hero-title {
+    font-size: 32px;
+  }
+
+  .hero-image {
+    width: 100%;
+    max-width: 400px;
+    margin: 2rem auto 0;
+    position: relative;
+    transform: scale(1.3); /* Make the radius and images look even bigger on small phones while centered */
   }
 }

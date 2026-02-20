@@ -76,24 +76,31 @@
 }
 
 @media (max-width: 768px) {
+  .salad-grid-section {
+    padding: 20px;
+  }
+
   .salad-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr !important; /* Stack everything on mobile */
+    gap: 30px;
   }
 
   .floating-cart-button {
     bottom: 20px;
-    right: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    width: fit-content;
   }
 
   .view-cart-btn {
     padding: 14px 24px;
     font-size: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .salad-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }

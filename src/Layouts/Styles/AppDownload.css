@@ -155,78 +155,91 @@
 
 @media (max-width: 768px) {
   .app-download-section {
-    padding: 60px 20px;
+    padding: 4rem 20px 0; /* No bottom padding so image can touch footer */
   }
 
   .app-download-content {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 0; /* Removed gap so image can touch content/footer */
+    padding-top: 0;
+  }
+
+  .ellipse-decoration {
+    display: none; /* Removed ellipses as requested */
   }
 
   .app-decorations {
-    top: -30px;
-    gap: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
   }
 
-  .decoration-dot {
-    width: 4px;
-    height: 4px;
-  }
-
-  .decoration-icon {
-    width: 24px;
-    height: 24px;
+  .decoration-group {
+    width: auto;
+    height: auto;
+    max-width: 100%;
   }
 
   .app-download-title {
     font-size: 40px;
+    text-align: center;
   }
 
   .app-download-description {
     font-size: 14px;
     max-width: 100%;
+    text-align: center;
+    margin-bottom: 2rem;
   }
 
   .app-download-buttons {
     max-width: 100%;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 0;
+    border-bottom: none; /* Ensure any divider is gone */
   }
 
   .app-mockups {
-    min-height: 350px;
+    min-height: auto;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Image touches bottom */
   }
 
   .phone-mockups-image {
-    max-width: 400px;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: -10px; /* Slight offset to ensure it overlaps footer seam if needed */
   }
 }
 
 @media (max-width: 480px) {
   .app-download-section {
-    padding: 40px 16px;
+    padding: 3rem 16px 0; /* Reduced top padding, kept bottom 0 */
   }
 
-  .app-download-title {
-    font-size: 32px;
-  }
-
-  .app-download-btn {
-    padding: 14px 20px;
-  }
-
-  .store-logo {
-    width: 24px;
-    height: 24px;
-  }
-
-  .btn-label {
-    font-size: 13px;
+  .app-download-buttons {
+    margin-bottom: 1.5rem;
   }
 
   .app-mockups {
-    min-height: 300px;
+    margin-top: 1rem;
   }
 
   .phone-mockups-image {
-    max-width: 100%;
+    width: 110%; /* Makes image bigger on small phones */
+    max-width: none;
+    margin-left: -5%; /* Centers the oversized image */
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Instagram, Linkedin } from 'lucide-react';
 import '../Styles/Footer.css';
 import Logo from '../../Assets/Logo.svg';
 import StarIcon from '../../Assets/Footer/Star.svg';
@@ -21,14 +22,11 @@ const Footer = () => {
             <div className="footer-social">
               <p className="social-label">Social Links:</p>
               <div className="social-icons">
-                <a href="https://wa.me/" className="social-icon whatsapp" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
-                  <i className="fab fa-whatsapp"></i>
-                </a>
                 <a href="https://instagram.com" className="social-icon instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-                  <i className="fab fa-instagram"></i>
+                  <Instagram size={20} />
                 </a>
-                <a href="https://facebook.com" className="social-icon facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-                  <i className="fab fa-facebook-f"></i>
+                <a href="https://linkedin.com" className="social-icon linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                  <Linkedin size={20} />
                 </a>
               </div>
             </div>
@@ -63,17 +61,24 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Large Background Text */}
-        <div className="footer-background-wrapper">
-          <img src={BackgroundText} alt="" className="footer-background-text" />
-        </div>
-
         {/* Bottom Section */}
         <div className="footer-bottom">
           <Link to="/terms">Terms & Conditions</Link>
           <span className="separator">|</span>
           <Link to="/privacy">Privacy policy</Link>
         </div>
+      </div>
+
+      {/* Large Background Text moved outside container */}
+      <div className="footer-background-wrapper">
+        <img src={BackgroundText} alt="" className="footer-background-text" />
+      </div>
+
+      {/* Re-rendering bottom section outside for absolute positioning relative to footer on mobile */}
+      <div className="footer-bottom mobile-only-bottom">
+        <Link to="/terms">Terms & Conditions</Link>
+        <span className="separator">|</span>
+        <Link to="/privacy">Privacy policy</Link>
       </div>
     </footer>
   );

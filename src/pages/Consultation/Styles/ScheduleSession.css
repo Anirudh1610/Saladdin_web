@@ -17,7 +17,8 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  width: 450px;
+  width: 40%;
+  min-width: 320px;
 }
 
 .schedule-title {
@@ -387,29 +388,50 @@ select.form-input {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .schedule-container {
+    flex-direction: column;
+    gap: 32px;
+  }
+  
+  .schedule-left {
+    width: 100%;
+    min-width: unset;
+  }
+  
   .schedule-title {
-    font-size: 36px;
-    line-height: 48px;
+    font-size: 32px;
+    line-height: 1.2;
+    text-align: center;
   }
 
-  .session-heading {
-    font-size: 20px;
-    line-height: 28px;
+  .session-options {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
   }
 
-  .form-row {
+  .session-card {
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .schedule-session {
+    padding: 30px 15px;
+  }
+  
+  .session-options {
     flex-direction: column;
-    gap: 20px;
+    align-items: stretch;
   }
 
-  .existing-consultation-box {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .arrow-icon {
-    align-self: flex-end;
+  .session-card {
+    max-width: none;
+    padding: 12px;
   }
 }
 

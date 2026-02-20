@@ -10,14 +10,18 @@
   gap: 20px;
   margin-top: 60px;
   margin-bottom: 100px;
-  padding: 0 120px;
+  padding: 0 20px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Base Bowl Section - Left Container */
 .base-bowl-section {
   box-sizing: border-box;
-  width: 860px;
-  height: 644px;
+  width: 68%;
+  min-width: 300px;
+  min-height: 644px;
   background: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 20px;
@@ -110,8 +114,9 @@
 /* Addons Sidebar - Right Container */
 .addons-sidebar {
   box-sizing: border-box;
-  width: 400px;
-  height: 644px;
+  width: 32%;
+  min-width: 320px;
+  min-height: 644px;
   background: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 20px;
@@ -558,7 +563,7 @@
 
 @media (max-width: 1400px) {
   .build-bowl-content {
-    padding: 0 60px;
+    padding: 0 40px;
   }
 }
 
@@ -566,12 +571,123 @@
   .build-bowl-content {
     flex-direction: column;
     align-items: center;
-    padding: 0 40px;
+    padding: 0 20px;
+    margin-top: 30px;
   }
   
   .base-bowl-section,
   .addons-sidebar {
     width: 100%;
     max-width: 860px;
+    min-width: 0;
+    height: auto;
+    min-height: auto;
+  }
+
+  .selected-bowl-content {
+    height: auto;
+    max-height: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .build-bowl-content {
+    padding: 0 15px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    gap: 30px;
+  }
+
+  .base-bowl-section {
+    min-height: 400px;
+    padding: 30px 15px;
+  }
+
+  .bowl-center-content {
+    width: 100%;
+  }
+
+  .bowl-text h2 {
+    font-size: 20px;
+  }
+
+  .bowl-header-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 15px;
+  }
+
+  .bowl-info {
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .change-base-btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+
+  .ingredient-chips, .addon-chips {
+    gap: 10px;
+  }
+
+  .ingredient-chip, .addon-chip {
+    padding: 12px;
+    font-size: 14px;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .section-header h3 {
+    font-size: 14px;
+  }
+
+  .addon-item {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 10px;
+  }
+
+  .addon-item-content {
+    align-items: flex-start;
+  }
+
+  .add-addon-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .build-your-bowl-page {
+    padding-top: 70px;
+  }
+
+  .addon-toggle {
+    margin-bottom: 15px;
+  }
+
+  .toggle-btn {
+    font-size: 13px;
+    padding: 0 5px;
+  }
+
+  .available-addons-list {
+    max-height: 350px;
+  }
+
+  .save-bowl-btn {
+    padding: 15px;
+    font-size: 15px;
+    position: sticky;
+    bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    z-index: 10;
   }
 }
