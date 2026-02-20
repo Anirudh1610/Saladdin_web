@@ -400,9 +400,6 @@ const ProfilePage = () => {
                     </div>
                   ))}
                 </div>
-
-                <div className="bowl-divider"></div>
-
                 <div className="ingredients-section">
                   <span className="ingredients-label">Core Ingredients</span>
                   <div className="ingredients-list">
@@ -411,7 +408,6 @@ const ProfilePage = () => {
                     ))}
                   </div>
                 </div>
-
                 <div className="ingredients-section">
                   <span className="ingredients-label">Add-On Ingredients</span>
                   <div className="ingredients-list">
@@ -423,7 +419,6 @@ const ProfilePage = () => {
                     ))}
                   </div>
                 </div>
-
                 <button className="bowl-add-to-cart-btn">
                   Add to Cart
                 </button>

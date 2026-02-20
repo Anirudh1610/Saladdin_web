@@ -6,6 +6,12 @@ const SaladCard = ({ salad, onAddToCart }) => {
   return (
     <Link to={`/salad/${salad.id}`} className="salad-card-link">
       <div className="salad-card">
+        {salad.vegTag && (
+          <div className="veg-tag">
+            <div className="veg-icon"></div>
+            <span className="veg-label">Veg</span>
+          </div>
+        )}
         <div className="salad-card-inner">
           {/* Top Section: Image + Content */}
           <div className="salad-card-top">
@@ -20,12 +26,6 @@ const SaladCard = ({ salad, onAddToCart }) => {
                     <span key={index} className="salad-tag">{tag}</span>
                   ))}
                 </div>
-                {salad.vegTag && (
-                  <div className="veg-tag">
-                    <div className="veg-icon"></div>
-                    <span className="veg-label">Veg</span>
-                  </div>
-                )}
               </div>
 
               <div className="salad-info-content">

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
 import '../Styles/Navbar.css';
 import { ReactComponent as NavbarLogo } from '../../Assets/Navbar/Navbar_logo.svg';
-import { ReactComponent as AppStoreLogo } from '../../Assets/Navbar/app-store 1.svg';
+import { ReactComponent as AppStoreLogo } from '../../Assets/Navbar/app-store.svg';
 import { ReactComponent as GooglePlayLogo } from '../../Assets/Navbar/google-play-store-icon 1.svg';
 import { ReactComponent as AccountIcon } from '../../Assets/Navbar/Vector.svg';
 import AuthModal from '../../pages/Profile/Components/AuthModal';
@@ -14,6 +13,8 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
+      {/* Backdrop - click outside to close */}
+      {isOpen && <div className="nav-backdrop" onClick={() => setIsOpen(false)} />}
       <div className="navbar-container">
         <div className="nav-content">
           {/* Left Section - Logo + Navigation */}
@@ -21,10 +22,8 @@ const Navbar = () => {
             <Link to="/" className="logo">
               <NavbarLogo className="logo-image" />
             </Link>
-
             <div className="nav-separator"></div>
-
-            <div className={`nav-links ${isOpen ? 'active' : ''}`}>
+            <div className="nav-links">
               <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
               <NavLink to="/menu" onClick={() => setIsOpen(false)}>Menu</NavLink>
               <NavLink to="/build-your-bowl" onClick={() => setIsOpen(false)}>Build your bowl</NavLink>
@@ -33,7 +32,6 @@ const Navbar = () => {
               <NavLink to="/blogs" onClick={() => setIsOpen(false)}>Blogs</NavLink>
             </div>
           </div>
-
           {/* Right Section - Mobile App + Account */}
           <div className="nav-right">
             <div className="mobile-app-container">
@@ -49,7 +47,6 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
-
             <button 
               className="account-btn" 
               onClick={() => setIsAuthModalOpen(true)}
@@ -58,14 +55,34 @@ const Navbar = () => {
               <span>Account</span>
             </button>
           </div>
-
           {/* Mobile Toggle */}
           <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            <span className={`hamburger-line ${isOpen ? 'open' : ''}`}></span>
+            <span className={`hamburger-line ${isOpen ? 'open' : ''}`}></span>
+            <span className={`hamburger-line ${isOpen ? 'open' : ''}`}></span>
           </button>
         </div>
+        {/* Mobile nav overlay, always rendered, toggled via class */}
+        <div className={`nav-mobile-overlay ${isOpen ? 'mobile-menu-open' : ''}`}>
+          <NavLink className="nav-mobile-item" to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
+          <NavLink className="nav-mobile-item" to="/menu" onClick={() => setIsOpen(false)}>Menu</NavLink>
+          <NavLink className="nav-mobile-item" to="/build-your-bowl" onClick={() => setIsOpen(false)}>Build your bowl</NavLink>
+          <NavLink className="nav-mobile-item" to="/subscription" onClick={() => setIsOpen(false)}>Subscription</NavLink>
+          <NavLink className="nav-mobile-item" to="/consultation" onClick={() => setIsOpen(false)}>Consultation</NavLink>
+          <NavLink className="nav-mobile-item" to="/blogs" onClick={() => setIsOpen(false)}>Blogs</NavLink>
+          <div className="mobile-app-links nav-mobile-item">
+            <span className="mobile-app-text">Download App:</span>
+            <div className="app-store-icons">
+              <a href="https://www.apple.com/app-store/" className="app-store-link" aria-label="Download on App Store" target="_blank" rel="noopener noreferrer">
+                <AppStoreLogo className="app-store-icon" />
+              </a>
+              <a href="https://play.google.com/store" className="app-store-link" aria-label="Get it on Google Play" target="_blank" rel="noopener noreferrer">
+                <GooglePlayLogo className="google-play-icon" />
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-
       {/* Auth Modal */}
       <AuthModal 
         isOpen={isAuthModalOpen} 
