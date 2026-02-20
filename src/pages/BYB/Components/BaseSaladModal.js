@@ -135,7 +135,14 @@ const BaseSaladModal = ({ isOpen, onClose, onSelectSalad }) => {
         <div className="modal-content">
           <div className="salads-grid">
             {filteredSalads.map(salad => (
-              <div key={salad.id} onClick={() => onSelectSalad(salad)}>
+              <div 
+                key={salad.id} 
+                onClickCapture={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onSelectSalad(salad);
+                }}
+              >
                 <SaladCard salad={salad} />
               </div>
             ))}

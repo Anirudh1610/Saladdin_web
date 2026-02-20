@@ -35,10 +35,6 @@ const MainLayout = ({ children }) => {
       title: 'Health & Wellness Blog',
       subtitle: 'Expert insights, tips, and recipes from our team of nutritionists and health professionals'
     },
-    '/profile': {
-      title: 'My Profile',
-      subtitle: 'Manage your account, orders, and preferences'
-    }
   };
 
   // Get current page header based on pathname

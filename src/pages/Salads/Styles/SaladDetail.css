@@ -29,6 +29,18 @@
   margin-bottom: 3rem;
 }
 
+@media (max-width: 1024px) {
+  .detail-header {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 20px;
+  }
+
+  .salad-hero {
+    position: static;
+  }
+}
+
 .salad-hero {
   position: sticky;
   top: 100px;
@@ -41,6 +53,11 @@
   padding: 3rem;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.salad-image-large {
+  font-size: 8rem;
+  padding: 2rem;
 }
 
 .salad-main-info h1 {
@@ -77,6 +94,11 @@
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
+}
+
+.nutrition-summary {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 }
 
 .nutrition-item {
@@ -236,5 +258,47 @@
   .action-section {
     flex-direction: column;
     align-items: stretch;
+  }
+}
+
+@media (max-width: 768px) {
+  .salad-detail {
+    padding: 30px 0;
+  }
+
+  .salad-image-large {
+    font-size: 8rem;
+    padding: 2rem;
+  }
+
+  .nutrition-summary {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .action-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .detail-tabs {
+    overflow-x: auto;
+    width: 100vw;
+    margin-left: -20px;
+    padding-left: 20px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .detail-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-btn {
+    padding: 1rem;
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 }

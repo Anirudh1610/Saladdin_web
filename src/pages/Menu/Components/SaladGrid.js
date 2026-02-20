@@ -4,7 +4,7 @@ import '../Styles/SaladGrid.css';
 import saladImage1 from '../../../Assets/Menu/Salad Grid/Rectangle 11.svg';
 import saladImage2 from '../../../Assets/Menu/Salad Grid/Rectangle 11 (1).svg';
 import saladImage3 from '../../../Assets/Menu/Salad Grid/Rectangle 11 (2).svg';
-import saladImage4 from '../../../Assets/Menu/Salad Grid/2.jpg';
+import saladImage4 from '../../../Assets/Menu/Salad Grid/Rectangle 11.svg';
 
 const SaladGrid = () => {
   const salads = [

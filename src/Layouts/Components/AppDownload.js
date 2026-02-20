@@ -3,8 +3,8 @@ import '../Styles/AppDownload.css';
 import AppStoreButton from '../../Assets/Components/AppStore.svg';
 import PlayStoreButton from '../../Assets/Components/Playstore.svg';
 import DownloadPic from '../../Assets/Components/DownloadPic.svg';
-import FruitIcon1 from '../../Assets/Components/Ellipse 4.svg';
-import FruitIcon2 from '../../Assets/Components/Group.svg';
+import Highlight from '../../Assets/Components/Ellipse 4.svg';
+import FruitIcon from '../../Assets/Components/Group.svg';
 
 const AppDownload = () => {
   return (
@@ -13,7 +13,7 @@ const AppDownload = () => {
         <div className="app-download-content">
           {/* Decorative elements */}
           <div className="app-decorations">
-            <img src={FruitIcon2} alt="" className="decoration-group" />
+            <img src={FruitIcon} alt="" className="decoration-group" />
           </div>
 
           {/* Left content */}
@@ -38,9 +38,9 @@ const AppDownload = () => {
 
           {/* Right content - Phone mockups */}
           <div className="app-mockups">
-            <img src={FruitIcon1} alt="" className="ellipse-decoration ellipse-1" />
-            <img src={FruitIcon1} alt="" className="ellipse-decoration ellipse-2" />
-            <img src={FruitIcon1} alt="" className="ellipse-decoration ellipse-3" />
+            <img src={Highlight} alt="" className="ellipse-decoration ellipse-1" />
+            <img src={Highlight} alt="" className="ellipse-decoration ellipse-2" />
+            <img src={Highlight} alt="" className="ellipse-decoration ellipse-3" />
             <img src={DownloadPic} alt="Saladdin App Mockups" className="phone-mockups-image" />
           </div>
         </div>

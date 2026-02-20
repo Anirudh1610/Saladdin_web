@@ -1,7 +1,7 @@
 .profile-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  padding: 2rem 0;
+  padding: 6rem 0 2rem 0;
   position: relative;
 }
 
@@ -516,7 +516,7 @@
   height: 0px;
   opacity: 0.1;
   border: 0.5px solid #000000;
-  margin: 8px 0;
+  margin: 12px 0;
 }
 
 .order-status-row {
@@ -966,7 +966,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .profile-page {
-    padding: 1rem 0;
+    padding: 5rem 0 1rem 0;
   }
 
   .back-button {
@@ -1114,7 +1114,9 @@
   align-items: center;
   padding: 0;
   gap: 8px;
-  margin-bottom: 2px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
 }
 
 .bowl-id-section {
@@ -1148,7 +1150,8 @@
 .bowl-actions {
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .bowl-action-btn {
@@ -1156,17 +1159,18 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 12px 24px;
+  padding: clamp(6px, 1.5vw, 12px) clamp(10px, 2.5vw, 24px);
   border: 1px solid rgba(56, 102, 65, 0.2);
   border-radius: 4px;
   background: transparent;
   font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 800;
-  font-size: 14px;
-  line-height: 19px;
+  font-size: clamp(11px, 1.5vw, 14px);
+  line-height: 1.4;
   color: #386641;
   cursor: pointer;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .bowl-action-btn:hover {
@@ -1243,13 +1247,15 @@
   height: 0px;
   opacity: 0.1;
   border: 0.5px solid #000000;
-  margin: 0;
+  margin: 12px 0;
 }
 
 .nutrition-section {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .nutrition-grid {
@@ -1258,6 +1264,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 4px;
+  padding: 0;
+  margin: 0;
 }
 
 .nutrition-item {
@@ -1265,7 +1273,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   flex: 1;
 }
 
@@ -1273,7 +1281,7 @@
   font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 800;
   font-size: 12px;
-  line-height: 16px;
+  line-height: 14px;
   text-align: center;
   color: #000000;
 }
@@ -1284,13 +1292,16 @@
   font-size: 10px;
   line-height: 12px;
   text-align: center;
-  color: #000000;
+  color: #666666;
+  padding-bottom: 8px;
 }
 
 .ingredients-section {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .ingredients-label {
@@ -1299,6 +1310,9 @@
   font-size: 10px;
   line-height: 12px;
   color: #000000;
+  margin-bottom: 0px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .ingredients-list {
@@ -1306,10 +1320,13 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: 8px;
+  margin-top: 0px;
+  padding-top: 0px;
+  padding-bottom: 8px;
 }
 
 .ingredient-chip {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   align-items: center;
   padding: 2px 12px 2px 8px;
@@ -1317,10 +1334,11 @@
   border-radius: 4px;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 13px;
   line-height: 19px;
   letter-spacing: -0.32px;
   color: #000000;
+  width: fit-content;
 }
 
 .ingredient-chip.core {
@@ -1346,6 +1364,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-top: 12px;
   padding: 12px 24px;
   gap: 10px;
   width: 100%;
@@ -1365,4 +1384,31 @@
   background: #e8dcc0;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .bowl-actions {
+    gap: 6px;
+  }
+
+  .bowl-action-btn {
+    padding: 5px 12px;
+    font-size: 11px;
+  }
+
+  .ingredient-chip {
+    padding: 2px 8px 2px 6px;
+    font-size: 11px;
+    line-height: 14px;
+    border-radius: 3px;
+  }
+
+  .ingredient-amount {
+    font-size: 10px;
+    line-height: 13px;
+  }
+
+  .ingredients-list {
+    gap: 6px;
+  }
 }
