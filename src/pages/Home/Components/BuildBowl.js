@@ -98,13 +98,6 @@ const BuildBowl = () => {
           ))}
         </div>
 
-        {/* Build Your Bowl Button */}
-        <div className="build-cta">
-          <Link to="/build-your-bowl" className="btn-build-now">
-            <img src={Frame8Button} alt="Build Your Bowl" className="build-button-img" />
-          </Link>
-        </div>
-
         {/* Vegetable Salad Bowl Showcase */}
         <div className="bowl-showcase">
           <img src={Group19} alt="Decoration" className="group-decoration group-19" />
@@ -113,6 +106,13 @@ const BuildBowl = () => {
           <img src={Group22} alt="Decoration" className="group-decoration group-22" />
           <img src={VegetableSaladBowl} alt="Fresh Vegetable Salad Bowl" className="vegetable-salad-image" />
           <img src={MaskGroup} alt="Mask Group" className="mask-group-image" />
+        </div>
+
+        {/* Build Your Bowl Button */}
+        <div className="build-cta">
+          <Link to="/build-your-bowl" className="btn-build-now">
+            <img src={Frame8Button} alt="Build Your Bowl" className="build-button-img" />
+          </Link>
         </div>
 
         {/* Handpicked Ingredients Section */}
