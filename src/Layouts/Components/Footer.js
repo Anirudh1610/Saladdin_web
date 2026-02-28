@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Linkedin } from 'lucide-react';
+import { Instagram } from 'lucide-react';
 import '../Styles/Footer.css';
 import Logo from '../../Assets/Logo.svg';
 import StarIcon from '../../Assets/Footer/Star.svg';
@@ -22,11 +22,8 @@ const Footer = () => {
             <div className="footer-social">
               <p className="social-label">Social Links:</p>
               <div className="social-icons">
-                <a href="https://instagram.com" className="social-icon instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.instagram.com/eatsalads.in" className="social-icon instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                   <Instagram size={20} />
-                </a>
-                <a href="https://linkedin.com" className="social-icon linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-                  <Linkedin size={20} />
                 </a>
               </div>
             </div>
