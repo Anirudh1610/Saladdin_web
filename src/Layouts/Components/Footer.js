@@ -52,7 +52,6 @@ const Footer = () => {
           <div className="footer-right">
             <nav className="footer-nav">
               <Link to="/">Home</Link>
-              <Link to="/about">About</Link>
               <Link to="/menu">Menu</Link>
               <Link to="/build-your-bowl">Build your bowl</Link>
               <Link to="/blogs">Blogs</Link>

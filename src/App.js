@@ -18,6 +18,7 @@ import BlogDetail from './pages/Blogs/Components/BlogDetail';
 import ProfilePage from './pages/Profile/ProfilePage';
 import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Cart/Components/Checkout';
+import FAQ from './pages/FAQ/FAQ';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/faq" element={<FAQ />} />
         </Routes>
       </MainLayout>
     </Router>

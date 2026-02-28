@@ -5,6 +5,7 @@ import Footer from './Components/Footer';
 import ViewCartButton from './Components/ViewCartButton';
 import PageHeader from './Components/PageHeader';
 import AppDownload from './Components/AppDownload';
+import './Styles/PageTransition.css';
 
 const MainLayout = ({ children }) => {
   const location = useLocation();
@@ -35,6 +36,10 @@ const MainLayout = ({ children }) => {
       title: 'Health & Wellness Blog',
       subtitle: 'Expert insights, tips, and recipes from our team of nutritionists and health professionals'
     },
+    '/faq': {
+      title: "Frequently Asked Questions",
+      subtitle: 'Healthy, delicious bowls made fresh every day so you can feel lighter, happier, and better.'
+    },
   };
 
   // Get current page header based on pathname
@@ -46,7 +51,7 @@ const MainLayout = ({ children }) => {
       {currentHeader && (
         <PageHeader title={currentHeader.title} subtitle={currentHeader.subtitle} />
       )}
-      <main>
+      <main key={location.pathname} className="page-transition">
         {children}
       </main>
       <AppDownload />
