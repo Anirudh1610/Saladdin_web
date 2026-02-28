@@ -62,7 +62,7 @@
   text-decoration: none;
   font-weight: 600;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
   display: inline-block;
 }
 
@@ -73,7 +73,8 @@
 }
 
 .btn-order:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px) scale(1.04);
+  filter: drop-shadow(0 6px 14px rgba(74, 124, 89, 0.35));
 }
 
 .btn-build {
@@ -88,7 +89,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all 0.3s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
 }
 
 .btn-build img {
@@ -98,7 +99,8 @@
 }
 
 .btn-build:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px) scale(1.04);
+  filter: drop-shadow(0 6px 14px rgba(74, 124, 89, 0.3));
 }
 
 /* Hero Image Section */
