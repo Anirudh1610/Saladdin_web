@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import './Styles/ProfilePage.css';
 import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
 import fallbackImage from '../../Assets/Menu/Salad Grid/Rectangle 11.svg';
 
 const API_BASE = `http://${window.location.hostname}:8000`;
@@ -12,6 +13,7 @@ const ProfilePage = () => {
   const [savedBowls, setSavedBowls] = useState([]);
   const [bowlsLoading, setBowlsLoading] = useState(false);
   const { user, session, loading, signOut } = useAuth();
+  const { addItem } = useCart();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -427,7 +429,10 @@ const ProfilePage = () => {
                     ))}
                   </div>
                 </div>
-                <button className="bowl-add-to-cart-btn">
+                <button
+                  className="bowl-add-to-cart-btn"
+                  onClick={() => addItem({ item_type: 'bowl', bowl_id: bowl.id })}
+                >
                   Add to Cart
                 </button>
               </div>

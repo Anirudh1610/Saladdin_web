@@ -65,7 +65,7 @@ const SaladCard = ({ salad, onAddToCart }) => {
 
             <div className="salad-card-footer">
               <button className="view-details-btn">View Details</button>
-              <button className="add-to-cart-btn" onClick={(e) => { e.preventDefault(); onAddToCart(salad.id); }}>
+              <button className="add-to-cart-btn" onClick={(e) => { e.preventDefault(); onAddToCart(salad); }}>
                 Add to Cart
               </button>
             </div>

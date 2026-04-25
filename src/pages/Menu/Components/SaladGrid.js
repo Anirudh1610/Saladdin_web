@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SaladCard from '../../Salads/Components/SaladCard';
 import '../Styles/SaladGrid.css';
 import fallbackImage from '../../../Assets/Menu/Salad Grid/Rectangle 11.svg';
+import { useCart } from '../../../context/CartContext';
 
 const API_BASE = `http://${window.location.hostname}:8000`;
 
@@ -28,6 +29,7 @@ const SaladGrid = ({ searchTerm = '' }) => {
   const [salads, setSalads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { addItem } = useCart();
 
   useEffect(() => {
     fetch(`${API_BASE}/salads/`)
@@ -49,8 +51,8 @@ const SaladGrid = ({ searchTerm = '' }) => {
     ? salads.filter(s => s.name.toLowerCase().includes(searchTerm.toLowerCase()))
     : salads;
 
-  const handleAddToCart = (saladId) => {
-    console.log('Added to cart:', saladId);
+  const handleAddToCart = (salad) => {
+    addItem({ item_type: 'salad', salad_id: salad.id });
   };
 
   return (

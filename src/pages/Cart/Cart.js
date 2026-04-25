@@ -1,77 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft } from 'lucide-react';
+import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft, Loader2 } from 'lucide-react';
 import './Styles/Cart.css';
+import { useCart } from '../../context/CartContext';
+
+const TAX_RATE = 0.08;
+const FREE_DELIVERY_THRESHOLD = 30;
+const DELIVERY_FEE = 4.99;
 
 const Cart = () => {
   const navigate = useNavigate();
-  
-  // Mock cart items
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: 'Mediterranean Delight Bowl',
-      description: 'Fresh greens, feta, olives, tomatoes',
-      price: 12.99,
-      quantity: 2,
-      image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=400&fit=crop',
-      calories: 350,
-      protein: 15
-    },
-    {
-      id: 2,
-      name: 'Build Your Bowl - Custom',
-      description: 'Spinach, chicken, avocado, quinoa',
-      price: 14.50,
-      quantity: 1,
-      image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop',
-      calories: 420,
-      protein: 32
-    },
-    {
-      id: 3,
-      name: 'Asian Fusion Crunch',
-      description: 'Edamame, sesame, cabbage, ginger soy',
-      price: 11.99,
-      quantity: 1,
-      image: 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=400&h=400&fit=crop',
-      calories: 310,
-      protein: 18
-    }
-  ]);
+  const { cartItems, removeItem, updateQuantity, totalItems, loading } = useCart();
 
-  const updateQuantity = (id, change) => {
-    setCartItems(cartItems.map(item => {
-      if (item.id === id) {
-        const newQuantity = Math.max(1, item.quantity + change);
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    }));
-  };
-
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-  };
-
-  const calculateSubtotal = () => {
-    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-  };
-
-  const subtotal = calculateSubtotal();
-  const tax = subtotal * 0.08; // 8% tax
-  const deliveryFee = subtotal > 30 ? 0 : 4.99;
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const tax = subtotal * TAX_RATE;
+  const deliveryFee = subtotal > FREE_DELIVERY_THRESHOLD ? 0 : DELIVERY_FEE;
   const total = subtotal + tax + deliveryFee;
+
+  if (loading) {
+    return (
+      <div className="cart-page">
+        <div className="container cart-loading">
+          <Loader2 size={36} className="spin" />
+          <p>Loading your cart...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (cartItems.length === 0) {
     return (
       <div className="cart-page">
         <div className="container">
           <div className="empty-cart">
-            <ShoppingBag size={80} />
+            <div className="empty-cart-icon">
+              <ShoppingBag size={56} />
+            </div>
             <h2>Your cart is empty</h2>
             <p>Add some delicious salads to get started!</p>
-            <Link to="/explorer" className="btn btn-primary">
+            <Link to="/explorer" className="browse-btn">
               Browse Salads
             </Link>
           </div>
@@ -87,83 +54,102 @@ const Cart = () => {
           <ArrowLeft size={20} />
           <span>Back</span>
         </button>
+
         <div className="cart-layout">
+          {/* Items Column */}
           <div className="cart-items">
-            <h2 className="cart-items-header">Items in Cart ({cartItems.length})</h2>
+            <h2 className="cart-items-header">
+              Your Cart
+              <span className="cart-count">{totalItems} item{totalItems !== 1 ? 's' : ''}</span>
+            </h2>
+
             {cartItems.map(item => (
               <div key={item.id} className="cart-item">
                 <div className="item-image">
                   <img src={item.image} alt={item.name} />
                 </div>
+
                 <div className="item-details">
-                  <h3>{item.name}</h3>
-                  <p className="item-description">{item.description}</p>
-                  <div className="item-meta">
-                    <span>{item.calories} cal</span>
-                    <span>•</span>
-                    <span>{item.protein}g protein</span>
+                  <div className="item-name-row">
+                    <h3>{item.name}</h3>
+                    {item.item_type === 'bowl' && (
+                      <span className="item-type-badge">Custom Bowl</span>
+                    )}
                   </div>
+                  <p className="item-description">{item.description}</p>
+                  {(item.calories > 0 || item.protein > 0) && (
+                    <div className="item-meta">
+                      {item.calories > 0 && <span>{item.calories} kcal</span>}
+                      {item.calories > 0 && item.protein > 0 && <span className="meta-dot">·</span>}
+                      {item.protein > 0 && <span>{item.protein}g protein</span>}
+                    </div>
+                  )}
                 </div>
+
                 <div className="item-actions">
                   <div className="quantity-controls">
-                    <button 
+                    <button
                       className="quantity-btn"
-                      onClick={() => updateQuantity(item.id, -1)}
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
                       disabled={item.quantity === 1}
                     >
-                      <Minus size={16} />
+                      <Minus size={14} />
                     </button>
                     <span className="quantity">{item.quantity}</span>
-                    <button 
+                    <button
                       className="quantity-btn"
-                      onClick={() => updateQuantity(item.id, 1)}
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
                     >
-                      <Plus size={16} />
+                      <Plus size={14} />
                     </button>
                   </div>
+
                   <div className="item-price">
-                    ₹{(item.price * item.quantity).toFixed(2)}
+                    {item.price > 0
+                      ? `₹${(item.price * item.quantity).toFixed(2)}`
+                      : '—'}
                   </div>
-                  <button 
-                    className="remove-btn"
-                    onClick={() => removeItem(item.id)}
-                  >
-                    <Trash2 size={18} />
+
+                  <button className="remove-btn" onClick={() => removeItem(item.id)} aria-label="Remove item">
+                    <Trash2 size={16} />
                   </button>
                 </div>
               </div>
             ))}
           </div>
 
+          {/* Summary Column */}
           <div className="cart-summary">
-            <h2>Cart Summary</h2>
+            <h2>Order Summary</h2>
+
             <div className="summary-details">
               <div className="summary-row">
-                <span>Items Count:</span>
-                <span className="summary-value">2 Items</span>
+                <span>Subtotal</span>
+                <span className="summary-value">₹{subtotal.toFixed(2)}</span>
               </div>
               <div className="summary-row">
-                <span>Total Bowls / Quantity</span>
-                <span className="summary-value">3</span>
+                <span>Tax (8%)</span>
+                <span className="summary-value">₹{tax.toFixed(2)}</span>
               </div>
               <div className="summary-row">
-                <span>No of Meals:</span>
-                <span className="summary-value">14 meals/2 weeks</span>
+                <span>Delivery</span>
+                <span className="summary-value delivery-value">
+                  {deliveryFee === 0 ? 'Free' : `₹${deliveryFee.toFixed(2)}`}
+                </span>
               </div>
-              <div className="summary-row">
-                <span>Dietary Preference:</span>
-                <span className="summary-value">Vegetarian</span>
-              </div>
-              <div className="summary-row">
-                <span>Allergens to Avoid:</span>
-                <span className="summary-value">Shellfish</span>
-              </div>
+              {deliveryFee > 0 && (
+                <p className="free-delivery-hint">
+                  Add ₹{(FREE_DELIVERY_THRESHOLD - subtotal).toFixed(2)} more for free delivery
+                </p>
+              )}
             </div>
+
+            <div className="summary-divider" />
 
             <div className="summary-total-section">
               <div className="summary-total-box">
                 <div className="summary-row total">
-                  <span>Total Amount:</span>
+                  <span>Total</span>
                   <span className="total-price">₹{total.toFixed(2)}</span>
                 </div>
                 <Link to="/checkout" className="checkout-btn">
@@ -172,7 +158,6 @@ const Cart = () => {
               </div>
               <p className="cancel-notice">Cancel or modify anytime</p>
             </div>
-
           </div>
         </div>
       </div>

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Star } from 'lucide-react';
+import { ArrowLeft, Star, ShoppingCart, Check } from 'lucide-react';
 import '../Styles/GranularSaladPage.css';
+import { useCart } from '../../../context/CartContext';
 // import VegLabel from '../Assets/Menu/Salad Grid/Frame 96.svg';
 
 const GranularSaladPage = ({ salad }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('ingredients');
   const [quantity] = useState(1);
+  const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
 
   // // Default salad data if none provided
   // const defaultSalad = {
@@ -94,9 +97,12 @@ const GranularSaladPage = ({ salad }) => {
     navigate(-1);
   };
 
-  const handleAddToCart = () => {
-    console.log('Added to cart:', { salad: saladData, quantity });
-    // Add to cart logic here
+  const handleAddToCart = async () => {
+    const ok = await addItem({ item_type: 'salad', salad_id: saladData.id });
+    if (ok) {
+      setAdded(true);
+      setTimeout(() => setAdded(false), 2000);
+    }
   };
 
   return (
@@ -179,11 +185,12 @@ const GranularSaladPage = ({ salad }) => {
                 <span className="price-label">Price:</span>
                 <span className="price-value">₹{saladData.price ? saladData.price.toFixed(2) : '0.00'}</span>
               </div>
-              <button 
-                className="add-to-cart-main-btn"
+              <button
+                className={`add-to-cart-main-btn${added ? ' added' : ''}`}
                 onClick={handleAddToCart}
+                disabled={added}
               >
-                Add to Cart
+                {added ? <><Check size={18} /> Added!</> : <><ShoppingCart size={18} /> Add to Cart</>}
               </button>
             </div>
           </div>

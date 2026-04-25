@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
 import './App.css';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -37,6 +38,7 @@ function App() {
 
   return (
     <Router>
+      <CartProvider>
       <ScrollToTop />
       <MainLayout>
         <Routes>
@@ -57,6 +59,7 @@ function App() {
           <Route path="/faq" element={<FAQ />} />
         </Routes>
       </MainLayout>
+      </CartProvider>
     </Router>
   );
 }

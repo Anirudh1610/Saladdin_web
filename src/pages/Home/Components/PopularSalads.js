@@ -4,6 +4,7 @@ import '../Styles/PopularSalads.css';
 import GroupIcon from '../../../Assets/Home/Popular/Group.svg';
 import SaladCard from '../../Salads/Components/SaladCard';
 import fallbackImage from '../../../Assets/Menu/Salad Grid/Rectangle 11.svg';
+import { useCart } from '../../../context/CartContext';
 
 const API_BASE = `http://${window.location.hostname}:8000`;
 
@@ -30,6 +31,7 @@ const PopularSalads = () => {
   const [salads, setSalads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { addItem } = useCart();
 
   useEffect(() => {
     fetch(`${API_BASE}/salads/popular`)
@@ -47,8 +49,8 @@ const PopularSalads = () => {
       });
   }, []);
 
-  const handleAddToCart = (saladId) => {
-    console.log('Add to cart:', saladId);
+  const handleAddToCart = (salad) => {
+    addItem({ item_type: 'salad', salad_id: salad.id });
   };
 
   return (

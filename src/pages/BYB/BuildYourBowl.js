@@ -3,6 +3,7 @@ import './Styles/BuildYourBowl.css';
 import BaseSaladModal from './Components/BaseSaladModal';
 import AuthModal from '../Profile/Components/AuthModal';
 import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
 import emptyBowlIcon from '../../Assets/BYB/salad (1) 1.svg';
 import baseBowlIcon from '../../Assets/BYB/salad 1.svg';
 
@@ -10,6 +11,7 @@ const API_BASE = `http://${window.location.hostname}:8000`;
 
 const BuildYourBowl = () => {
   const { user, session } = useAuth();
+  const { addItem } = useCart();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -26,6 +28,8 @@ const BuildYourBowl = () => {
   const [bowlName, setBowlName] = useState('');
   const [saving, setSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState(null); // 'success' | 'error' | null
+  const [addingToCart, setAddingToCart] = useState(false);
+  const [cartStatus, setCartStatus] = useState(null); // 'success' | 'error' | null
 
   useEffect(() => {
     fetch(`${API_BASE}/ingredients/`)
@@ -227,11 +231,53 @@ const BuildYourBowl = () => {
                   </div>
                 ) : (
                   <>
-                    <button className="save-bowl-btn" onClick={handleSaveClick}>
-                      {user ? 'Save to My Bowls' : 'Sign in to Save'}
-                    </button>
+                    <div className="bowl-action-buttons">
+                      <button className="save-bowl-btn" onClick={handleSaveClick}>
+                        {user ? 'Save to My Bowls' : 'Sign in to Save'}
+                      </button>
+                      <button
+                        className="add-to-cart-bowl-btn"
+                        disabled={addingToCart}
+                        onClick={async () => {
+                          if (!user) { setIsAuthModalOpen(true); return; }
+                          setAddingToCart(true);
+                          setCartStatus(null);
+                          try {
+                            const res = await fetch(`${API_BASE}/bowls/`, {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${session.access_token}`,
+                              },
+                              body: JSON.stringify({
+                                name: `${selectedSalad.name} (Custom)`,
+                                base_salad_id: selectedSalad.id,
+                                core_ingredients: coreIngredients,
+                                addons: addOns,
+                              }),
+                            });
+                            if (!res.ok) throw new Error();
+                            const bowl = await res.json();
+                            await addItem({ item_type: 'bowl', bowl_id: bowl.id });
+                            setCartStatus('success');
+                          } catch {
+                            setCartStatus('error');
+                          } finally {
+                            setAddingToCart(false);
+                          }
+                        }}
+                      >
+                        {addingToCart ? 'Adding...' : 'Add to Cart'}
+                      </button>
+                    </div>
                     {saveStatus === 'success' && (
                       <p style={{ color: '#386641', fontSize: '13px', marginTop: '8px' }}>Bowl saved!</p>
+                    )}
+                    {cartStatus === 'success' && (
+                      <p style={{ color: '#386641', fontSize: '13px', marginTop: '8px' }}>Added to cart!</p>
+                    )}
+                    {cartStatus === 'error' && (
+                      <p style={{ color: '#ff6b6b', fontSize: '13px', marginTop: '8px' }}>Failed to add to cart. Try again.</p>
                     )}
                   </>
                 )}

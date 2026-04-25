@@ -34,6 +34,20 @@
   transform: translateY(-1px) scale(1);
 }
 
+.cart-badge {
+  background: #fff;
+  color: #2d5f3f;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .floating-cart-btn {
