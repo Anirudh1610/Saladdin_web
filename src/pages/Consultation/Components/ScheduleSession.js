@@ -1,16 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Users, CalendarDays, HeadphonesIcon, MessageSquare, ChevronRight } from 'lucide-react';
+import { useAuth } from '../../../context/AuthContext';
+import AuthModal from '../../Profile/Components/AuthModal';
 import '../Styles/ScheduleSession.css';
 
+const API_BASE = 'http://localhost:8000';
+
 const ScheduleSession = () => {
+  const { user, session } = useAuth();
+
   const [formData, setFormData] = useState({
-    consultationType: 'Marshal Mathers',
-    date: '22-02-2026',
-    time: '09:00 AM',
-    fullName: 'Marshal Mathers',
-    email: 'marshalmathers112@gmail.com',
-    phone: '+91 98374 84785',
+    consultationType: '',
+    date: '',
+    time: '',
+    fullName: '',
+    email: '',
+    phone: '',
     discussion: ''
   });
+
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        fullName: user.user_metadata?.full_name ?? '',
+        email: user.email ?? '',
+        phone: user.phone ?? '',
+      }));
+    }
+  }, [user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,13 +38,75 @@ const ScheduleSession = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+
+  const today = new Date().toISOString().split('T')[0];
+  const nowTime = new Date().toTimeString().slice(0, 5);
+  const minTime = formData.date === today ? nowTime : '00:00';
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Booking submitted:', formData);
-    // Handle form submission logic here
+    if (!session) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+
+    if (!formData.consultationType) {
+      setSubmitError('Please select a nutritionist.');
+      return;
+    }
+
+    if (!formData.date || !formData.time) {
+      setSubmitError('Please select a date and time.');
+      return;
+    }
+
+    const chosen = new Date(`${formData.date}T${formData.time}`);
+    if (chosen <= new Date()) {
+      setSubmitError('Please select a future date and time.');
+      return;
+    }
+
+    setSubmitting(true);
+    setSubmitError('');
+    setSubmitSuccess(false);
+
+    try {
+      const res = await fetch(`${API_BASE}/consultations/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          nutritionist: formData.consultationType,
+          date: formData.date,
+          time: formData.time,
+          full_name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          discussion: formData.discussion || null,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || 'Failed to book consultation.');
+      }
+
+      setSubmitSuccess(true);
+    } catch (err) {
+      setSubmitError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
+    <>
     <section className="schedule-session">
       <div className="schedule-container">
         <div className="schedule-left">
@@ -34,7 +114,9 @@ const ScheduleSession = () => {
           
           <div className="session-options">
             <div className="session-card">
-              <div className="session-icon one-on-one-icon"></div>
+              <div className="session-icon one-on-one-icon">
+                <Users size={26} color="#fff" />
+              </div>
               <div className="session-info">
                 <h3 className="session-heading">One-on-One Sessions</h3>
                 <p className="session-description">Personalized attention from certified nutritionists</p>
@@ -42,7 +124,9 @@ const ScheduleSession = () => {
             </div>
 
             <div className="session-card">
-              <div className="session-icon flexible-icon"></div>
+              <div className="session-icon flexible-icon">
+                <CalendarDays size={26} color="#fff" />
+              </div>
               <div className="session-info">
                 <h3 className="session-heading">Flexible Scheduling</h3>
                 <p className="session-description">Choose a time that works best for your schedule</p>
@@ -50,7 +134,9 @@ const ScheduleSession = () => {
             </div>
 
             <div className="session-card">
-              <div className="session-icon support-icon"></div>
+              <div className="session-icon support-icon">
+                <HeadphonesIcon size={26} color="#fff" />
+              </div>
               <div className="session-info">
                 <h3 className="session-heading">Ongoing Support</h3>
                 <p className="session-description">Chat support available after your consultation</p>
@@ -61,14 +147,14 @@ const ScheduleSession = () => {
           <div className="existing-consultation-box">
             <div className="existing-content">
               <div className="chat-icon-circle">
-                <div className="chat-icon"></div>
+                <MessageSquare size={18} color="#386641" />
               </div>
               <div className="existing-text">
                 <h4 className="existing-heading">Already have a consultation?</h4>
                 <p className="existing-subtext">Continue chatting with our nutritionist</p>
               </div>
             </div>
-            <div className="arrow-icon"></div>
+            <ChevronRight size={20} color="#111111" />
           </div>
         </div>
 
@@ -79,13 +165,13 @@ const ScheduleSession = () => {
             <div className="form-group">
               <label className="form-label">Consultation Type</label>
               <div className="input-wrapper select-wrapper">
-                <select 
-                  name="consultationType" 
+                <select
+                  name="consultationType"
                   value={formData.consultationType}
                   onChange={handleInputChange}
                   className="form-input"
                 >
-                  <option value="Marshal Mathers">Marshal Mathers</option>
+                  <option value="" disabled>Select a nutritionist</option>
                   <option value="Dr. Sarah Mitchell">Dr. Sarah Mitchell</option>
                   <option value="Dr. James Chen">Dr. James Chen</option>
                   <option value="Dr. Emily Rodriguez">Dr. Emily Rodriguez</option>
@@ -98,30 +184,28 @@ const ScheduleSession = () => {
               <div className="form-group">
                 <label className="form-label">Date</label>
                 <div className="input-wrapper">
-                  <input 
-                    type="text" 
+                  <input
+                    type="date"
                     name="date"
                     value={formData.date}
                     onChange={handleInputChange}
-                    className="form-input" 
-                    placeholder="22-02-2026"
+                    className="form-input"
+                    min={today}
                   />
-                  <div className="calendar-icon"></div>
                 </div>
               </div>
 
               <div className="form-group">
                 <label className="form-label">Time</label>
                 <div className="input-wrapper">
-                  <input 
-                    type="text" 
+                  <input
+                    type="time"
                     name="time"
                     value={formData.time}
                     onChange={handleInputChange}
-                    className="form-input" 
-                    placeholder="09:00 AM"
+                    className="form-input"
+                    min={minTime}
                   />
-                  <div className="time-icon"></div>
                 </div>
               </div>
             </div>
@@ -184,13 +268,22 @@ const ScheduleSession = () => {
               </div>
             </div>
 
-            <button type="submit" className="book-button">
-              Book a Consultation
+            {submitError && <p className="form-feedback form-error">{submitError}</p>}
+            {submitSuccess && <p className="form-feedback form-success">Booking confirmed! We'll be in touch shortly.</p>}
+
+            <button type="submit" className="book-button" disabled={submitting}>
+              {submitting ? 'Booking…' : 'Book a Consultation'}
             </button>
           </form>
         </div>
       </div>
     </section>
+
+    <AuthModal
+      isOpen={isAuthModalOpen}
+      onClose={() => setIsAuthModalOpen(false)}
+    />
+    </>
   );
 };
 
