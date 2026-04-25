@@ -951,3 +951,145 @@
     font-size: 20px;
   }
 }
+
+.subscription-success {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #4CAF50;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px 0;
+}
+
+.subscription-error {
+  color: #e53935;
+  font-size: 13px;
+  margin: 6px 0 0;
+}
+
+/* Active subscription banner */
+.active-sub-banner {
+  margin-top: 48px;
+  margin-bottom: 48px;
+  padding: 28px 32px;
+  background: #f0f7f1;
+  border: 2px solid #386641;
+  border-radius: 12px;
+}
+
+.active-sub-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.active-sub-header h2 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.32px;
+  color: #141414;
+  margin: 0;
+  text-align: left;
+}
+
+.active-sub-status {
+  background: #386641;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.active-sub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px 32px;
+}
+
+.active-sub-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.active-sub-item--full {
+  grid-column: 1 / -1;
+}
+
+.active-sub-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: #111111;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.active-sub-value {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #141414;
+}
+
+.active-sub-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #F2E8CF;
+  color: #386641;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.active-sub-chip--plan {
+  background: #e6faff;
+  color: #190089;
+}
+
+.active-sub-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.active-sub-tag {
+  background: #F2F2F2;
+  color: #141414;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.active-sub-tag--allergen {
+  background: #FFE3DC;
+}
+
+@media (max-width: 768px) {
+  .active-sub-banner {
+    padding: 20px;
+  }
+
+  .active-sub-header h2 {
+    font-size: 22px;
+  }
+
+  .active-sub-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+

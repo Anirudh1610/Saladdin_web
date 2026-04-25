@@ -3,8 +3,10 @@ import { Check, TrendingDown, TrendingUp, Heart, Calendar, Target, BarChart3, Re
 import './Styles/Subscription.css';
 import AuthModal from '../Profile/Components/AuthModal';
 import fallbackImage from '../../Assets/Menu/Salad Grid/Rectangle 11.svg';
+import { useAuth } from '../../context/AuthContext';
 
 const Subscription = () => {
+  const { user, session } = useAuth();
   const [selectedGoal, setSelectedGoal] = useState('weight-loss');
   const [frequency, setFrequency] = useState('weekly');
   const [preferences, setPreferences] = useState({
@@ -15,6 +17,9 @@ const Subscription = () => {
   const [salads, setSalads] = useState([]);
   const [saladsLoading, setSaladsLoading] = useState(true);
   const [selectedSalads, setSelectedSalads] = useState([]);
+  const [submitStatus, setSubmitStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+  const [submitError, setSubmitError] = useState('');
+  const [activeSubscription, setActiveSubscription] = useState(null);
 
   useEffect(() => {
     fetch('http://localhost:8000/salads/')
@@ -23,6 +28,16 @@ const Subscription = () => {
       .catch(() => {})
       .finally(() => setSaladsLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (!user || !session) return;
+    fetch('http://localhost:8000/subscriptions/me', {
+      headers: { 'Authorization': `Bearer ${session.access_token}` },
+    })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => setActiveSubscription(data))
+      .catch(() => {});
+  }, [user, session]);
 
   const handleSaladToggle = (salad) => {
     setSelectedSalads(prev => {
@@ -109,8 +124,39 @@ const Subscription = () => {
     }));
   };
 
-  const handleSubscribe = () => {
-    setIsAuthModalOpen(true);
+  const handleSubscribe = async () => {
+    if (!user || !session) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+    setSubmitStatus('loading');
+    setSubmitError('');
+    try {
+      const res = await fetch('http://localhost:8000/subscriptions/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          plan: frequency,
+          health_goal: selectedGoal,
+          dietary_preference: preferences.dietary || null,
+          allergies: preferences.allergies,
+          selected_salad_ids: selectedSalads.map(s => s.id),
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || 'Subscription failed.');
+      }
+      const created = await res.json();
+      setActiveSubscription(created);
+      setSubmitStatus('success');
+    } catch (e) {
+      setSubmitError(e.message || 'Something went wrong.');
+      setSubmitStatus('error');
+    }
   };
 
   const selectedPlan = subscriptionPlans.find(plan => plan.value === frequency);
@@ -119,6 +165,71 @@ const Subscription = () => {
     <div className="subscription-page">
       
       <div className="container">
+
+        {/* Active Subscription Banner */}
+        {activeSubscription && (() => {
+          const plan = subscriptionPlans.find(p => p.value === activeSubscription.plan);
+          const goal = healthGoals.find(g => g.id === activeSubscription.health_goal);
+          const saladNames = activeSubscription.selected_salad_ids
+            .map(id => salads.find(s => s.id === id)?.name)
+            .filter(Boolean);
+          const startDate = new Date(activeSubscription.created_at).toLocaleDateString('en-IN', {
+            day: '2-digit', month: 'short', year: 'numeric'
+          });
+          return (
+            <section className="active-sub-banner">
+              <div className="active-sub-header">
+                <h2>Active Subscription</h2>
+                <span className="active-sub-status">Active</span>
+              </div>
+              <div className="active-sub-grid">
+                <div className="active-sub-item">
+                  <span className="active-sub-label">Plan</span>
+                  <span className="active-sub-chip active-sub-chip--plan">
+                    {plan?.name} — ₹{plan?.price}
+                  </span>
+                </div>
+                <div className="active-sub-item">
+                  <span className="active-sub-label">Health Goal</span>
+                  <span className="active-sub-chip">
+                    {goal?.icon} {goal?.name}
+                  </span>
+                </div>
+                <div className="active-sub-item">
+                  <span className="active-sub-label">Dietary</span>
+                  <span className="active-sub-value">
+                    {activeSubscription.dietary_preference || 'No restrictions'}
+                  </span>
+                </div>
+                {activeSubscription.allergies.length > 0 && (
+                  <div className="active-sub-item">
+                    <span className="active-sub-label">Avoiding</span>
+                    <div className="active-sub-tags">
+                      {activeSubscription.allergies.map(a => (
+                        <span key={a} className="active-sub-tag active-sub-tag--allergen">{a}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {saladNames.length > 0 && (
+                  <div className="active-sub-item active-sub-item--full">
+                    <span className="active-sub-label">Selected Salads</span>
+                    <div className="active-sub-tags">
+                      {saladNames.map(name => (
+                        <span key={name} className="active-sub-tag">{name}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <div className="active-sub-item">
+                  <span className="active-sub-label">Started</span>
+                  <span className="active-sub-value">{startDate}</span>
+                </div>
+              </div>
+            </section>
+          );
+        })()}
+
         {/* Health Goals */}
         <section className="goals-section">
           <h2>Choose Your Health Goal</h2>
@@ -300,14 +411,25 @@ const Subscription = () => {
                   <strong>₹{selectedPlan?.price}</strong>
                 </div>
                 <div className="summary-actions">
-                  <button
-                    className="btn btn-primary btn-large"
-                    onClick={handleSubscribe}
-                    disabled={selectedSalads.length === 0}
-                  >
-                    Start Subscription
-                  </button>
-                  <p className="cancel-note">Cancel or modify anytime</p>
+                  {submitStatus === 'success' ? (
+                    <div className="subscription-success">
+                      <Check size={20} /> Subscription started successfully!
+                    </div>
+                  ) : (
+                    <>
+                      <button
+                        className="btn btn-primary btn-large"
+                        onClick={handleSubscribe}
+                        disabled={selectedSalads.length === 0 || submitStatus === 'loading'}
+                      >
+                        {submitStatus === 'loading' ? 'Starting…' : 'Start Subscription'}
+                      </button>
+                      {submitStatus === 'error' && (
+                        <p className="subscription-error">{submitError}</p>
+                      )}
+                      <p className="cancel-note">Cancel or modify anytime</p>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
