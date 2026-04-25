@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Check, TrendingDown, TrendingUp, Heart, Calendar } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Check, TrendingDown, TrendingUp, Heart, Calendar, Target, BarChart3, RefreshCw, BadgePercent } from 'lucide-react';
 import './Styles/Subscription.css';
 import AuthModal from '../Profile/Components/AuthModal';
+import fallbackImage from '../../Assets/Menu/Salad Grid/Rectangle 11.svg';
 
 const Subscription = () => {
   const [selectedGoal, setSelectedGoal] = useState('weight-loss');
@@ -9,9 +10,28 @@ const Subscription = () => {
   const [preferences, setPreferences] = useState({
     dietary: '',
     allergies: [],
-    calorieTarget: 2000,
   });
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [salads, setSalads] = useState([]);
+  const [saladsLoading, setSaladsLoading] = useState(true);
+  const [selectedSalads, setSelectedSalads] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8000/salads/')
+      .then(r => r.json())
+      .then(data => setSalads(data))
+      .catch(() => {})
+      .finally(() => setSaladsLoading(false));
+  }, []);
+
+  const handleSaladToggle = (salad) => {
+    setSelectedSalads(prev => {
+      const isSelected = prev.some(s => s.id === salad.id);
+      if (isSelected) return prev.filter(s => s.id !== salad.id);
+      if (prev.length >= 3) return prev;
+      return [...prev, salad];
+    });
+  };
 
   const healthGoals = [
     {
@@ -180,22 +200,6 @@ const Subscription = () => {
               </div>
 
               <div className="form-group">
-                <label>Frequency (No. of Meals)</label>
-                <div className="dietary-buttons">
-                  {subscriptionPlans.map(plan => (
-                    <button
-                      key={plan.value}
-                      type="button"
-                      className={`dietary-toggle ${frequency === plan.value ? 'active' : ''}`}
-                      onClick={() => setFrequency(plan.value)}
-                    >
-                      {plan.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="form-group">
                 <label>Allergens to Avoid</label>
                 <div className="allergen-buttons">
                   {allergenOptions.map(allergen => (
@@ -212,60 +216,99 @@ const Subscription = () => {
               </div>
 
               <div className="form-group">
-                <div className="calorie-label-row">
-                  <label>Daily Calorie Target</label>
-                  <span className="calorie-value">{preferences.calorieTarget} Cal</span>
-                </div>
-                <input
-                  type="range"
-                  min="1200"
-                  max="3000"
-                  step="100"
-                  value={preferences.calorieTarget}
-                  onChange={(e) => setPreferences({...preferences, calorieTarget: parseInt(e.target.value)})}
-                  className="calorie-slider"
-                />
-                <div className="slider-labels">
-                  <span>1200</span>
-                  <span>2100</span>
-                  <span>3000</span>
-                </div>
+                <label>
+                  Pick Your Salads
+                  <span className="label-hint"> — select up to 3 ({selectedSalads.length}/3)</span>
+                </label>
+                {saladsLoading ? (
+                  <p className="salads-loading">Loading salads…</p>
+                ) : (
+                  <div className="salad-picker-row">
+                    {salads.map(salad => {
+                      const isSelected = selectedSalads.some(s => s.id === salad.id);
+                      const isDisabled = !isSelected && selectedSalads.length >= 3;
+                      return (
+                        <div
+                          key={salad.id}
+                          className={`salad-picker-card ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`}
+                          onClick={() => !isDisabled && handleSaladToggle(salad)}
+                        >
+                          <img
+                            src={(salad.image_urls && salad.image_urls[0]) || fallbackImage}
+                            alt={salad.name}
+                            onError={(e) => { e.target.src = fallbackImage; }}
+                          />
+                          <span>{salad.name}</span>
+                          {isSelected && (
+                            <div className="salad-check"><Check size={13} /></div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
+
             </div>
 
             <div className="summary-card card">
               <h3>Subscription Summary</h3>
-              <div className="summary-content">
-                <div className="summary-row">
-                  <span>Health Goal:</span>
+              <div className="summary-grid">
+                <div className="summary-item">
+                  <span>Health Goal</span>
                   <strong>{healthGoals.find(g => g.id === selectedGoal)?.name}</strong>
                 </div>
-                <div className="summary-row">
-                  <span>Plan:</span>
+                <div className="summary-item">
+                  <span>Plan</span>
                   <strong>{selectedPlan?.name}</strong>
                 </div>
-                <div className="summary-row">
-                  <span>No of Meals:</span>
+                <div className="summary-item">
+                  <span>No of Meals</span>
                   <strong>{selectedPlan?.deliveries}</strong>
                 </div>
-                <div className="summary-row">
-                  <span>Dietary Preference:</span>
+                <div className="summary-item">
+                  <span>Dietary Preference</span>
                   <strong>{preferences.dietary || 'No restrictions'}</strong>
                 </div>
                 {preferences.allergies.length > 0 && (
-                  <div className="summary-row">
-                    <span>Allergens to Avoid:</span>
+                  <div className="summary-item">
+                    <span>Allergens to Avoid</span>
                     <strong>{preferences.allergies.join(', ')}</strong>
                   </div>
                 )}
-                <div className="summary-row total">
-                  <span>Total Amount:</span>
+                {selectedSalads.length > 0 && (
+                  <div className="summary-item summary-item--salads">
+                    <span>Selected Salads</span>
+                    <div className="summary-salads-row">
+                      {selectedSalads.map(s => (
+                        <div key={s.id} className="summary-salad-chip">
+                          <img
+                            src={(s.image_urls && s.image_urls[0]) || fallbackImage}
+                            alt={s.name}
+                            onError={(e) => { e.target.src = fallbackImage; }}
+                          />
+                          <span>{s.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="summary-footer">
+                <div className="summary-total">
+                  <span>Total Amount</span>
                   <strong>₹{selectedPlan?.price}</strong>
                 </div>
-                <button className="btn btn-primary btn-large" onClick={handleSubscribe}>
-                  Start Subscription
-                </button>
-                <p className="cancel-note">Cancel or modify anytime</p>
+                <div className="summary-actions">
+                  <button
+                    className="btn btn-primary btn-large"
+                    onClick={handleSubscribe}
+                    disabled={selectedSalads.length === 0}
+                  >
+                    Start Subscription
+                  </button>
+                  <p className="cancel-note">Cancel or modify anytime</p>
+                </div>
               </div>
             </div>
           </div>
@@ -274,28 +317,51 @@ const Subscription = () => {
         {/* Benefits */}
         <section className="benefits-section">
           <div className="container">
-            <h2>Subscription Benefits</h2>
+            <div className="benefits-header">
+              <h2>Why Subscribe?</h2>
+              <p className="benefits-subtitle">More than just food — a complete wellness experience delivered to your door.</p>
+            </div>
             <div className="benefits-grid">
-              <div className="benefit-item">
-                <span className="benefit-emoji">🎯</span>
-                <h4>Goal-Oriented</h4>
-                <p>Meals designed specifically for your health objectives</p>
-              </div>
-              <div className="benefit-item">
-                <span className="benefit-emoji">📊</span>
-                <h4>Progress Tracking</h4>
-                <p>Monitor your nutrition and health metrics over time</p>
-              </div>
-              <div className="benefit-item">
-                <span className="benefit-emoji">🔄</span>
-                <h4>Flexible Changes</h4>
-                <p>Modify your plan, skip weeks, or cancel anytime</p>
-              </div>
-              <div className="benefit-item">
-                <span className="benefit-emoji">💰</span>
-                <h4>Cost Savings</h4>
-                <p>Save up to 18% with longer subscription plans</p>
-              </div>
+              {[
+                {
+                  icon: <Target size={26} />,
+                  number: '01',
+                  title: 'Goal-Oriented Meals',
+                  description: 'Every meal is curated around your specific health goal — whether you\'re cutting, bulking, or maintaining.',
+                  highlight: '3 tailored plans'
+                },
+                {
+                  icon: <BarChart3 size={26} />,
+                  number: '02',
+                  title: 'Progress Tracking',
+                  description: 'Keep tabs on your calorie intake, macros, and nutrition milestones week over week.',
+                  highlight: 'Weekly insights'
+                },
+                {
+                  icon: <RefreshCw size={26} />,
+                  number: '03',
+                  title: 'Fully Flexible',
+                  description: 'Swap meals, pause a week, change your plan, or cancel entirely — total control, zero friction.',
+                  highlight: 'Cancel anytime'
+                },
+                {
+                  icon: <BadgePercent size={26} />,
+                  number: '04',
+                  title: 'Real Cost Savings',
+                  description: 'Eating healthy doesn\'t have to break the bank. Longer plans unlock bigger discounts automatically.',
+                  highlight: 'Up to 18% off'
+                }
+              ].map((b, i) => (
+                <div key={i} className="benefit-card">
+                  <div className="benefit-card-top">
+                    <div className="benefit-icon-wrap">{b.icon}</div>
+                    <span className="benefit-number">{b.number}</span>
+                  </div>
+                  <h4>{b.title}</h4>
+                  <p>{b.description}</p>
+                  <div className="benefit-highlight">{b.highlight}</div>
+                </div>
+              ))}
             </div>
           </div>
         </section>

@@ -1,19 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import './Styles/ProfilePage.css'
+import './Styles/ProfilePage.css';
+import { useAuth } from '../../context/AuthContext';
+import fallbackImage from '../../Assets/Menu/Salad Grid/Rectangle 11.svg';
+
+const API_BASE = `http://${window.location.hostname}:8000`;
+
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState('orders');
+  const [savedBowls, setSavedBowls] = useState([]);
+  const [bowlsLoading, setBowlsLoading] = useState(false);
+  const { user, session, loading, signOut } = useAuth();
   const navigate = useNavigate();
 
-  // Mock user data
-  const userData = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '+1 (555) 123-4567',
-    memberSince: 'January 2024',
-    profileImage: null,
+  useEffect(() => {
+    if (!loading && !user) navigate('/');
+  }, [user, loading, navigate]);
+
+  useEffect(() => {
+    if (activeTab !== 'bowls' || !session) return;
+    setBowlsLoading(true);
+    fetch(`${API_BASE}/bowls/`, {
+      headers: { Authorization: `Bearer ${session.access_token}` },
+    })
+      .then((res) => res.json())
+      .then((data) => { setSavedBowls(data); setBowlsLoading(false); })
+      .catch(() => setBowlsLoading(false));
+  }, [activeTab, session]);
+
+  const handleDeleteBowl = async (bowlId) => {
+    try {
+      await fetch(`${API_BASE}/bowls/${bowlId}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+      setSavedBowls((prev) => prev.filter((b) => b.id !== bowlId));
+    } catch {}
   };
+
+  const userData = {
+    name: user?.user_metadata?.full_name || user?.email?.split('@')[0] || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+    memberSince: user ? new Date(user.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : '',
+    profileImage: user?.user_metadata?.avatar_url || null,
+  };
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/');
+  };
+
+  if (loading) return null;
 
   // const healthMetrics = {
   //   weight: '70 kg',
@@ -81,27 +120,6 @@ const ProfilePage = () => {
     }
   ];
 
-  const savedBowls = [
-    {
-      id: 'MM909484',
-      name: 'Green Detox Bowl',
-      description: 'A light, refreshing salad packed with greens to support digestion and fat loss.',
-      image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=400&fit=crop',
-      tags: ['Detox', 'Vegan'],
-      nutrition: {
-        calories: { value: '280 kcal', label: 'Calories' },
-        protein: { value: '9 g', label: 'Protein' },
-        carbs: { value: '32 g', label: 'Carbs' },
-        fats: { value: '10 g', label: 'Fats' },
-        fiber: { value: '8 g', label: 'Fiber' }
-      },
-      coreIngredients: ['Lettuce / Romaine', 'Spinach', 'Cucumber slices', 'Broccoli', 'Green capsicum', 'Celery'],
-      addOnIngredients: [
-        { name: 'Chicken', amount: '50gms' },
-        { name: 'Pumpkin seeds', amount: '' }
-      ]
-    }
-  ];
 
   const savedAddresses = [
     { id: 1, label: 'Home', address: '123 Main St, Apt 4B', city: 'New York, NY 10001', isDefault: true },
@@ -164,7 +182,7 @@ const ProfilePage = () => {
         <button className="add-btn">+ Add New Address</button>
       </div>
 
-      <button className="logout-btn">
+      <button className="logout-btn" onClick={handleLogout}>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M2 11V14H5L12.5 6.5L9.5 3.5L2 11Z" stroke="#386641" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
@@ -351,11 +369,12 @@ const ProfilePage = () => {
     <div className="bowls-container">
       <div className="bowls-header">
         <h3 className="bowls-title">Saved Bowls</h3>
-        <button className="add-new-bowl-btn">
-          <span>+</span>
-          <span>Add New Bowl</span>
-        </button>
       </div>
+
+      {bowlsLoading && <p style={{ color: '#aaa' }}>Loading your bowls...</p>}
+      {!bowlsLoading && savedBowls.length === 0 && (
+        <p style={{ color: '#aaa' }}>No saved bowls yet. Build one from the menu!</p>
+      )}
 
       <div className="bowls-list">
         {savedBowls.map((bowl) => (
@@ -367,54 +386,43 @@ const ProfilePage = () => {
                     <path d="M13.4167 7C13.4167 10.4517 10.4517 13.4167 7 13.4167C3.54833 13.4167 0.583333 10.4517 0.583333 7C0.583333 3.54833 3.54833 0.583333 7 0.583333C10.4517 0.583333 13.4167 3.54833 13.4167 7Z" fill="#386641"/>
                   </svg>
                 </div>
-                <span className="bowl-id-text">Bowl ID: {bowl.id}</span>
+                <span className="bowl-id-text">{bowl.name}</span>
               </div>
               <div className="bowl-actions">
-                <button className="bowl-action-btn">Edit</button>
-                <button className="bowl-action-btn">Delete</button>
+                <button className="bowl-action-btn" onClick={() => handleDeleteBowl(bowl.id)}>Delete</button>
               </div>
             </div>
 
             <div className="bowl-content">
               <div className="bowl-main-info">
-                <img src={bowl.image} alt={bowl.name} className="bowl-image" />
+                <img
+                  src={bowl.base_salad_image_url || fallbackImage}
+                  alt={bowl.base_salad_name || bowl.name}
+                  className="bowl-image"
+                />
                 <div className="bowl-details">
-                  <div className="bowl-tags">
-                    {bowl.tags.map((tag, index) => (
-                      <span key={index} className="bowl-tag">{tag}</span>
-                    ))}
-                  </div>
-                  <h4 className="bowl-name">{bowl.name}</h4>
-                  <p className="bowl-description">{bowl.description}</p>
+                  {bowl.base_salad_name && (
+                    <h4 className="bowl-name">{bowl.base_salad_name}</h4>
+                  )}
                 </div>
               </div>
 
-              <div className="bowl-divider"></div>
-
               <div className="nutrition-section">
-                <div className="nutrition-grid">
-                  {Object.entries(bowl.nutrition).map(([key, data]) => (
-                    <div key={key} className="nutrition-item">
-                      <span className="nutrition-value">{data.value}</span>
-                      <span className="nutrition-label">{data.label}</span>
-                    </div>
-                  ))}
-                </div>
                 <div className="ingredients-section">
                   <span className="ingredients-label">Core Ingredients</span>
                   <div className="ingredients-list">
-                    {bowl.coreIngredients.map((ingredient, index) => (
-                      <span key={index} className="ingredient-chip core">{ingredient}</span>
+                    {bowl.core_ingredients.map((ing, index) => (
+                      <span key={index} className="ingredient-chip core">{ing.name}</span>
                     ))}
                   </div>
                 </div>
                 <div className="ingredients-section">
                   <span className="ingredients-label">Add-On Ingredients</span>
                   <div className="ingredients-list">
-                    {bowl.addOnIngredients.map((ingredient, index) => (
+                    {bowl.addons.map((addon, index) => (
                       <span key={index} className="ingredient-chip addon">
-                        {ingredient.name}
-                        {ingredient.amount && <span className="ingredient-amount"> {ingredient.amount}</span>}
+                        {addon.name}
+                        {addon.amount && <span className="ingredient-amount"> {addon.amount}</span>}
                       </span>
                     ))}
                   </div>

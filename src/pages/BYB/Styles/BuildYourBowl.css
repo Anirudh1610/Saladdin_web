@@ -437,8 +437,53 @@
   flex-shrink: 0;
 }
 
-.save-bowl-btn:hover {
+.save-bowl-btn:hover:not(:disabled) {
   background: #2d5033;
+}
+
+.save-bowl-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.save-prompt {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.bowl-name-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.bowl-name-input:focus {
+  outline: none;
+  border-color: #386641;
+}
+
+.save-prompt-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.cancel-save-btn {
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+}
+
+.cancel-save-btn:hover {
+  background: #f5f5f5;
 }
 
 /* Available Addons Sidebar Updates */

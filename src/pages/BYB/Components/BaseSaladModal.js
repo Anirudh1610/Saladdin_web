@@ -1,87 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import '../Styles/BaseSaladModal.css';
 import SaladCard from '../../Salads/Components/SaladCard';
+import fallbackImage from '../../../Assets/Menu/Salad Grid/Rectangle 11.svg';
+
+const API_BASE = `http://${window.location.hostname}:8000`;
+
+const mapSaladToCard = (salad) => {
+  const nutrients = salad.nutrient_info || {};
+  return {
+    id: salad.id,
+    name: salad.name,
+    description: salad.description || '',
+    price: parseFloat(salad.price),
+    rating: parseFloat(salad.average_rating),
+    tags: [],
+    vegTag: false,
+    calories: nutrients.calories ?? 0,
+    protein: nutrients.protein ?? 0,
+    carbs: nutrients.carbs ?? 0,
+    fat: nutrients.fat ?? 0,
+    fiber: nutrients.fiber ?? 0,
+    image: salad.image_urls?.[0] || fallbackImage,
+  };
+};
 
 const BaseSaladModal = ({ isOpen, onClose, onSelectSalad }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedFilter, setSelectedFilter] = useState('all');
-  const [vegMode, setVegMode] = useState(true);
+  const [salads, setSalads] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Sample salad data - replace with actual data
-  const salads = [
-    {
-      id: 1,
-      name: 'Green Detox Bowl',
-      description: 'A light, refreshing salad packed with greens to support digestion and detox.',
-      price: 154.99,
-      image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400',
-      tags: ['Detox', 'Vegan'],
-      vegTag: true,
-      calories: 280,
-      protein: 9,
-      carbs: 32,
-      fat: 10,
-      fiber: 8
-    },
-    {
-      id: 2,
-      name: 'Protein Power Salad',
-      description: 'A protein-rich bowl designed to fuel workouts and support muscle recovery.',
-      price: 154.99,
-      image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400',
-      tags: ['High Protein', 'Post-Workout'],
-      vegTag: true,
-      calories: 280,
-      protein: 9,
-      carbs: 32,
-      fat: 10,
-      fiber: 8
-    },
-    {
-      id: 3,
-      name: 'Mediterranean Balance Bowl',
-      description: 'A wholesome mix of fresh veggies and grains for daily clean eating.',
-      price: 154.99,
-      image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400',
-      tags: ['Balanced', "Chef's Pick"],
-      vegTag: false,
-      calories: 360,
-      protein: 18,
-      carbs: 34,
-      fat: 14,
-      fiber: 7
-    },
-    {
-      id: 4,
-      name: 'Avocado Keto Crunch',
-      description: 'A low-carb bowl packed with healthy fats for steady energy.',
-      price: 154.99,
-      image: 'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=400',
-      tags: ['Low Carb', 'Keto'],
-      vegTag: true,
-      calories: 330,
-      protein: 16,
-      carbs: 14,
-      fat: 22,
-      fiber: 8
-    }
-  ];
+  useEffect(() => {
+    if (!isOpen) return;
+    setLoading(true);
+    fetch(`${API_BASE}/salads/`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        setSalads(data.map(mapSaladToCard));
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [isOpen]);
 
-  const filterButtons = [
-    { id: 'all', label: 'All', icon: '🥗' },
-    { id: 'vegan', label: 'Vegan', icon: '🌱' },
-    { id: 'chicken', label: 'Chicken', icon: '🍗' },
-    { id: 'fish', label: 'Fish', icon: '🍤' }
-  ];
-
-  const filteredSalads = salads.filter(salad => {
-    const matchesSearch = salad.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesVegMode = !vegMode || salad.vegTag;
-    const matchesFilter = selectedFilter === 'all' || 
-      salad.tags.some(tag => tag.toLowerCase().includes(selectedFilter.toLowerCase()));
-    return matchesSearch && matchesVegMode && matchesFilter;
-  });
+  const filteredSalads = salads.filter(s =>
+    s.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (!isOpen) return null;
 
@@ -90,9 +60,7 @@ const BaseSaladModal = ({ isOpen, onClose, onSelectSalad }) => {
       <div className="base-salad-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>Base Bowl</h2>
-          <button className="close-btn" onClick={onClose}>
-            Close
-          </button>
+          <button className="close-btn" onClick={onClose}>Close</button>
         </div>
 
         <div className="modal-search-section">
@@ -100,56 +68,35 @@ const BaseSaladModal = ({ isOpen, onClose, onSelectSalad }) => {
             <Search size={20} className="search-icon" />
             <input
               type="text"
-              placeholder="Search by 'Chicken Salad'"
+              placeholder='Search by "Chicken Salad"'
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </div>
 
-        <div className="modal-filters">
-          <div className="filter-buttons">
-            {filterButtons.map(filter => (
-              <button
-                key={filter.id}
-                className={`filter-btn ${selectedFilter === filter.id ? 'active' : ''}`}
-                onClick={() => setSelectedFilter(filter.id)}
-              >
-                <span className="filter-icon">{filter.icon}</span>
-                {filter.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="veg-mode-toggle">
-            <input
-              type="checkbox"
-              id="veg-mode"
-              checked={vegMode}
-              onChange={(e) => setVegMode(e.target.checked)}
-            />
-            <label htmlFor="veg-mode">Veg Mode</label>
-          </div>
-        </div>
-
         <div className="modal-content">
-          <div className="salads-grid">
-            {filteredSalads.map(salad => (
-              <div 
-                key={salad.id} 
-                onClickCapture={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  onSelectSalad(salad);
-                }}
-              >
-                <SaladCard salad={salad} />
-              </div>
-            ))}
-          </div>
-          {filteredSalads.length === 0 && (
-            <div className="no-results">
-              <p>No salads found matching your criteria</p>
+          {loading && <p style={{ padding: '20px', color: '#aaa' }}>Loading salads...</p>}
+          {error && <p style={{ padding: '20px', color: '#ff6b6b' }}>Failed to load salads.</p>}
+          {!loading && !error && (
+            <div className="salads-grid">
+              {filteredSalads.map(salad => (
+                <div
+                  key={salad.id}
+                  onClickCapture={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onSelectSalad(salad);
+                  }}
+                >
+                  <SaladCard salad={salad} />
+                </div>
+              ))}
+              {filteredSalads.length === 0 && (
+                <div className="no-results">
+                  <p>No salads found matching your search.</p>
+                </div>
+              )}
             </div>
           )}
         </div>
