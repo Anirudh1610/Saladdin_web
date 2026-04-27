@@ -22,7 +22,7 @@ export const CartProvider = ({ children }) => {
       headers: { Authorization: `Bearer ${session.access_token}` },
     })
       .then((r) => r.json())
-      .then((data) => setCartItems(data))
+      .then((data) => setCartItems(Array.isArray(data) ? data : []))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, [session]);

@@ -26,9 +26,14 @@ const ProfilePage = () => {
     fetch(`${API_BASE}/bowls/`, {
       headers: { Authorization: `Bearer ${session.access_token}` },
     })
-      .then((res) => res.json())
-      .then((data) => { setSavedBowls(data); setBowlsLoading(false); })
-      .catch(() => setBowlsLoading(false));
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then(err => { console.error('GET /bowls/ error:', res.status, err); return []; });
+        }
+        return res.json();
+      })
+      .then((data) => { setSavedBowls(Array.isArray(data) ? data : []); setBowlsLoading(false); })
+      .catch((err) => { console.error('GET /bowls/ fetch failed:', err); setBowlsLoading(false); });
   }, [activeTab, session]);
 
   const handleDeleteBowl = async (bowlId) => {
@@ -44,7 +49,7 @@ const ProfilePage = () => {
   const userData = {
     name: user?.user_metadata?.full_name || user?.email?.split('@')[0] || '',
     email: user?.email || '',
-    phone: user?.phone || '',
+    phone: user?.user_metadata?.phone || '',
     memberSince: user ? new Date(user.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : '',
     profileImage: user?.user_metadata?.avatar_url || null,
   };

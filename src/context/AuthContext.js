@@ -9,9 +9,16 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (session?.expires_at && session.expires_at * 1000 < Date.now()) {
+        const { data } = await supabase.auth.refreshSession({ refresh_token: session.refresh_token });
+        const fresh = data.session;
+        setSession(fresh);
+        setUser(fresh?.user ?? null);
+      } else {
+        setSession(session);
+        setUser(session?.user ?? null);
+      }
       setLoading(false);
     });
 
@@ -23,8 +30,12 @@ export const AuthProvider = ({ children }) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signUp = (email, password) =>
-    supabase.auth.signUp({ email, password });
+  const signUp = (email, password, name, phone) =>
+    supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: name, phone } },
+    });
 
   const signIn = (email, password) =>
     supabase.auth.signInWithPassword({ email, password });

@@ -6,6 +6,8 @@ import '../Styles/AuthModal.css';
 
 const AuthModal = ({ isOpen, onClose }) => {
   const [mode, setMode] = useState('login'); // 'login' | 'signup'
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -19,6 +21,8 @@ const AuthModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const resetForm = () => {
+    setName('');
+    setPhone('');
     setEmail('');
     setPassword('');
     setConfirmPassword('');
@@ -52,8 +56,10 @@ const AuthModal = ({ isOpen, onClose }) => {
       setError('Passwords do not match.');
       return;
     }
+    if (!name.trim()) { setError('Full name is required.'); return; }
+    if (!phone.trim()) { setError('Phone number is required.'); return; }
     setLoading(true);
-    const { error } = await signUp(email, password);
+    const { error } = await signUp(email, password, name.trim(), phone.trim());
     setLoading(false);
     if (error) {
       setError(error.message);
@@ -135,6 +141,26 @@ const AuthModal = ({ isOpen, onClose }) => {
               ) : (
                 <form className="auth-form" onSubmit={handleSignup}>
                   <div className="auth-form-fields">
+                    <div className="auth-input-group">
+                      <label className="auth-label">Full Name</label>
+                      <input
+                        type="text"
+                        className="auth-input"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="auth-input-group">
+                      <label className="auth-label">Phone Number</label>
+                      <input
+                        type="tel"
+                        className="auth-input"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        required
+                      />
+                    </div>
                     <div className="auth-input-group">
                       <label className="auth-label">Email</label>
                       <input
