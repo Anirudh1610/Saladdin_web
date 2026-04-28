@@ -8,10 +8,95 @@ import fallbackImage from '../../Assets/Menu/Salad Grid/Rectangle 11.svg';
 
 const API_BASE = `http://${window.location.hostname}:8000`;
 
+const fmtSlot = (slot) => {
+  if (!slot) return '';
+  const [start, end] = slot.split('-');
+  const fmt = (t) => {
+    const h = parseInt(t.split(':')[0], 10);
+    if (h === 0) return '12 AM';
+    if (h < 12) return `${h} AM`;
+    if (h === 12) return '12 PM';
+    return `${h - 12} PM`;
+  };
+  return `${fmt(start)} – ${fmt(end)}`;
+};
+
+const fmtDate = (d) => {
+  if (!d) return '';
+  const [y, m, day] = d.split('-');
+  return new Date(y, m - 1, day).toLocaleDateString('en-SA', {
+    weekday: 'short', month: 'short', day: 'numeric', year: 'numeric',
+  });
+};
+
+const EMPTY_ADDR = {
+  label: '', street_line1: '', street_line2: '',
+  city: '', state: '', postal_code: '', country: 'SA',
+  delivery_notes: '', is_default: false,
+};
+
+const AddrFormFields = ({ form, onChange }) => (
+  <div className="addr-form-grid">
+    <div className="addr-form-row">
+      <div className="info-item">
+        <label>Title (e.g. Home, Work)</label>
+        <input type="text" value={form.label} onChange={e => onChange('label', e.target.value)} placeholder="Home" />
+      </div>
+    </div>
+    <div className="addr-form-row">
+      <div className="info-item">
+        <label>Street Address *</label>
+        <input type="text" value={form.street_line1} onChange={e => onChange('street_line1', e.target.value)} placeholder="123 King Fahd Road" />
+      </div>
+      <div className="info-item">
+        <label>Apartment / Suite</label>
+        <input type="text" value={form.street_line2} onChange={e => onChange('street_line2', e.target.value)} placeholder="Apt 4B" />
+      </div>
+    </div>
+    <div className="addr-form-row">
+      <div className="info-item">
+        <label>City *</label>
+        <input type="text" value={form.city} onChange={e => onChange('city', e.target.value)} />
+      </div>
+      <div className="info-item">
+        <label>District *</label>
+        <input type="text" value={form.state} onChange={e => onChange('state', e.target.value)} />
+      </div>
+      <div className="info-item">
+        <label>Postal Code *</label>
+        <input type="text" value={form.postal_code} onChange={e => onChange('postal_code', e.target.value)} />
+      </div>
+    </div>
+    <div className="addr-form-row">
+      <div className="info-item" style={{ width: '100%' }}>
+        <label>Delivery Notes</label>
+        <input type="text" value={form.delivery_notes} onChange={e => onChange('delivery_notes', e.target.value)} placeholder="Gate code, floor, leave at door…" />
+      </div>
+    </div>
+    <div className="addr-form-row">
+      <label className="addr-default-checkbox">
+        <input type="checkbox" checked={form.is_default} onChange={e => onChange('is_default', e.target.checked)} />
+        Set as default address
+      </label>
+    </div>
+  </div>
+);
+
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState('orders');
   const [savedBowls, setSavedBowls] = useState([]);
   const [bowlsLoading, setBowlsLoading] = useState(false);
+
+  const [orders, setOrders] = useState([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
+
+  const [addresses, setAddresses] = useState([]);
+  const [addrLoading, setAddrLoading] = useState(false);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [addrForm, setAddrForm] = useState(EMPTY_ADDR);
+  const [addrSaving, setAddrSaving] = useState(false);
+
   const { user, session, loading, signOut } = useAuth();
   const { addItem } = useCart();
   const navigate = useNavigate();
@@ -19,6 +104,28 @@ const ProfilePage = () => {
   useEffect(() => {
     if (!loading && !user) navigate('/');
   }, [user, loading, navigate]);
+
+  useEffect(() => {
+    if (activeTab !== 'orders' || !session) return;
+    setOrdersLoading(true);
+    fetch(`${API_BASE}/orders/`, {
+      headers: { Authorization: `Bearer ${session.access_token}` },
+    })
+      .then(r => r.json())
+      .then(data => { setOrders(Array.isArray(data) ? data : []); setOrdersLoading(false); })
+      .catch(() => setOrdersLoading(false));
+  }, [activeTab, session]);
+
+  useEffect(() => {
+    if (activeTab !== 'account' || !session) return;
+    setAddrLoading(true);
+    fetch(`${API_BASE}/addresses/`, {
+      headers: { Authorization: `Bearer ${session.access_token}` },
+    })
+      .then(r => r.json())
+      .then(data => { setAddresses(Array.isArray(data) ? data : []); setAddrLoading(false); })
+      .catch(() => setAddrLoading(false));
+  }, [activeTab, session]);
 
   useEffect(() => {
     if (activeTab !== 'bowls' || !session) return;
@@ -35,6 +142,73 @@ const ProfilePage = () => {
       .then((data) => { setSavedBowls(Array.isArray(data) ? data : []); setBowlsLoading(false); })
       .catch((err) => { console.error('GET /bowls/ fetch failed:', err); setBowlsLoading(false); });
   }, [activeTab, session]);
+
+  const authHeaders = () => ({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${session.access_token}`,
+  });
+
+  const handleDeleteAddress = async (id) => {
+    try {
+      await fetch(`${API_BASE}/addresses/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+      setAddresses(prev => prev.filter(a => a.id !== id));
+    } catch {}
+  };
+
+  const handleEditAddress = (addr) => {
+    setEditingId(addr.id);
+    setAddrForm({
+      label: addr.label || '',
+      street_line1: addr.street_line1,
+      street_line2: addr.street_line2 || '',
+      city: addr.city,
+      state: addr.state,
+      postal_code: addr.postal_code,
+      country: addr.country,
+      delivery_notes: addr.delivery_notes || '',
+      is_default: addr.is_default,
+    });
+    setShowAddForm(false);
+  };
+
+  const handleSaveEdit = async () => {
+    setAddrSaving(true);
+    try {
+      const resp = await fetch(`${API_BASE}/addresses/${editingId}`, {
+        method: 'PUT',
+        headers: authHeaders(),
+        body: JSON.stringify(addrForm),
+      });
+      const updated = await resp.json();
+      setAddresses(prev => prev.map(a => a.id === editingId ? updated : a));
+      setEditingId(null);
+      setAddrForm(EMPTY_ADDR);
+    } catch {}
+    setAddrSaving(false);
+  };
+
+  const handleAddAddress = async () => {
+    setAddrSaving(true);
+    try {
+      const resp = await fetch(`${API_BASE}/addresses/`, {
+        method: 'POST',
+        headers: authHeaders(),
+        body: JSON.stringify(addrForm),
+      });
+      const created = await resp.json();
+      setAddresses(prev =>
+        addrForm.is_default
+          ? [...prev.map(a => ({ ...a, is_default: false })), created]
+          : [...prev, created]
+      );
+      setShowAddForm(false);
+      setAddrForm(EMPTY_ADDR);
+    } catch {}
+    setAddrSaving(false);
+  };
 
   const handleDeleteBowl = async (bowlId) => {
     try {
@@ -71,67 +245,7 @@ const ProfilePage = () => {
   //   waterIntake: '2.5 L',
   // };
 
-  const currentOrders = [
-    {
-      id: 'SD387440',
-      date: '24/01/2026 - 08:00 AM',
-      customer: {
-        name: 'Marshal Mathers',
-        avatar: 'https://i.pravatar.cc/150?img=12'
-      },
-      deliveryAddress: '301, 3rd floor, Workafella, kondap...',
-      items: [
-        {
-          name: 'Green Detox Bowl',
-          description: 'A light, refreshing salad packed...',
-          quantity: 1,
-          image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=400&fit=crop'
-        },
-        {
-          name: 'Protein Power Salad',
-          description: 'A light, refreshing salad packed...',
-          quantity: 2,
-          image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop'
-        }
-      ],
-      deliveryStatus: {
-        text: 'Out for delivery',
-        arrivalTime: 'Arriving by 24/01/2026 - 07:40 AM'
-      },
-      type: 'current'
-    }
-  ];
 
-  const pastOrders = [
-    {
-      id: 'SD387440',
-      date: '24/01/2026 - 08:00 AM',
-      customer: {
-        name: 'Marshal Mathers',
-        avatar: 'https://i.pravatar.cc/150?img=12'
-      },
-      deliveryAddress: '301, 3rd floor, Workafella, kondap...',
-      items: [
-        {
-          name: 'Protein Power Salad',
-          description: 'A light, refreshing salad packed...',
-          quantity: 2,
-          image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop'
-        }
-      ],
-      deliveryStatus: {
-        text: 'Out for delivery',
-        arrivalTime: 'Arriving by 24/01/2026 - 07:40 AM'
-      },
-      type: 'past'
-    }
-  ];
-
-
-  const savedAddresses = [
-    { id: 1, label: 'Home', address: '123 Main St, Apt 4B', city: 'New York, NY 10001', isDefault: true },
-    { id: 2, label: 'Work', address: '456 Business Ave, Suite 200', city: 'New York, NY 10002', isDefault: false },
-  ];
 
   // const subscriptionData = {
   //   plan: 'Premium Monthly',
@@ -145,6 +259,9 @@ const ProfilePage = () => {
   //   { id: 1, date: '2025-01-03', doctor: 'Dr. Sarah Miller', topic: 'Dietary Planning', status: 'Completed' },
   //   { id: 2, date: '2024-12-15', doctor: 'Dr. James Wilson', topic: 'Weight Management', status: 'Completed' },
   // ];
+
+  const handleAddrChange = (key, val) => setAddrForm(p => ({ ...p, [key]: val }));
+  const addrFormValid = addrForm.street_line1.trim() && addrForm.city.trim() && addrForm.state.trim() && addrForm.postal_code.trim();
 
   const renderPersonalInfo = () => (
     <>
@@ -168,25 +285,89 @@ const ProfilePage = () => {
 
       <div className="profile-section">
         <h2>Saved Addresses</h2>
-        <div className="address-list">
-          {savedAddresses.map((address) => (
-            <div key={address.id} className="address-card">
-              <div className="address-header">
-                <span className="address-label">{address.label}</span>
-                {address.isDefault && <span className="default-badge">Default</span>}
+
+        {addrLoading && <p style={{ color: '#aaa', marginBottom: '1rem' }}>Loading addresses…</p>}
+
+        {!addrLoading && (
+          <div className="address-list">
+            {addresses.map((addr) => (
+              <div key={addr.id} className="address-card">
+                {editingId === addr.id ? (
+                  <>
+                    <AddrFormFields form={addrForm} onChange={handleAddrChange} />
+                    <div className="address-actions">
+                      <button
+                        className="action-btn"
+                        onClick={handleSaveEdit}
+                        disabled={addrSaving || !addrFormValid}
+                      >
+                        {addrSaving ? 'Saving…' : 'Save'}
+                      </button>
+                      <button
+                        className="action-btn delete"
+                        onClick={() => { setEditingId(null); setAddrForm(EMPTY_ADDR); }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="address-header">
+                      <span className="address-label">{addr.label || 'Address'}</span>
+                      {addr.is_default && <span className="default-badge">Default</span>}
+                    </div>
+                    <div className="address-content">
+                      <p className="address-text">
+                        {addr.street_line1}{addr.street_line2 ? `, ${addr.street_line2}` : ''}
+                      </p>
+                      <p className="address-city">{addr.city}, {addr.state} {addr.postal_code}</p>
+                      {addr.delivery_notes && (
+                        <p className="address-city" style={{ opacity: 0.6, fontSize: '13px' }}>
+                          {addr.delivery_notes}
+                        </p>
+                      )}
+                    </div>
+                    <div className="address-actions">
+                      <button className="action-btn" onClick={() => handleEditAddress(addr)}>Edit</button>
+                      <button className="action-btn delete" onClick={() => handleDeleteAddress(addr.id)}>Delete</button>
+                    </div>
+                  </>
+                )}
               </div>
-              <div className="address-content">
-                <p className="address-text">{address.address}</p>
-                <p className="address-city">{address.city}</p>
-              </div>
-              <div className="address-actions">
-                <button className="action-btn">Edit</button>
-                <button className="action-btn delete">Delete</button>
-              </div>
+            ))}
+          </div>
+        )}
+
+        {showAddForm && (
+          <div className="addr-add-form">
+            <AddrFormFields form={addrForm} onChange={handleAddrChange} />
+            <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+              <button
+                className="action-btn"
+                onClick={handleAddAddress}
+                disabled={addrSaving || !addrFormValid}
+              >
+                {addrSaving ? 'Saving…' : 'Save Address'}
+              </button>
+              <button
+                className="action-btn delete"
+                onClick={() => { setShowAddForm(false); setAddrForm(EMPTY_ADDR); }}
+              >
+                Cancel
+              </button>
             </div>
-          ))}
-        </div>
-        <button className="add-btn">+ Add New Address</button>
+          </div>
+        )}
+
+        {!showAddForm && editingId === null && (
+          <button
+            className="add-btn"
+            onClick={() => { setShowAddForm(true); setEditingId(null); setAddrForm(EMPTY_ADDR); }}
+          >
+            + Add New Address
+          </button>
+        )}
       </div>
 
       <button className="logout-btn" onClick={handleLogout}>
@@ -254,98 +435,110 @@ const ProfilePage = () => {
   //   </div>
   // );
 
-  const renderOrderCard = (order) => (
-    <div key={order.id} className="order-card">
-      <div className="order-header-info">
-        <div className="order-date-time">
-          <svg width="12" height="13" viewBox="0 0 12 13" fill="none">
-            <rect x="0.5" y="0.5" width="11" height="12" rx="2" stroke="black" strokeOpacity="0.7"/>
-          </svg>
-          <span>{order.date}</span>
-        </div>
-        <div className="order-id">ID: #{order.id}</div>
-      </div>
-      
-      <div className="customer-info">
-        <div className="customer-avatar">
-          {order.customer.avatar ? (
-            <img src={order.customer.avatar} alt={order.customer.name} />
-          ) : (
-            <div className="avatar-placeholder">{order.customer.name.charAt(0)}</div>
-          )}
-        </div>
-        <span className="customer-name">{order.customer.name}</span>
-      </div>
+  const STATUS_LABELS = {
+    waiting: 'Preparing',
+    out_for_delivery: 'Out for Delivery',
+    delivered: 'Delivered',
+  };
 
-      <div className="delivery-address-row">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M16.6667 8.33333V5C16.6667 3.61667 15.95 2.5 14.1667 2.5H5.83333C4.05 2.5 3.33333 3.61667 3.33333 5V15C3.33333 16.3833 4.05 17.5 5.83333 17.5H8.33333" stroke="#190089" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-        <span className="delivery-text">
-          {order.type === 'current' ? 'Delivering to: ' : 'Delivered to: '}
-          {order.deliveryAddress}
-        </span>
-      </div>
+  const renderOrderCard = (order) => {
+    const addr = order.address_snapshot || {};
+    const addrStr = [addr.street_line1, addr.street_line2, addr.city, addr.state]
+      .filter(Boolean).join(', ');
+    const isUpcoming = order.delivery_status !== 'delivered';
+    const statusLabel = STATUS_LABELS[order.delivery_status] || order.delivery_status;
 
-      <div className="order-items-list">
-        {order.items.map((item, index) => (
-          <div key={index} className="order-item-row">
-            <div className="item-content">
-              <div className="item-image">
-                {item.image ? (
-                  <img src={item.image} alt={item.name} />
-                ) : (
-                  <div className="item-image-placeholder">🥗</div>
-                )}
-              </div>
-              <div className="item-details">
-                <h4 className="item-name">{item.name}</h4>
-                <p className="item-description">{item.description}</p>
-              </div>
-            </div>
-            <div className="item-quantity">X {item.quantity}</div>
+    return (
+      <div key={order.id} className="order-card">
+        <div className="order-header-info">
+          <div className="order-date-time">
+            <svg width="12" height="13" viewBox="0 0 12 13" fill="none">
+              <rect x="0.5" y="0.5" width="11" height="12" rx="2" stroke="black" strokeOpacity="0.7"/>
+            </svg>
+            <span>{fmtDate(order.delivery_date)} · {fmtSlot(order.delivery_slot)}</span>
           </div>
-        ))}
-      </div>
-
-      <div className="order-divider"></div>
-
-      <div className="order-status-row">
-        <div className="delivery-status-info">
-          <span className="status-label">Delivery Status</span>
-          <span className="arrival-time">{order.deliveryStatus.arrivalTime}</span>
+          <div className="order-id">#{order.id.slice(0, 8).toUpperCase()}</div>
         </div>
-        <div className="status-badge-pill">
-          {order.deliveryStatus.text}
+
+        <div className="customer-info">
+          <div className="customer-avatar">
+            <div className="avatar-placeholder">{order.customer_name?.charAt(0) || '?'}</div>
+          </div>
+          <span className="customer-name">{order.customer_name}</span>
+        </div>
+
+        <div className="delivery-address-row">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#386641" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span className="delivery-text">
+            {isUpcoming ? 'Delivering to: ' : 'Delivered to: '}
+            {addrStr}
+          </span>
+        </div>
+
+        <div className="order-items-list">
+          {(order.items || []).map((item, index) => (
+            <div key={index} className="order-item-row">
+              <div className="item-content">
+                <div className="item-image">
+                  {item.image
+                    ? <img src={item.image} alt={item.name} />
+                    : <div className="item-image-placeholder">🥗</div>
+                  }
+                </div>
+                <div className="item-details">
+                  <h4 className="item-name">{item.name}</h4>
+                  <p className="item-description">
+                    {Number(item.unit_price) > 0 ? `₹${Number(item.unit_price).toFixed(2)} each` : ''}
+                  </p>
+                </div>
+              </div>
+              <div className="item-quantity">×{item.quantity}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="order-divider" />
+
+        <div className="order-status-row">
+          <div className="delivery-status-info">
+            <span className="status-label">Total</span>
+            <span className="arrival-time">₹{Number(order.total || 0).toFixed(2)}</span>
+          </div>
+          <div className={`status-badge-pill status-${order.delivery_status}`}>
+            {statusLabel}
+          </div>
         </div>
       </div>
+    );
+  };
 
-      <button className="order-action-btn">
-        <span>{order.type === 'current' ? 'Track Order' : 'Reorder'}</span>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M4.5 1.5L9 6L4.5 10.5" stroke="#386641" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </button>
-    </div>
-  );
+  const renderPurchaseHistory = () => {
+    if (ordersLoading) return <p style={{ color: '#aaa', padding: '2rem 0' }}>Loading orders…</p>;
 
-  const renderPurchaseHistory = () => (
-    <div className="orders-container">
-      <div className="orders-section">
-        <h3 className="section-title">Current Orders</h3>
-        <div className="orders-list">
-          {currentOrders.map(order => renderOrderCard(order))}
+    const upcoming = orders.filter(o => o.delivery_status !== 'delivered');
+    const past = orders.filter(o => o.delivery_status === 'delivered');
+
+    return (
+      <div className="orders-container">
+        <div className="orders-section">
+          <h3 className="section-title">Upcoming Orders</h3>
+          {upcoming.length === 0
+            ? <p className="orders-empty">No upcoming orders.</p>
+            : <div className="orders-list">{upcoming.map(o => renderOrderCard(o))}</div>
+          }
+        </div>
+        <div className="orders-section">
+          <h3 className="section-title">Past Orders</h3>
+          {past.length === 0
+            ? <p className="orders-empty">No past orders yet.</p>
+            : <div className="orders-list">{past.map(o => renderOrderCard(o))}</div>
+          }
         </div>
       </div>
-
-      <div className="orders-section">
-        <h3 className="section-title">Past Orders</h3>
-        <div className="orders-list">
-          {pastOrders.map(order => renderOrderCard(order))}
-        </div>
-      </div>
-    </div>
-  );
+    );
+  };
 
   // const renderAddresses = () => (
   //   <div className="profile-section">
