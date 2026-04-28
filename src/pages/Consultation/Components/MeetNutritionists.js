@@ -10,8 +10,8 @@ const MeetNutritionists = () => {
   const nutritionists = [
     {
       id: 1,
-      name: 'Dr. Sarah Mitchell',
-      specialty: 'Weight Management & Sports Nutrition',
+      name: 'Madiha Baig',
+      specialty: 'Healath Counsellor',
       description: '15 years of experience helping athletes and fitness enthusiasts optimize their nutrition.',
       rating: 4.9,
       sessions: '500+ sessions',
