@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import '../Styles/Navbar.css';
 import { ReactComponent as NavbarLogo } from '../../Assets/Navbar/Navbar_logo.svg';
 import { ReactComponent as AppStoreLogo } from '../../Assets/Navbar/app-store.svg';
 import { ReactComponent as GooglePlayLogo } from '../../Assets/Navbar/google-play-store-icon 1.svg';
 import { ReactComponent as AccountIcon } from '../../Assets/Navbar/Vector.svg';
 import AuthModal from '../../pages/Profile/Components/AuthModal';
+import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <nav className="navbar">
@@ -47,13 +50,23 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
-            <button 
-              className="account-btn" 
-              onClick={() => setIsAuthModalOpen(true)}
-            >
-              <AccountIcon className="account-icon" />
-              <span>Account</span>
-            </button>
+            {user ? (
+              <button
+                className="account-btn"
+                onClick={() => navigate('/profile')}
+              >
+                <AccountIcon className="account-icon" />
+                <span>{user.email.split('@')[0]}</span>
+              </button>
+            ) : (
+              <button
+                className="account-btn"
+                onClick={() => setIsAuthModalOpen(true)}
+              >
+                <AccountIcon className="account-icon" />
+                <span>Account</span>
+              </button>
+            )}
           </div>
           {/* Mobile Toggle */}
           <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)}>

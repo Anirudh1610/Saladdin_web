@@ -1,87 +1,206 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { CreditCard, MapPin, User, ShoppingBag, CheckCircle, ArrowLeft } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  MapPin, User, ShoppingBag, CheckCircle, ArrowLeft,
+  Calendar, Clock, Package, Phone,
+} from 'lucide-react';
 import '../Styles/Checkout.css';
+import { useCart } from '../../../context/CartContext';
+import { useAuth } from '../../../context/AuthContext';
+
+const API_BASE = `http://${window.location.hostname}:8000`;
+const DELIVERY_FEE = 15;
+
+const formatSlot = (slot) => {
+  const [start, end] = slot.split('-');
+  const fmt = (t) => {
+    const h = parseInt(t.split(':')[0], 10);
+    if (h === 0) return '12 AM';
+    if (h < 12) return `${h} AM`;
+    if (h === 12) return '12 PM';
+    return `${h - 12} PM`;
+  };
+  return `${fmt(start)} – ${fmt(end)}`;
+};
+
+const getMinDate = () => {
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  return d.toISOString().split('T')[0];
+};
+
+const formatDate = (d) => {
+  if (!d) return '';
+  const [y, m, day] = d.split('-');
+  return new Date(y, m - 1, day).toLocaleDateString('en-SA', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+  });
+};
 
 const Checkout = () => {
+  const navigate = useNavigate();
+  const { cartItems, clearCart } = useCart();
+  const { session, user } = useAuth();
+
   const [step, setStep] = useState(1);
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [placedOrder, setPlacedOrder] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
+  const [savedAddresses, setSavedAddresses] = useState([]);
+  const [addressMode, setAddressMode] = useState('new');
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [slots, setSlots] = useState([]);
 
   const [formData, setFormData] = useState({
-    // Contact Information
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    
-    // Delivery Address
-    address: '',
-    apartment: '',
+    customerName: '',
+    customerPhone: '',
+    label: '',
+    streetLine1: '',
+    streetLine2: '',
     city: '',
     state: '',
-    zipCode: '',
-    deliveryInstructions: '',
-    
-    // Payment
-    cardNumber: '',
-    cardName: '',
-    expiryDate: '',
-    cvv: '',
-    
-    // Preferences
+    postalCode: '',
+    country: 'SA',
+    deliveryNotes: '',
     saveAddress: false,
-    savePayment: false,
+    deliveryDate: '',
+    deliverySlot: '',
+    specialInstructions: '',
   });
 
-  const handleInputChange = (e) => {
+  const subtotal = cartItems.reduce((s, i) => s + i.price * i.quantity, 0);
+  const total = subtotal + DELIVERY_FEE;
+
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        customerName: user.user_metadata?.full_name || '',
+        customerPhone: user.user_metadata?.phone || '',
+      }));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (!session) return;
+
+    fetch(`${API_BASE}/addresses/`, {
+      headers: { Authorization: `Bearer ${session.access_token}` },
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setSavedAddresses(data);
+          const def = data.find(a => a.is_default) || data[0];
+          setSelectedAddressId(def.id);
+          setAddressMode('saved');
+        }
+      })
+      .catch(() => {});
+
+    fetch(`${API_BASE}/orders/slots`)
+      .then(r => r.json())
+      .then(data => setSlots(data.slots || []))
+      .catch(() => {});
+  }, [session]);
+
+  const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Simulate order placement
-    setOrderPlaced(true);
+  const step1Valid = formData.customerName.trim() && formData.customerPhone.trim();
+
+  const step2Valid = (() => {
+    if (!formData.deliveryDate || !formData.deliverySlot) return false;
+    if (addressMode === 'saved') return !!selectedAddressId;
+    return (
+      formData.streetLine1.trim() &&
+      formData.city.trim() &&
+      formData.state.trim() &&
+      formData.postalCode.trim()
+    );
+  })();
+
+  const handlePlaceOrder = async () => {
+    if (submitting) return;
+    setSubmitting(true);
+    setError('');
+
+    try {
+      let addressId = selectedAddressId;
+
+      if (addressMode === 'new') {
+        const addrResp = await fetch(`${API_BASE}/addresses/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            label: formData.label || null,
+            street_line1: formData.streetLine1,
+            street_line2: formData.streetLine2 || null,
+            city: formData.city,
+            state: formData.state,
+            postal_code: formData.postalCode,
+            country: formData.country,
+            delivery_notes: formData.deliveryNotes || null,
+            is_default: formData.saveAddress,
+          }),
+        });
+        if (!addrResp.ok) throw new Error('Could not save address. Please try again.');
+        const addr = await addrResp.json();
+        addressId = addr.id;
+      }
+
+      const orderResp = await fetch(`${API_BASE}/orders/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          address_id: addressId,
+          customer_name: formData.customerName,
+          customer_phone: formData.customerPhone,
+          delivery_date: formData.deliveryDate,
+          delivery_slot: formData.deliverySlot,
+          special_instructions: formData.specialInstructions || null,
+        }),
+      });
+
+      if (!orderResp.ok) {
+        const err = await orderResp.json();
+        throw new Error(err.detail || 'Could not place order. Please try again.');
+      }
+
+      const order = await orderResp.json();
+      setPlacedOrder(order);
+      setOrderPlaced(true);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  // Mock order data
-  const orderItems = [
-    { id: 1, name: 'Mediterranean Delight Bowl', quantity: 2, price: 12.99 },
-    { id: 2, name: 'Build Your Bowl - Custom', quantity: 1, price: 14.50 },
-    { id: 3, name: 'Asian Fusion Crunch', quantity: 1, price: 11.99 }
-  ];
+  const selectedAddress = savedAddresses.find(a => a.id === selectedAddressId);
 
-  const subtotal = 52.47;
-  const tax = 4.20;
-  const deliveryFee = 0; // Free delivery over ₹30
-  const total = 56.67;
-
-  if (orderPlaced) {
+  // ── Not signed in ──────────────────────────────────────────
+  if (!session) {
     return (
       <div className="checkout-page">
         <div className="container">
           <div className="order-success">
-            <CheckCircle size={80} className="success-icon" />
-            <h1>Order Placed Successfully!</h1>
-            <p className="order-number">Order #12345</p>
-            <div className="success-message">
-              <p>Thank you for your order! We've sent a confirmation email to <strong>{formData.email}</strong></p>
-              <p>Your fresh salad bowls will be prepared with care and delivered to:</p>
-              <div className="delivery-address">
-                <MapPin size={20} />
-                <div>
-                  <p>{formData.address}</p>
-                  <p>{formData.city}, {formData.state} {formData.zipCode}</p>
-                </div>
-              </div>
-              <p className="estimated-delivery">Estimated delivery: 30-45 minutes</p>
-            </div>
+            <ShoppingBag size={60} className="success-icon" />
+            <h1>Sign in to checkout</h1>
+            <p className="order-number">You need to be signed in to place an order.</p>
             <div className="success-actions">
-              <Link to="/profile" className="btn btn-primary">View Order Details</Link>
-              <Link to="/explorer" className="btn btn-outline">Continue Shopping</Link>
+              <Link to="/profile" className="btn btn-primary">Sign In</Link>
+              <Link to="/cart" className="btn btn-outline">Back to Cart</Link>
             </div>
           </div>
         </div>
@@ -89,6 +208,48 @@ const Checkout = () => {
     );
   }
 
+  // ── Empty cart ─────────────────────────────────────────────
+  if (cartItems.length === 0 && !orderPlaced) {
+    navigate('/cart');
+    return null;
+  }
+
+  // ── Success ────────────────────────────────────────────────
+  if (orderPlaced && placedOrder) {
+    const addr = placedOrder.address_snapshot;
+    return (
+      <div className="checkout-page">
+        <div className="container">
+          <div className="order-success">
+            <CheckCircle size={80} className="success-icon" />
+            <h1>Order Placed!</h1>
+            <p className="order-number">#{placedOrder.id.slice(0, 8).toUpperCase()}</p>
+            <div className="success-message">
+              <div className="review-block">
+                <div className="review-block-row">
+                  <Calendar size={16} />
+                  <span>{formatDate(placedOrder.delivery_date)} · {formatSlot(placedOrder.delivery_slot)}</span>
+                </div>
+                <div className="review-block-row">
+                  <MapPin size={16} />
+                  <span>
+                    {addr.street_line1}
+                    {addr.street_line2 ? `, ${addr.street_line2}` : ''}, {addr.city}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="success-actions">
+              <Link to="/profile" className="btn btn-primary">View Orders</Link>
+              <Link to="/menu" className="btn btn-outline">Order Again</Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Checkout form ──────────────────────────────────────────
   return (
     <div className="checkout-page">
       <div className="container">
@@ -102,104 +263,142 @@ const Checkout = () => {
 
         <div className="checkout-layout">
           <div className="checkout-form">
+
+            {/* Progress steps */}
             <div className="progress-steps">
-              <div className={`step ${step >= 1 ? 'active' : ''}`}>
-                <span className="step-number">1</span>
-                <span className="step-label">Contact</span>
-              </div>
-              <div className={`step ${step >= 2 ? 'active' : ''}`}>
-                <span className="step-number">2</span>
-                <span className="step-label">Delivery</span>
-              </div>
-              <div className={`step ${step >= 3 ? 'active' : ''}`}>
-                <span className="step-number">3</span>
-                <span className="step-label">Payment</span>
-              </div>
+              {[
+                { n: 1, label: 'Contact' },
+                { n: 2, label: 'Delivery' },
+                { n: 3, label: 'Review' },
+              ].map(s => (
+                <div key={s.n} className={`step ${step >= s.n ? 'active' : ''}`}>
+                  <span className="step-number">{s.n}</span>
+                  <span className="step-label">{s.label}</span>
+                </div>
+              ))}
             </div>
 
-            <form onSubmit={handleSubmit}>
-              {/* Step 1: Contact Information */}
-              {step === 1 && (
-                <div className="form-section">
-                  <div className="section-header">
-                    <User size={24} />
-                    <h2>Contact Information</h2>
-                  </div>
-                  <div className="form-grid">
-                    <div className="form-group">
-                      <label>First Name *</label>
-                      <input
-                        type="text"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Last Name *</label>
-                      <input
-                        type="text"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group full-width">
-                      <label>Email Address *</label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group full-width">
-                      <label>Phone Number *</label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        placeholder="(555) 123-4567"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <button type="button" className="btn btn-primary" onClick={() => setStep(2)}>
-                    Continue to Delivery
-                  </button>
+            {/* ── Step 1: Contact ── */}
+            {step === 1 && (
+              <div className="form-section">
+                <div className="section-header">
+                  <User size={24} />
+                  <h2>Contact Information</h2>
                 </div>
-              )}
-
-              {/* Step 2: Delivery Address */}
-              {step === 2 && (
-                <div className="form-section">
-                  <div className="section-header">
-                    <MapPin size={24} />
-                    <h2>Delivery Address</h2>
+                <div className="form-grid">
+                  <div className="form-group full-width">
+                    <label>Full Name *</label>
+                    <input
+                      type="text"
+                      name="customerName"
+                      value={formData.customerName}
+                      onChange={handleChange}
+                      placeholder="Your full name"
+                    />
                   </div>
+                  <div className="form-group full-width">
+                    <label>Phone Number *</label>
+                    <input
+                      type="tel"
+                      name="customerPhone"
+                      value={formData.customerPhone}
+                      onChange={handleChange}
+                      placeholder="+966 5X XXX XXXX"
+                    />
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => setStep(2)}
+                  disabled={!step1Valid}
+                >
+                  Continue to Delivery
+                </button>
+              </div>
+            )}
+
+            {/* ── Step 2: Delivery ── */}
+            {step === 2 && (
+              <div className="form-section">
+                <div className="section-header">
+                  <MapPin size={24} />
+                  <h2>Delivery Details</h2>
+                </div>
+
+                {/* Address mode toggle */}
+                {savedAddresses.length > 0 && (
+                  <div className="address-mode-toggle">
+                    <button
+                      type="button"
+                      className={addressMode === 'saved' ? 'active' : ''}
+                      onClick={() => setAddressMode('saved')}
+                    >
+                      Saved Addresses
+                    </button>
+                    <button
+                      type="button"
+                      className={addressMode === 'new' ? 'active' : ''}
+                      onClick={() => setAddressMode('new')}
+                    >
+                      New Address
+                    </button>
+                  </div>
+                )}
+
+                {/* Saved address cards */}
+                {addressMode === 'saved' && (
+                  <div className="co-addr-cards">
+                    {savedAddresses.map(addr => (
+                      <div
+                        key={addr.id}
+                        className={`co-addr-card ${selectedAddressId === addr.id ? 'selected' : ''}`}
+                        onClick={() => setSelectedAddressId(addr.id)}
+                      >
+                        <div className="co-addr-radio" />
+                        <div className="co-addr-body">
+                          {addr.label && <span className="co-addr-tag">{addr.label}</span>}
+                          <p>{addr.street_line1}{addr.street_line2 ? `, ${addr.street_line2}` : ''}</p>
+                          <p>{addr.city}, {addr.state} {addr.postal_code}</p>
+                          {addr.delivery_notes && (
+                            <p className="co-addr-notes">{addr.delivery_notes}</p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* New address form */}
+                {addressMode === 'new' && (
                   <div className="form-grid">
+                    <div className="form-group">
+                      <label>Label (optional)</label>
+                      <input
+                        type="text"
+                        name="label"
+                        value={formData.label}
+                        onChange={handleChange}
+                        placeholder="Home, Work…"
+                      />
+                    </div>
                     <div className="form-group full-width">
                       <label>Street Address *</label>
                       <input
                         type="text"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleInputChange}
-                        placeholder="123 Main Street"
-                        required
+                        name="streetLine1"
+                        value={formData.streetLine1}
+                        onChange={handleChange}
+                        placeholder="123 King Fahd Road"
                       />
                     </div>
                     <div className="form-group full-width">
-                      <label>Apartment, Suite, etc.</label>
+                      <label>Apartment / Suite</label>
                       <input
                         type="text"
-                        name="apartment"
-                        value={formData.apartment}
-                        onChange={handleInputChange}
+                        name="streetLine2"
+                        value={formData.streetLine2}
+                        onChange={handleChange}
                         placeholder="Apt 4B"
                       />
                     </div>
@@ -209,38 +408,35 @@ const Checkout = () => {
                         type="text"
                         name="city"
                         value={formData.city}
-                        onChange={handleInputChange}
-                        required
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="form-group">
-                      <label>State *</label>
+                      <label>District *</label>
                       <input
                         type="text"
                         name="state"
                         value={formData.state}
-                        onChange={handleInputChange}
-                        required
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="form-group">
-                      <label>ZIP Code *</label>
+                      <label>Postal Code *</label>
                       <input
                         type="text"
-                        name="zipCode"
-                        value={formData.zipCode}
-                        onChange={handleInputChange}
-                        required
+                        name="postalCode"
+                        value={formData.postalCode}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="form-group full-width">
-                      <label>Delivery Instructions</label>
+                      <label>Delivery Notes</label>
                       <textarea
-                        name="deliveryInstructions"
-                        value={formData.deliveryInstructions}
-                        onChange={handleInputChange}
-                        placeholder="Ring doorbell, leave at door, etc."
-                        rows="3"
+                        name="deliveryNotes"
+                        value={formData.deliveryNotes}
+                        onChange={handleChange}
+                        placeholder="Gate code, buzzer, leave at door…"
+                        rows="2"
                       />
                     </div>
                     <div className="form-group full-width">
@@ -249,147 +445,232 @@ const Checkout = () => {
                           type="checkbox"
                           name="saveAddress"
                           checked={formData.saveAddress}
-                          onChange={handleInputChange}
+                          onChange={handleChange}
                         />
                         Save this address for future orders
                       </label>
                     </div>
                   </div>
-                  <div className="button-group">
-                    <button type="button" className="btn btn-outline" onClick={() => setStep(1)}>
-                      Back
-                    </button>
-                    <button type="button" className="btn btn-primary" onClick={() => setStep(3)}>
-                      Continue to Payment
-                    </button>
-                  </div>
-                </div>
-              )}
+                )}
 
-              {/* Step 3: Payment */}
-              {step === 3 && (
-                <div className="form-section">
-                  <div className="section-header">
-                    <CreditCard size={24} />
-                    <h2>Payment Information</h2>
-                  </div>
-                  <div className="form-grid">
-                    <div className="form-group full-width">
-                      <label>Card Number *</label>
-                      <input
-                        type="text"
-                        name="cardNumber"
-                        value={formData.cardNumber}
-                        onChange={handleInputChange}
-                        placeholder="1234 5678 9012 3456"
-                        required
-                      />
-                    </div>
-                    <div className="form-group full-width">
-                      <label>Cardholder Name *</label>
-                      <input
-                        type="text"
-                        name="cardName"
-                        value={formData.cardName}
-                        onChange={handleInputChange}
-                        placeholder="John Doe"
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Expiry Date *</label>
-                      <input
-                        type="text"
-                        name="expiryDate"
-                        value={formData.expiryDate}
-                        onChange={handleInputChange}
-                        placeholder="MM/YY"
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>CVV *</label>
-                      <input
-                        type="text"
-                        name="cvv"
-                        value={formData.cvv}
-                        onChange={handleInputChange}
-                        placeholder="123"
-                        maxLength="4"
-                        required
-                      />
-                    </div>
-                    <div className="form-group full-width">
-                      <label className="checkbox-label">
-                        <input
-                          type="checkbox"
-                          name="savePayment"
-                          checked={formData.savePayment}
-                          onChange={handleInputChange}
-                        />
-                        Save this payment method for future orders
-                      </label>
-                    </div>
-                  </div>
-                  <div className="button-group">
-                    <button type="button" className="btn btn-outline" onClick={() => setStep(2)}>
-                      Back
-                    </button>
-                    <button type="submit" className="btn btn-primary btn-place-order">
-                      Place Order - ₹{total.toFixed(2)}
-                    </button>
+                {/* Delivery date */}
+                <div className="form-group delivery-date-group">
+                  <label>
+                    <Calendar size={14} />
+                    Delivery Date *
+                  </label>
+                  <input
+                    type="date"
+                    name="deliveryDate"
+                    value={formData.deliveryDate}
+                    onChange={handleChange}
+                    min={getMinDate()}
+                  />
+                </div>
+
+                {/* Time slot */}
+                <div className="form-group">
+                  <label>
+                    <Clock size={14} />
+                    Delivery Time Slot *
+                  </label>
+                  <div className="slot-grid">
+                    {slots.map(slot => (
+                      <button
+                        key={slot}
+                        type="button"
+                        className={`slot-btn ${formData.deliverySlot === slot ? 'selected' : ''}`}
+                        onClick={() => setFormData(prev => ({ ...prev, deliverySlot: slot }))}
+                      >
+                        {formatSlot(slot)}
+                      </button>
+                    ))}
                   </div>
                 </div>
-              )}
-            </form>
+
+                {/* Special instructions */}
+                <div className="form-group">
+                  <label>Special Instructions</label>
+                  <textarea
+                    name="specialInstructions"
+                    value={formData.specialInstructions}
+                    onChange={handleChange}
+                    placeholder="Any requests for the kitchen or driver…"
+                    rows="2"
+                  />
+                </div>
+
+                <div className="button-group">
+                  <button type="button" className="btn btn-outline" onClick={() => setStep(1)}>
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => setStep(3)}
+                    disabled={!step2Valid}
+                  >
+                    Review Order
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* ── Step 3: Review ── */}
+            {step === 3 && (
+              <div className="form-section">
+                <div className="section-header">
+                  <Package size={24} />
+                  <h2>Review & Confirm</h2>
+                </div>
+
+                {/* Items */}
+                <div className="review-block">
+                  <h3 className="review-block-title">Your Order ({cartItems.length} item{cartItems.length !== 1 ? 's' : ''})</h3>
+                  <div className="review-items-list">
+                    {cartItems.map(item => (
+                      <div key={item.id} className="review-item-row">
+                        {item.image && (
+                          <img src={item.image} alt={item.name} className="review-item-img" />
+                        )}
+                        <div className="review-item-info">
+                          <span className="review-item-name">{item.name}</span>
+                          <span className="review-item-meta">
+                            {item.item_type === 'bowl' ? 'Bowl' : 'Salad'} · ×{item.quantity}
+                            {item.price > 0 && ` · ₹${item.price.toFixed(2)} each`}
+                          </span>
+                        </div>
+                        <span className="review-item-total">
+                          {item.price > 0 ? `₹${(item.price * item.quantity).toFixed(2)}` : '—'}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="review-pricing">
+                    <div className="review-pricing-row">
+                      <span>Subtotal</span>
+                      <span>₹{subtotal.toFixed(2)}</span>
+                    </div>
+                    <div className="review-pricing-row">
+                      <span>Delivery fee</span>
+                      <span>₹{DELIVERY_FEE.toFixed(2)}</span>
+                    </div>
+                    <div className="review-pricing-row review-pricing-total">
+                      <span>Total</span>
+                      <span>₹{total.toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Contact */}
+                <div className="review-block">
+                  <h3 className="review-block-title">Contact</h3>
+                  <div className="review-block-row">
+                    <User size={15} />
+                    <span>{formData.customerName}</span>
+                  </div>
+                  <div className="review-block-row">
+                    <Phone size={15} />
+                    <span>{formData.customerPhone}</span>
+                  </div>
+                </div>
+
+                {/* Delivery */}
+                <div className="review-block">
+                  <h3 className="review-block-title">Delivery</h3>
+                  <div className="review-block-row">
+                    <Calendar size={15} />
+                    <span>{formatDate(formData.deliveryDate)}</span>
+                  </div>
+                  <div className="review-block-row">
+                    <Clock size={15} />
+                    <span>{formatSlot(formData.deliverySlot)}</span>
+                  </div>
+                  <div className="review-block-row" style={{ alignItems: 'flex-start' }}>
+                    <MapPin size={15} style={{ marginTop: 2, flexShrink: 0 }} />
+                    <span>
+                      {addressMode === 'saved' && selectedAddress ? (
+                        <>
+                          {selectedAddress.label && <strong>{selectedAddress.label} · </strong>}
+                          {selectedAddress.street_line1}
+                          {selectedAddress.street_line2 ? `, ${selectedAddress.street_line2}` : ''}
+                          {`, ${selectedAddress.city}`}
+                          {selectedAddress.state ? `, ${selectedAddress.state}` : ''}
+                          {selectedAddress.postal_code ? ` ${selectedAddress.postal_code}` : ''}
+                        </>
+                      ) : (
+                        <>
+                          {formData.label && <strong>{formData.label} · </strong>}
+                          {formData.streetLine1}
+                          {formData.streetLine2 ? `, ${formData.streetLine2}` : ''}
+                          {`, ${formData.city}`}
+                          {formData.state ? `, ${formData.state}` : ''}
+                          {formData.postalCode ? ` ${formData.postalCode}` : ''}
+                        </>
+                      )}
+                    </span>
+                  </div>
+                  {(() => {
+                    const notes = addressMode === 'saved' && selectedAddress
+                      ? selectedAddress.delivery_notes
+                      : formData.deliveryNotes;
+                    return notes ? (
+                      <p className="review-note">Delivery note: "{notes}"</p>
+                    ) : null;
+                  })()}
+                  {formData.specialInstructions && (
+                    <p className="review-note">Kitchen note: "{formData.specialInstructions}"</p>
+                  )}
+                </div>
+
+                {error && <p className="error-msg">{error}</p>}
+
+                <div className="button-group">
+                  <button type="button" className="btn btn-outline" onClick={() => setStep(2)}>
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-place-order"
+                    onClick={handlePlaceOrder}
+                    disabled={submitting}
+                  >
+                    {submitting ? 'Placing Order…' : `Place Order · ₹${total.toFixed(2)}`}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Order Summary Sidebar */}
+          {/* ── Order Summary Sidebar ── */}
           <div className="order-summary">
             <h2>Order Summary</h2>
             <div className="order-items">
-              {orderItems.map(item => (
+              {cartItems.map(item => (
                 <div key={item.id} className="order-item">
                   <div className="order-item-info">
                     <span className="item-name">{item.name}</span>
-                    <span className="item-quantity">x{item.quantity}</span>
+                    <span className="item-quantity">×{item.quantity}</span>
                   </div>
-                  <span className="item-total">₹{(item.price * item.quantity).toFixed(2)}</span>
+                  <span className="item-total">
+                    {item.price > 0 ? `₹${(item.price * item.quantity).toFixed(2)}` : '—'}
+                  </span>
                 </div>
               ))}
             </div>
-
-            <div className="summary-divider"></div>
-
+            <div className="summary-divider" />
             <div className="summary-row">
               <span>Subtotal</span>
               <span>₹{subtotal.toFixed(2)}</span>
             </div>
             <div className="summary-row">
-              <span>Tax</span>
-              <span>₹{tax.toFixed(2)}</span>
-            </div>
-            <div className="summary-row">
               <span>Delivery</span>
-              <span className="free-text">{deliveryFee === 0 ? 'FREE' : `₹${deliveryFee.toFixed(2)}`}</span>
+              <span>₹{DELIVERY_FEE.toFixed(2)}</span>
             </div>
-
-            <div className="summary-divider"></div>
-
+            <div className="summary-divider" />
             <div className="summary-row total">
               <span>Total</span>
               <span>₹{total.toFixed(2)}</span>
-            </div>
-
-            <div className="security-badges">
-              <div className="badge">
-                <CheckCircle size={16} />
-                Secure Checkout
-              </div>
-              <div className="badge">
-                <ShoppingBag size={16} />
-                Fresh & Safe
-              </div>
             </div>
           </div>
         </div>

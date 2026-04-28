@@ -7,11 +7,11 @@
   margin-right: auto;
 }
 
-.section-title {
+.nutritionists-section .section-title {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 48px;
-  line-height: 66px;
+  font-size: 64px;
+  line-height: 80px;
   text-align: center;
   letter-spacing: -0.32px;
   color: #141414;
@@ -175,15 +175,11 @@
   line-height: 16px;
 }
 
-.session-icon {
-  font-size: 16px;
-  line-height: 16px;
-}
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .section-title {
-    font-size: 36px;
+  .nutritionists-section .section-title {
+    font-size: 48px;
     line-height: 1.2;
     margin-bottom: 24px;
   }
@@ -208,7 +204,7 @@
     width: 100%;
   }
 
-  .section-title {
-    font-size: 28px;
+  .nutritionists-section .section-title {
+    font-size: 36px;
   }
 }

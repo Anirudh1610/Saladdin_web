@@ -1,77 +1,137 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Styles/BuildYourBowl.css';
 import BaseSaladModal from './Components/BaseSaladModal';
+import AuthModal from '../Profile/Components/AuthModal';
+import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
 import emptyBowlIcon from '../../Assets/BYB/salad (1) 1.svg';
 import baseBowlIcon from '../../Assets/BYB/salad 1.svg';
 
+const API_BASE = `http://${window.location.hostname}:8000`;
+
 const BuildYourBowl = () => {
-  const [addonType, setAddonType] = useState('all');
+  const { user, session } = useAuth();
+  const { addItem } = useCart();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [selectedSalad, setSelectedSalad] = useState(null);
   const [coreIngredients, setCoreIngredients] = useState([]);
   const [addOns, setAddOns] = useState([]);
+
+  const [availableAddons, setAvailableAddons] = useState([]);
+  const [addonsLoading, setAddonsLoading] = useState(true);
+  const [addonType, setAddonType] = useState('all');
   const [searchAddon, setSearchAddon] = useState('');
 
-  // Available addons data
-  const availableAddons = [
-    { id: 1, name: 'Mint leaves', type: 'veg', defaultAmount: '50gms' },
-    { id: 2, name: 'Paneer cubes', type: 'veg', defaultAmount: '50gms' },
-    { id: 3, name: 'Boiled egg', type: 'non-veg', defaultAmount: '50gms' },
-    { id: 4, name: 'Chicken Brest', type: 'non-veg', defaultAmount: '100gms' },
-    { id: 5, name: 'Cherry tomatoes', type: 'veg', defaultAmount: '30gms' },
-    { id: 6, name: 'Olives', type: 'veg', defaultAmount: '20gms' },
-    { id: 7, name: 'Feta cheese', type: 'veg', defaultAmount: '40gms' },
-    { id: 8, name: 'Grilled Salmon', type: 'non-veg', defaultAmount: '100gms' },
-  ];
+  const [showSavePrompt, setShowSavePrompt] = useState(false);
+  const [bowlName, setBowlName] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [saveStatus, setSaveStatus] = useState(null); // 'success' | 'error' | null
+  const [addingToCart, setAddingToCart] = useState(false);
+  const [cartStatus, setCartStatus] = useState(null); // 'success' | 'error' | null
 
-  const handleSaladSelect = (salad) => {
+  useEffect(() => {
+    fetch(`${API_BASE}/ingredients/`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAvailableAddons(data.map((ing) => ({
+          id: String(ing.id),
+          name: ing.name,
+          type: ing.category?.toLowerCase().includes('non-veg') ? 'non-veg' : 'veg',
+          defaultAmount: '50gms',
+        })));
+        setAddonsLoading(false);
+      })
+      .catch(() => setAddonsLoading(false));
+  }, []);
+
+  const handleSaladSelect = async (salad) => {
     setSelectedSalad(salad);
-    // Set initial core ingredients from salad
-    setCoreIngredients([
-      { id: 1, name: 'Lettuce / Romaine' },
-      { id: 2, name: 'Spinach' },
-      { id: 3, name: 'Cucumber slices' },
-      { id: 4, name: 'Broccoli' },
-      { id: 5, name: 'Green capsicum' },
-      { id: 6, name: 'Celery' },
-    ]);
-    setAddOns([
-      { id: 1, name: 'Pumpkin seeds', amount: '30gms' }
-    ]);
+    setAddOns([]);
+    setSaveStatus(null);
     setIsModalOpen(false);
-  };
 
-  const removeCoreIngredient = (id) => {
-    setCoreIngredients(coreIngredients.filter(item => item.id !== id));
-  };
-
-  const removeAddOn = (id) => {
-    setAddOns(addOns.filter(item => item.id !== id));
-  };
-
-  const addAddonToList = (addon) => {
-    const exists = addOns.find(item => item.id === addon.id);
-    if (!exists) {
-      setAddOns([...addOns, { ...addon, amount: addon.defaultAmount }]);
+    // Fetch real ingredients for this salad
+    try {
+      const res = await fetch(`${API_BASE}/salads/${salad.id}`);
+      const data = await res.json();
+      setCoreIngredients(
+        (data.ingredients || []).map((ing) => ({
+          id: String(ing.ingredient_id),
+          name: ing.ingredient_name,
+        }))
+      );
+    } catch {
+      setCoreIngredients([]);
     }
   };
 
-  const resetCoreIngredients = () => {
-    setCoreIngredients([
-      { id: 1, name: 'Lettuce / Romaine' },
-      { id: 2, name: 'Spinach' },
-      { id: 3, name: 'Cucumber slices' },
-      { id: 4, name: 'Broccoli' },
-      { id: 5, name: 'Green capsicum' },
-      { id: 6, name: 'Celery' },
-    ]);
+  const removeCoreIngredient = (id) =>
+    setCoreIngredients((prev) => prev.filter((i) => i.id !== id));
+
+  const removeAddOn = (id) =>
+    setAddOns((prev) => prev.filter((i) => i.id !== id));
+
+  const addAddonToList = (addon) => {
+    if (!addOns.find((i) => i.id === addon.id)) {
+      setAddOns((prev) => [...prev, { id: addon.id, name: addon.name, amount: addon.defaultAmount }]);
+    }
   };
 
-  const clearAddOns = () => {
-    setAddOns([]);
+  const resetCoreIngredients = async () => {
+    if (!selectedSalad) return;
+    try {
+      const res = await fetch(`${API_BASE}/salads/${selectedSalad.id}`);
+      const data = await res.json();
+      setCoreIngredients(
+        (data.ingredients || []).map((ing) => ({
+          id: String(ing.ingredient_id),
+          name: ing.ingredient_name,
+        }))
+      );
+    } catch {}
   };
 
-  const filteredAddons = availableAddons.filter(addon => {
+  const handleSaveClick = () => {
+    if (!user) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+    setBowlName('');
+    setSaveStatus(null);
+    setShowSavePrompt(true);
+  };
+
+  const handleConfirmSave = async () => {
+    if (!bowlName.trim()) return;
+    setSaving(true);
+    setSaveStatus(null);
+    try {
+      const res = await fetch(`${API_BASE}/bowls/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          name: bowlName.trim(),
+          base_salad_id: selectedSalad.id,
+          core_ingredients: coreIngredients,
+          addons: addOns,
+        }),
+      });
+      if (!res.ok) throw new Error();
+      setSaveStatus('success');
+      setShowSavePrompt(false);
+    } catch {
+      setSaveStatus('error');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const filteredAddons = availableAddons.filter((addon) => {
     const matchesSearch = addon.name.toLowerCase().includes(searchAddon.toLowerCase());
     const matchesType = addonType === 'all' || addon.type === addonType;
     return matchesSearch && matchesType;
@@ -79,7 +139,6 @@ const BuildYourBowl = () => {
 
   return (
     <div className="build-your-bowl-page">
-      
       <div className="container">
         <div className="build-bowl-content">
           <div className="base-bowl-section">
@@ -111,10 +170,6 @@ const BuildYourBowl = () => {
                     <p>{selectedSalad.description}</p>
                   </div>
                   <button className="change-base-btn" onClick={() => setIsModalOpen(true)}>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1.71 14.99C1.71 17.75 3.96 20 6.72 20H13.28C16.04 20 18.29 17.75 18.29 14.99" fill="#386641"/>
-                      <path d="M15.24 8.74C16.03 7.39 14.81 5.74 13.28 5.74C12.79 3.07 9.21 3.07 8.72 5.74C7.19 5.74 5.97 7.39 6.76 8.74" fill="#386641"/>
-                    </svg>
                     Change Base
                   </button>
                 </div>
@@ -125,7 +180,10 @@ const BuildYourBowl = () => {
                     <button className="reset-btn" onClick={resetCoreIngredients}>Reset</button>
                   </div>
                   <div className="ingredient-chips">
-                    {coreIngredients.map(ingredient => (
+                    {coreIngredients.length === 0 && (
+                      <p style={{ color: '#aaa', fontSize: '14px' }}>No core ingredients.</p>
+                    )}
+                    {coreIngredients.map((ingredient) => (
                       <div key={ingredient.id} className="ingredient-chip">
                         <span>{ingredient.name}</span>
                         <button onClick={() => removeCoreIngredient(ingredient.id)}>−</button>
@@ -137,10 +195,10 @@ const BuildYourBowl = () => {
                 <div className="addons-section">
                   <div className="section-header">
                     <h3>Add Ons</h3>
-                    <button className="clear-btn" onClick={clearAddOns}>Clear</button>
+                    <button className="clear-btn" onClick={() => setAddOns([])}>Clear</button>
                   </div>
                   <div className="addon-chips">
-                    {addOns.map(addon => (
+                    {addOns.map((addon) => (
                       <div key={addon.id} className="addon-chip">
                         <span>{addon.name}</span>
                         <button onClick={() => removeAddOn(addon.id)}>−</button>
@@ -149,7 +207,80 @@ const BuildYourBowl = () => {
                   </div>
                 </div>
 
-                <button className="save-bowl-btn">Save to My Bowls</button>
+                {showSavePrompt ? (
+                  <div className="save-prompt">
+                    <input
+                      className="bowl-name-input"
+                      type="text"
+                      placeholder="Name your bowl..."
+                      value={bowlName}
+                      onChange={(e) => setBowlName(e.target.value)}
+                      autoFocus
+                    />
+                    <div className="save-prompt-actions">
+                      <button className="save-bowl-btn" onClick={handleConfirmSave} disabled={!bowlName.trim() || saving}>
+                        {saving ? 'Saving...' : 'Confirm Save'}
+                      </button>
+                      <button className="cancel-save-btn" onClick={() => setShowSavePrompt(false)}>
+                        Cancel
+                      </button>
+                    </div>
+                    {saveStatus === 'error' && (
+                      <p style={{ color: '#ff6b6b', fontSize: '13px', marginTop: '8px' }}>Failed to save. Try again.</p>
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    <div className="bowl-action-buttons">
+                      <button className="save-bowl-btn" onClick={handleSaveClick}>
+                        {user ? 'Save to My Bowls' : 'Sign in to Save'}
+                      </button>
+                      <button
+                        className="add-to-cart-bowl-btn"
+                        disabled={addingToCart}
+                        onClick={async () => {
+                          if (!user) { setIsAuthModalOpen(true); return; }
+                          setAddingToCart(true);
+                          setCartStatus(null);
+                          try {
+                            const res = await fetch(`${API_BASE}/bowls/`, {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${session.access_token}`,
+                              },
+                              body: JSON.stringify({
+                                name: `${selectedSalad.name} (Custom)`,
+                                base_salad_id: selectedSalad.id,
+                                core_ingredients: coreIngredients,
+                                addons: addOns,
+                              }),
+                            });
+                            if (!res.ok) throw new Error();
+                            const bowl = await res.json();
+                            await addItem({ item_type: 'bowl', bowl_id: bowl.id });
+                            setCartStatus('success');
+                          } catch {
+                            setCartStatus('error');
+                          } finally {
+                            setAddingToCart(false);
+                          }
+                        }}
+                      >
+                        {addingToCart ? 'Adding...' : 'Add to Cart'}
+                      </button>
+                    </div>
+                    {saveStatus === 'success' && (
+                      <p style={{ color: '#386641', fontSize: '13px', marginTop: '8px' }}>Bowl saved!</p>
+                    )}
+                    {cartStatus === 'success' && (
+                      <p style={{ color: '#386641', fontSize: '13px', marginTop: '8px' }}>Added to cart!</p>
+                    )}
+                    {cartStatus === 'error' && (
+                      <p style={{ color: '#ff6b6b', fontSize: '13px', marginTop: '8px' }}>Failed to add to cart. Try again.</p>
+                    )}
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -157,25 +288,11 @@ const BuildYourBowl = () => {
           <div className="addons-sidebar">
             <h3>Available Addons</h3>
             <div className="addon-toggle">
-              <button 
-                className={`toggle-btn ${addonType === 'all' ? 'active' : ''}`}
-                onClick={() => setAddonType('all')}
-              >
-                All
-              </button>
-              <button 
-                className={`toggle-btn ${addonType === 'veg' ? 'active' : ''}`}
-                onClick={() => setAddonType('veg')}
-              >
-                Veg
-              </button>
-              <button 
-                className={`toggle-btn ${addonType === 'non-veg' ? 'active' : ''}`}
-                onClick={() => setAddonType('non-veg')}
-              >
-                Non-Veg
-              </button>
+              <button className={`toggle-btn ${addonType === 'all' ? 'active' : ''}`} onClick={() => setAddonType('all')}>All</button>
+              <button className={`toggle-btn ${addonType === 'veg' ? 'active' : ''}`} onClick={() => setAddonType('veg')}>Veg</button>
+              <button className={`toggle-btn ${addonType === 'non-veg' ? 'active' : ''}`} onClick={() => setAddonType('non-veg')}>Non-Veg</button>
             </div>
+
             {selectedSalad ? (
               <>
                 <div className="addon-search">
@@ -185,26 +302,28 @@ const BuildYourBowl = () => {
                     value={searchAddon}
                     onChange={(e) => setSearchAddon(e.target.value)}
                   />
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="9" cy="9" r="6" stroke="#999" strokeWidth="2"/>
-                    <path d="M14 14L18 18" stroke="#999" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
                 </div>
                 <div className="available-addons-list">
-                  {filteredAddons.map(addon => (
+                  {addonsLoading && <p style={{ color: '#aaa', fontSize: '14px' }}>Loading...</p>}
+                  {filteredAddons.map((addon) => (
                     <div key={addon.id} className="addon-item">
                       <div className="addon-item-content">
                         <span className="addon-name">{addon.name}</span>
-                        <select className="addon-amount" defaultValue={addon.defaultAmount}>
+                        <select
+                          className="addon-amount"
+                          defaultValue={addon.defaultAmount}
+                          onChange={(e) => { addon.defaultAmount = e.target.value; }}
+                        >
                           <option value="30gms">30gms</option>
                           <option value="50gms">50gms</option>
                           <option value="100gms">100gms</option>
                           <option value="150gms">150gms</option>
                         </select>
                       </div>
-                      <button 
+                      <button
                         className="add-addon-btn"
                         onClick={() => addAddonToList(addon)}
+                        disabled={!!addOns.find((i) => i.id === addon.id)}
                       >
                         +
                       </button>
@@ -220,10 +339,15 @@ const BuildYourBowl = () => {
           </div>
         </div>
 
-        <BaseSaladModal 
-          isOpen={isModalOpen} 
+        <BaseSaladModal
+          isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSelectSalad={handleSaladSelect}
+        />
+
+        <AuthModal
+          isOpen={isAuthModalOpen}
+          onClose={() => setIsAuthModalOpen(false)}
         />
       </div>
     </div>

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
 import './App.css';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -20,9 +21,24 @@ import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Cart/Components/Checkout';
 import FAQ from './pages/FAQ/FAQ';
 
+const API_BASE = `http://${window.location.hostname}:8000`;
+
 function App() {
+  useEffect(() => {
+    fetch(`${API_BASE}/`)
+      .then(res => res.json())
+      .then(data => console.log('Server:', data.message))
+      .catch(err => console.warn('Server unreachable:', err));
+
+    fetch(`${API_BASE}/health`)
+      .then(res => res.json().then(data => ({ status: res.status, ...data })))
+      .then(data => console.log('Health check:', data))
+      .catch(err => console.warn('Health check failed:', err));
+  }, []);
+
   return (
     <Router>
+      <CartProvider>
       <ScrollToTop />
       <MainLayout>
         <Routes>
@@ -43,6 +59,7 @@ function App() {
           <Route path="/faq" element={<FAQ />} />
         </Routes>
       </MainLayout>
+      </CartProvider>
     </Router>
   );
 }

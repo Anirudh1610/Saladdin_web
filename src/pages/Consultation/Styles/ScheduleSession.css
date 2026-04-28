@@ -59,9 +59,9 @@
   width: 50px;
   height: 50px;
   flex-shrink: 0;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Placeholder colored backgrounds for icons */
@@ -144,12 +144,6 @@
   border-radius: 30px;
 }
 
-.chat-icon {
-  width: 16px;
-  height: 16px;
-  border: 2px solid #386641;
-  border-radius: 2px;
-}
 
 .existing-text {
   display: flex;
@@ -177,14 +171,6 @@
   margin: 0;
 }
 
-.arrow-icon {
-  width: 16px;
-  height: 8px;
-  border-right: 2px solid #111111;
-  border-bottom: 2px solid #111111;
-  transform: rotate(-45deg);
-  flex-shrink: 0;
-}
 
 /* Right Section - Form */
 .schedule-right {
@@ -289,33 +275,6 @@ select.form-input {
   pointer-events: none;
 }
 
-.calendar-icon,
-.time-icon {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  border: 2px solid #111111;
-  border-radius: 2px;
-  pointer-events: none;
-}
-
-.time-icon {
-  border-radius: 50%;
-}
-
-.time-icon::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1px;
-  height: 6px;
-  background: #111111;
-  transform: translate(-50%, -50%);
-}
 
 .form-textarea {
   width: 100%;
@@ -369,6 +328,27 @@ select.form-input {
 
 .book-button:active {
   transform: translateY(0);
+}
+
+.book-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-feedback {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  margin: 0;
+}
+
+.form-error {
+  color: #e53935;
+}
+
+.form-success {
+  color: #386641;
+  font-weight: 600;
 }
 
 /* Responsive Design */
