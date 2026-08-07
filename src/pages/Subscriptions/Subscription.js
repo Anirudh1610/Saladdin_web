@@ -4,6 +4,7 @@ import './Styles/Subscription.css';
 import AuthModal from '../Profile/Components/AuthModal';
 import fallbackImage from '../../Assets/Menu/Salad Grid/Rectangle 11.svg';
 import { useAuth } from '../../context/AuthContext';
+import { API_BASE } from '../../config';
 
 const Subscription = () => {
   const { user, session } = useAuth();
@@ -22,7 +23,7 @@ const Subscription = () => {
   const [activeSubscription, setActiveSubscription] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:8000/salads/')
+    fetch(`${API_BASE}/salads/`)
       .then(r => r.json())
       .then(data => setSalads(data))
       .catch(() => {})
@@ -31,7 +32,7 @@ const Subscription = () => {
 
   useEffect(() => {
     if (!user || !session) return;
-    fetch('http://localhost:8000/subscriptions/me', {
+    fetch(`${API_BASE}/subscriptions/me`, {
       headers: { 'Authorization': `Bearer ${session.access_token}` },
     })
       .then(r => r.ok ? r.json() : null)
@@ -132,7 +133,7 @@ const Subscription = () => {
     setSubmitStatus('loading');
     setSubmitError('');
     try {
-      const res = await fetch('http://localhost:8000/subscriptions/', {
+      const res = await fetch(`${API_BASE}/subscriptions/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

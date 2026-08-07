@@ -5,8 +5,7 @@ import './Styles/ProfilePage.css';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import fallbackImage from '../../Assets/Menu/Salad Grid/Rectangle 11.svg';
-
-const API_BASE = `http://${window.location.hostname}:8000`;
+import { API_BASE } from '../../config';
 
 const fmtSlot = (slot) => {
   if (!slot) return '';

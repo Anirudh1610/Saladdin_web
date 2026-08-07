@@ -20,8 +20,7 @@ import ProfilePage from './pages/Profile/ProfilePage';
 import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Cart/Components/Checkout';
 import FAQ from './pages/FAQ/FAQ';
-
-const API_BASE = `http://${window.location.hostname}:8000`;
+import { API_BASE } from './config';
 
 function App() {
   useEffect(() => {

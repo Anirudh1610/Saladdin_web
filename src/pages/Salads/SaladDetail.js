@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import GranularSaladPage from './Components/GranularSaladPage';
 import fallbackImage from '../../Assets/Menu/Salad Grid/Rectangle 11.svg';
-
-const API_BASE = `http://${window.location.hostname}:8000`;
+import { API_BASE } from '../../config';
 
 const SaladDetail = () => {
   const { id } = useParams();

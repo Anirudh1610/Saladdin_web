@@ -7,8 +7,8 @@ import {
 import '../Styles/Checkout.css';
 import { useCart } from '../../../context/CartContext';
 import { useAuth } from '../../../context/AuthContext';
+import { API_BASE } from '../../../config';
 
-const API_BASE = `http://${window.location.hostname}:8000`;
 const DELIVERY_FEE = 15;
 
 const formatSlot = (slot) => {
@@ -39,7 +39,7 @@ const formatDate = (d) => {
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { cartItems } = useCart();
+  const { cartItems, clearCart } = useCart();
   const { session, user } = useAuth();
 
   const [step, setStep] = useState(1);
@@ -180,6 +180,7 @@ const Checkout = () => {
       const order = await orderResp.json();
       setPlacedOrder(order);
       setOrderPlaced(true);
+      clearCart();
     } catch (e) {
       setError(e.message);
     } finally {

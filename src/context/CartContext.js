@@ -1,10 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import AuthModal from '../pages/Profile/Components/AuthModal';
+import { API_BASE } from '../config';
 
 const CartContext = createContext(null);
-
-const API_BASE = `http://${window.location.hostname}:8000`;
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
