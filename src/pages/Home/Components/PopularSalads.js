@@ -5,8 +5,7 @@ import GroupIcon from '../../../Assets/Home/Popular/Group.svg';
 import SaladCard from '../../Salads/Components/SaladCard';
 import fallbackImage from '../../../Assets/Menu/Salad Grid/Rectangle 11.svg';
 import { useCart } from '../../../context/CartContext';
-
-const API_BASE = `http://${window.location.hostname}:8000`;
+import { API_BASE } from '../../../config';
 
 const mapSaladToCard = (salad) => {
   const nutrients = salad.nutrient_info || {};

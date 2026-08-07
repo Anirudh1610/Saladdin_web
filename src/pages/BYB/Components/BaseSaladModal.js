@@ -3,8 +3,7 @@ import { Search } from 'lucide-react';
 import '../Styles/BaseSaladModal.css';
 import SaladCard from '../../Salads/Components/SaladCard';
 import fallbackImage from '../../../Assets/Menu/Salad Grid/Rectangle 11.svg';
-
-const API_BASE = `http://${window.location.hostname}:8000`;
+import { API_BASE } from '../../../config';
 
 const mapSaladToCard = (salad) => {
   const nutrients = salad.nutrient_info || {};

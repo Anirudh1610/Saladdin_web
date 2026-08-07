@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 import '../Styles/ConsultationHistory.css';
-
-const API_BASE = 'http://localhost:8000';
+import { API_BASE } from '../../../config';
 
 const AVATAR = {
   'Dr. Sarah Mitchell':  { initials: 'SM', color: '#4CAF50' },

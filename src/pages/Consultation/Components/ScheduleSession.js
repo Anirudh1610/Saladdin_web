@@ -3,8 +3,7 @@ import { Users, CalendarDays, HeadphonesIcon, MessageSquare, ChevronRight } from
 import { useAuth } from '../../../context/AuthContext';
 import AuthModal from '../../Profile/Components/AuthModal';
 import '../Styles/ScheduleSession.css';
-
-const API_BASE = 'http://localhost:8000';
+import { API_BASE } from '../../../config';
 
 const ScheduleSession = () => {
   const { user, session } = useAuth();

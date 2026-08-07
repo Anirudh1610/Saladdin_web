@@ -6,8 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import emptyBowlIcon from '../../Assets/BYB/salad (1) 1.svg';
 import baseBowlIcon from '../../Assets/BYB/salad 1.svg';
-
-const API_BASE = `http://${window.location.hostname}:8000`;
+import { API_BASE } from '../../config';
 
 const BuildYourBowl = () => {
   const { user, session } = useAuth();
