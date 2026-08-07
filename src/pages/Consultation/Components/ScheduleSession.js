@@ -172,7 +172,7 @@ const ScheduleSession = () => {
                   className="form-input"
                 >
                   <option value="" disabled>Select a nutritionist</option>
-                  <option value="Dr. Sarah Mitchell">Dr. Sarah Mitchell</option>
+                  <option value="Dr. Sarah Mitchell">Madiha Baig</option>
                   <option value="Dr. James Chen">Dr. James Chen</option>
                   <option value="Dr. Emily Rodriguez">Dr. Emily Rodriguez</option>
                 </select>
