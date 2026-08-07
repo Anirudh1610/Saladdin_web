@@ -8,7 +8,6 @@ import { useCart } from '../../../context/CartContext';
 const GranularSaladPage = ({ salad }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('ingredients');
-  const [quantity] = useState(1);
   const [added, setAdded] = useState(false);
   const { addItem } = useCart();
 

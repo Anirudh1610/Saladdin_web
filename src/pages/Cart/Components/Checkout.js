@@ -39,7 +39,7 @@ const formatDate = (d) => {
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { cartItems, clearCart } = useCart();
+  const { cartItems } = useCart();
   const { session, user } = useAuth();
 
   const [step, setStep] = useState(1);
