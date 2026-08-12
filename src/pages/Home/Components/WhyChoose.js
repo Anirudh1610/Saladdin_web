@@ -38,14 +38,18 @@ const WhyChoose = () => {
           Why choose <span className="highlight">Saladdin</span>
         </h2>
       </div>
-      <div className="reasons-grid">
-        {reasons.map((reason, index) => (
-          <div className="reason-card" key={index}>
-            <img src={reason.img} alt={reason.title} className="reason-image" />
-            <h3 className="reason-title">{reason.title}</h3>
-            <p className="reason-description">{reason.description}</p>
-          </div>
-        ))}
+      <div className="carousel-viewport">
+        <div className="carousel-track">
+          {[...reasons, ...reasons, ...reasons, ...reasons].map((reason, index) => (
+            <div className="reason-card" key={index} aria-hidden={index >= reasons.length}>
+              <div className="reason-image-wrap">
+                <img src={reason.img} alt={reason.title} className="reason-image" />
+              </div>
+              <h3 className="reason-title">{reason.title}</h3>
+              <p className="reason-description">{reason.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

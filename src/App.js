@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
+import { ThemeProvider } from './context/ThemeContext';
 import './App.css';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -37,6 +38,7 @@ function App() {
 
   return (
     <Router>
+      <ThemeProvider>
       <CartProvider>
       <ScrollToTop />
       <MainLayout>
@@ -59,6 +61,7 @@ function App() {
         </Routes>
       </MainLayout>
       </CartProvider>
+      </ThemeProvider>
     </Router>
   );
 }

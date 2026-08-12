@@ -1,7 +1,11 @@
+/* Hero button SVG fill classes — themed via CSS variables */
+.hero-btn-fill-accent { fill: var(--accent); }
+.hero-btn-fill-warm   { fill: var(--step-title-color); }
+
 /* Hero Section */
 .hero-section {
   min-height: 100vh;
-  background: #FEFFDC;
+  background: var(--hero-bg);
   padding-top: 100px;
   position: relative;
   overflow: hidden; /* Changed from visible to prevent horizontal scroll from oversized mobile images */
@@ -23,6 +27,17 @@
   min-height: calc(100vh - 150px);
 }
 
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .hero-text {
   padding-right: 2rem;
 }
@@ -31,26 +46,29 @@
   font-size: 64px;
   font-weight: 800;
   line-height: 1.1;
-  color: #1a1a1a;
+  color: var(--hero-title-color);
   margin-bottom: 1.5rem;
   letter-spacing: -0.02em;
   font-family: 'Manrope', sans-serif;
+  animation: hero-fade-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
 }
 
 .hero-subtitle {
   font-size: 20px;
-  color: #5E5252;
+  color: var(--hero-subtitle-color);
   margin-bottom: 2.5rem;
   line-height: 1.7;
   font-family: 'Inter', sans-serif;
   font-weight: 600;
   opacity: 70%;
+  animation: hero-fade-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
 }
 
 .hero-buttons {
   display: flex;
   gap: 1rem;
   align-items: center;
+  animation: hero-fade-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
 }
 
 .btn-order {
@@ -74,12 +92,12 @@
 
 .btn-order:hover {
   transform: translateY(-4px) scale(1.04);
-  filter: drop-shadow(0 6px 14px rgba(74, 124, 89, 0.35));
+  filter: drop-shadow(0 6px 14px rgba(var(--shadow-rgb), 0.35));
 }
 
 .btn-build {
   background: transparent;
-  color: #2d5f3f;
+  color: var(--accent-hover);
   padding: 0;
   border: none;
   border-radius: 0;
@@ -100,7 +118,7 @@
 
 .btn-build:hover {
   transform: translateY(-4px) scale(1.04);
-  filter: drop-shadow(0 6px 14px rgba(74, 124, 89, 0.3));
+  filter: drop-shadow(0 6px 14px rgba(var(--shadow-rgb), 0.3));
 }
 
 /* Hero Image Section */
@@ -132,6 +150,11 @@
   z-index: 3; /* Moved to top so bowl doesn't overlap it */
 }
 
+@keyframes bowl-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 .bowl-svg {
   position: absolute;
   top: 50%;
@@ -140,6 +163,7 @@
   width: 65%; /* Reduced from 80% to restore original visual scale */
   height: auto;
   z-index: 2;
+  animation: bowl-spin 14s linear infinite;
 }
 
 .mask-group-svg {
@@ -200,7 +224,7 @@
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  background: #2d5f3f;
+  background: var(--accent-hover);
   color: white;
   padding: 1rem 1.5rem;
   border-radius: 50px;
@@ -209,15 +233,15 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  box-shadow: 0 4px 12px rgba(45, 95, 63, 0.3);
+  box-shadow: 0 4px 12px rgba(var(--shadow-rgb), 0.3);
   transition: all 0.3s ease;
   z-index: 1000;
 }
 
 .floating-cart-btn:hover {
-  background: #234a32;
+  background: var(--accent-deep);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(45, 95, 63, 0.4);
+  box-shadow: 0 6px 16px rgba(var(--shadow-rgb), 0.4);
 }
 
 /* Dynamic Responsive Styles */
@@ -225,7 +249,7 @@
   .hero-container {
     padding: 0 2rem;
   }
-  
+
   .hero-title {
     font-size: 52px;
   }

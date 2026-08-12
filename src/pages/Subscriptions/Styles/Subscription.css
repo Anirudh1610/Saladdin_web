@@ -6,6 +6,7 @@
 }
 
 .subscription-page > .container {
+  width: 100%;
   margin-bottom: 100px;
 }
 
@@ -949,6 +950,29 @@
 
   .summary-row.total strong {
     font-size: 20px;
+  }
+
+  .preferences-form,
+  .summary-card {
+    padding: 20px;
+  }
+
+  .summary-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .summary-actions {
+    align-items: stretch;
+  }
+
+  .summary-card .btn-large {
+    width: 100%;
+  }
+
+  .cancel-note {
+    text-align: center;
   }
 }
 

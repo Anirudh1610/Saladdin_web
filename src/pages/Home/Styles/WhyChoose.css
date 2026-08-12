@@ -1,8 +1,9 @@
 /* Why Choose Section */
 .why-choose {
-  padding: 6rem 0;
-  background: #ffffff;
+  padding: 2rem 0 6rem;
+  background: var(--section-bg);
   font-family: 'Manrope', sans-serif;
+  overflow: hidden;
 }
 
 .why-choose-header {
@@ -21,90 +22,114 @@
 .why-choose-title {
   font-size: 3rem;
   font-weight: 700;
-  color: #2c3e50;
+  color: var(--section-title-color);
   margin: 0;
 }
 
 .why-choose-title .highlight {
-  color: #386641;
+  color: var(--accent);
 }
 
-.reasons-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-  justify-items: center;
+/* Carousel */
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
 }
 
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-25%); }
+}
+
+.carousel-track {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  animation: marquee 22s linear infinite;
+  will-change: transform;
+}
+
+.carousel-track:hover {
+  animation-play-state: paused;
+}
+
+/* Card */
 .reason-card {
+  box-sizing: border-box;
+  width: 300px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   text-align: center;
-  padding: 1rem;
-  background-color: transparent;
-  box-shadow: none;
+  padding: 0 2rem;
+}
+
+.reason-image-wrap {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  flex-shrink: 0;
 }
 
 .reason-image {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  margin-bottom: 1.5rem;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
 }
 
 .reason-title {
-  font-size: 32px;
+  font-size: 17px;
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  color: #111111;
-  margin-bottom: 0.5rem;
-  text-align: center;
-  max-width: 480px;
+  color: var(--body-text-color);
+  margin: 0 0 0.5rem 0;
+  width: 100%;
+  line-height: 1.35;
 }
 
 .reason-description {
-  font-size: 20px;
+  font-size: 14px;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
-  color: #111111;
+  color: var(--body-text-color);
   text-align: center;
   line-height: 1.6;
   margin: 0;
-  max-width: 480px;
+  width: 100%;
+  opacity: 0.8;
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
   .why-choose {
-    padding: 3rem 1.5rem;
+    padding: 1rem 0 3rem;
   }
 
   .why-choose-title {
     font-size: 2.25rem;
   }
 
-  .reasons-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+  .reason-card {
+    width: 220px;
+    padding: 0 1.25rem;
+  }
+
+  .reason-image-wrap {
+    width: 120px;
+    height: 120px;
   }
 
   .reason-title {
-    font-size: 24px;
-    max-width: 100%;
+    font-size: 15px;
   }
 
   .reason-description {
-    font-size: 16px;
-    max-width: 100%;
-  }
-
-  .reason-image {
-    max-width: 80%;
+    font-size: 13px;
   }
 }
 
@@ -113,7 +138,21 @@
     font-size: 1.75rem;
   }
 
+  .reason-card {
+    width: 180px;
+    padding: 0 1rem;
+  }
+
+  .reason-image-wrap {
+    width: 100px;
+    height: 100px;
+  }
+
   .reason-title {
-    font-size: 20px;
+    font-size: 14px;
+  }
+
+  .reason-description {
+    font-size: 12px;
   }
 }

@@ -302,14 +302,18 @@
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.section-header {
+.ingredients-section .section-header,
+.addons-section .section-header {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  text-align: left;
   flex-shrink: 0;
 }
 
-.section-header h3 {
+.ingredients-section .section-header h3,
+.addons-section .section-header h3 {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 16px;
@@ -408,7 +412,7 @@
   cursor: pointer;
   padding: 0;
   width: 12px;
-  height: 0;
+  height: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -442,6 +446,53 @@
 }
 
 .save-bowl-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bowl-action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 8px;
+  flex-shrink: 0;
+}
+
+/* Secondary action: save/sign-in takes the tan style already used for
+   Change Base / Add Base Bowl elsewhere on this page. */
+.bowl-action-buttons .save-bowl-btn {
+  width: auto;
+  flex: 1;
+  margin-top: 0;
+  background: #F2E8CF;
+  color: #386641;
+}
+
+.bowl-action-buttons .save-bowl-btn:hover:not(:disabled) {
+  background: #e8dfc0;
+}
+
+/* Primary action: add to cart. */
+.add-to-cart-bowl-btn {
+  flex: 1;
+  padding: 14px 24px;
+  background: #386641;
+  border-radius: 12px;
+  border: none;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  color: #F2E8CF;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-to-cart-bowl-btn:hover:not(:disabled) {
+  background: #2d5033;
+}
+
+.add-to-cart-bowl-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -727,12 +778,18 @@
     max-height: 350px;
   }
 
-  .save-bowl-btn {
-    padding: 15px;
-    font-size: 15px;
+  .bowl-action-buttons {
+    flex-direction: column;
     position: sticky;
     bottom: 20px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    border-radius: 12px;
     z-index: 10;
+  }
+
+  .bowl-action-buttons .save-bowl-btn,
+  .add-to-cart-bowl-btn {
+    padding: 15px;
+    font-size: 15px;
   }
 }

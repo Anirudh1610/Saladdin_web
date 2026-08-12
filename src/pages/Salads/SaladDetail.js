@@ -13,13 +13,16 @@ const SaladDetail = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    fetch(`${API_BASE}/salads/${id}`)
-      .then((res) => {
+    Promise.all([
+      fetch(`${API_BASE}/salads/${id}`).then((res) => {
         if (!res.ok) throw new Error('Not found');
         return res.json();
-      })
-      .then((data) => {
+      }),
+      fetch(`${API_BASE}/ingredients/`).then((res) => (res.ok ? res.json() : [])),
+    ])
+      .then(([data, allIngredients]) => {
         const nutrients = data.nutrient_info || {};
+        const nutrientsById = new Map(allIngredients.map((ing) => [ing.id, ing.nutrient_info || {}]));
         setSalad({
           id: data.id,
           name: data.name,
@@ -37,13 +40,16 @@ const SaladDetail = () => {
             fats: nutrients.fat ?? 0,
             fiber: nutrients.fiber ?? 0,
           },
-          ingredients: (data.ingredients || []).map((ing) => ({
-            id: ing.ingredient_id,
-            name: ing.ingredient_name,
-            description: ing.ingredient_description || '',
-            calories: 0,
-            protein: 0,
-          })),
+          ingredients: (data.ingredients || []).map((ing) => {
+            const ingNutrients = nutrientsById.get(ing.ingredient_id) || {};
+            return {
+              id: ing.ingredient_id,
+              name: ing.ingredient_name,
+              description: ing.ingredient_description || '',
+              calories: ingNutrients.calories ?? 0,
+              protein: ingNutrients.protein ?? 0,
+            };
+          }),
           reviewsList: [],
         });
       })

@@ -1,6 +1,6 @@
 .menu-faq-section {
   padding: 60px 20px;
-  background: #FFFFFF;
+  background: var(--section-bg);
 }
 
 .menu-faq-container {
