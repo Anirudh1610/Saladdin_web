@@ -1,7 +1,7 @@
 /* Popular Salads Section */
 .popular-salads {
-  padding: 6rem 0;
-  background: #ffffff;
+  padding: 6rem 0 2rem;
+  background: var(--section-bg);
   font-family: 'Manrope', sans-serif;
 }
 
@@ -52,7 +52,7 @@
 .popular-salads .section-title {
   font-size: 64px !important;
   font-weight: 800;
-  color: #1a1a1a;
+  color: var(--section-title-color);
   margin: 0 !important;
   padding: 0 !important;
   font-family: 'Manrope', sans-serif;
@@ -73,7 +73,28 @@
 }
 
 .section-title .highlight {
-  color: #4A7C59;
+  color: var(--accent);
+}
+
+/* Card entrance animation */
+@keyframes card-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(48px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-wrapper {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.card-wrapper.card-animate-in {
+  animation: card-fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* Salads Grid */
@@ -101,7 +122,7 @@
 }
 
 .view-all-btn {
-  background: #4A7C59;
+  background: var(--accent);
   color: #ffffff;
   padding: 1rem 3rem;
   border-radius: 12px;
@@ -114,9 +135,9 @@
 }
 
 .view-all-btn:hover {
-  background: #3d6449;
+  background: var(--accent-hover);
   transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 8px 22px rgba(74, 124, 89, 0.35);
+  box-shadow: 0 8px 22px rgba(var(--shadow-rgb), 0.35);
 }
 
 .view-all-btn:active {
@@ -134,15 +155,15 @@
   .popular-salads {
     padding: 4rem 0;
   }
-  
+
   .popular-salads-container {
     padding: 0 1.5rem;
   }
-  
+
   .popular-salads .section-title {
     font-size: 48px !important;
   }
-  
+
   .salads-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -153,7 +174,7 @@
   .popular-salads .section-title {
     font-size: 36px !important;
   }
-  
+
   .header-decoration {
     font-size: 1rem;
   }

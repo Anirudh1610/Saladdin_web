@@ -217,8 +217,8 @@ const ScheduleSession = () => {
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  className="form-input" 
-                  placeholder="Marshal Mathers"
+                  className="form-input"
+                  placeholder="Enter your full name"
                 />
               </div>
             </div>
@@ -232,8 +232,8 @@ const ScheduleSession = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="form-input" 
-                    placeholder="marshalmathers112@gmail.com"
+                    className="form-input"
+                    placeholder="you@example.com"
                   />
                 </div>
               </div>
@@ -246,8 +246,8 @@ const ScheduleSession = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="form-input" 
-                    placeholder="+91 98374 84785"
+                    className="form-input"
+                    placeholder="+91 98765 43210"
                   />
                 </div>
               </div>

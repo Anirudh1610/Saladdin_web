@@ -1,6 +1,6 @@
 .granular-salad-page {
   min-height: 100vh;
-  background: #FFFFFF;
+  background: var(--section-bg);
   padding: 100px 20px 190px;
 }
 
@@ -36,9 +36,9 @@
 }
 
 .back-to-menu-btn:hover {
-  border-color: #7CB342;
-  background: #F5F9F0;
-  color: #2D5016;
+  border-color: var(--accent);
+  background: var(--hero-bg);
+  color: var(--accent);
 }
 
 /* Main Content Layout */
@@ -124,7 +124,7 @@
   width: fit-content;
   height: 32px;
   padding: 0 12px;
-  background: #FEFFDC;
+  background: var(--hero-bg);
   border-radius: 4px;
   box-shadow: none;
   white-space: nowrap;
@@ -276,30 +276,30 @@
   font-family: 'Manrope', sans-serif;
   font-size: 28px;
   font-weight: 700;
-  color: #2D5016;
+  color: var(--accent);
 }
 
 /* Add to Cart Button */
 .add-to-cart-main-btn {
   width: 350px;
   height: 40px;
-  background: #F2E8CF;
-  border: 1px #38664133 solid;
+  background: var(--step-title-color);
+  border: 1px solid rgba(var(--shadow-rgb), 0.2);
   border-radius: 8px;
   font-family: 'Manrope', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  color: #386641;
+  color: var(--accent);
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .add-to-cart-main-btn:hover {
-  background: #F5F9E8;
-  border-color: #7CB342;
+  filter: brightness(0.95);
+  border-color: var(--accent);
   transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(124, 179, 66, 0.2);
+  box-shadow: 0 2px 6px rgba(var(--shadow-rgb), 0.2);
 }
 
 /* Tabs Section */
@@ -368,7 +368,7 @@
   width: 254.67px;
   min-height: 143px;
   padding: 16px;
-  background: #FFFFFF;
+  background: var(--section-bg);
   border: 1px solid #E5E5E5;
   border-radius: 16px;
   transition: all 0.3s ease;
@@ -380,8 +380,8 @@
 }
 
 .ingredient-card:hover {
-  border-color: #7CB342;
-  background: #F5F9F0;
+  border-color: var(--accent);
+  background: var(--hero-bg);
   transform: translateY(-2px);
 }
 
@@ -439,7 +439,7 @@
 
 .review-card {
   padding: 20px 24px;
-  background: #FFFFFF;
+  background: var(--section-bg);
   border: 1px solid #E5E5E5;
   border-radius: 16px;
 }
@@ -527,19 +527,19 @@
   font-family: 'Manrope', sans-serif;
   font-size: 16px;
   font-weight: 600;
-  background: #2D5016;
+  background: var(--accent);
   color: #FFFFFF;
   border: none;
   border-radius: 50px;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(45, 80, 22, 0.3);
+  box-shadow: 0 8px 24px rgba(var(--shadow-rgb), 0.3);
   transition: all 0.3s ease;
 }
 
 .view-cart-floating-btn:hover {
-  background: #3D6520;
+  background: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(45, 80, 22, 0.4);
+  box-shadow: 0 12px 32px rgba(var(--shadow-rgb), 0.4);
 }
 
 /* Responsive Design */

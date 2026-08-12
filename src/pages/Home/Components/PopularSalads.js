@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../Styles/PopularSalads.css';
 import GroupIcon from '../../../Assets/Home/Popular/Group.svg';
@@ -31,6 +31,24 @@ const PopularSalads = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { addItem } = useCart();
+  const cardRefs = useRef([]);
+
+  useEffect(() => {
+    if (salads.length === 0) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('card-animate-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    cardRefs.current.forEach((ref) => { if (ref) observer.observe(ref); });
+    return () => observer.disconnect();
+  }, [salads]);
 
   useEffect(() => {
     fetch(`${API_BASE}/salads/popular`)
@@ -69,12 +87,18 @@ const PopularSalads = () => {
         <div className="salads-grid">
           {loading && <p>Loading popular salads...</p>}
           {error && <p>Failed to load salads.</p>}
-          {!loading && !error && salads.map((salad) => (
-            <SaladCard
+          {!loading && !error && salads.map((salad, index) => (
+            <div
               key={salad.id}
-              salad={salad}
-              onAddToCart={handleAddToCart}
-            />
+              className="card-wrapper"
+              ref={(el) => (cardRefs.current[index] = el)}
+              style={{ animationDelay: `${index * 0.13}s` }}
+            >
+              <SaladCard
+                salad={salad}
+                onAddToCart={handleAddToCart}
+              />
+            </div>
           ))}
         </div>
 

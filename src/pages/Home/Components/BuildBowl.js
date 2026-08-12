@@ -6,7 +6,7 @@ import SaladIcon from '../../../Assets/Home/build/salad 2.svg';
 import AddToCartIcon from '../../../Assets/Home/build/add-to-cart 1.svg';
 import OnlineShoppingIcon from '../../../Assets/Home/build/online-shopping 1.svg';
 import ElectionIcon from '../../../Assets/Home/build/election 1.svg';
-import Frame8Button from '../../../Assets/Home/build/Frame 8.svg';
+import { ReactComponent as BuildNowButton } from '../../../Assets/Home/build/Frame 8.svg';
 import VegetableSaladBowl from '../../../Assets/Home/build/colorful-fresh-vegetable-salad-bowl-with-spinach-tomatoes-cucumbers-bell-peppers 1.svg';
 import MaskGroup from '../../../Assets/Home/build/Mask group.svg';
 import Group19 from '../../../Assets/Home/build/Group 19.svg';
@@ -111,7 +111,7 @@ const BuildBowl = () => {
         {/* Build Your Bowl Button */}
         <div className="build-cta">
           <Link to="/build-your-bowl" className="btn-build-now">
-            <img src={Frame8Button} alt="Build Your Bowl" className="build-button-img" />
+            <BuildNowButton className="build-button-img" />
           </Link>
         </div>
 
@@ -128,9 +128,18 @@ const BuildBowl = () => {
           <div className="quality-grid">
             {qualityFeatures.map((feature, index) => (
               <div key={index} className="quality-card">
-                <img src={feature.image} alt={feature.title} className="quality-feature-image" />
-                <div className="quality-text-overlay">
-                  <h3 className="quality-title">{feature.title}</h3>
+                <div className="quality-card-inner">
+                  <div className="quality-card-front">
+                    <img src={feature.image} alt={feature.title} className="quality-feature-image" />
+                    <div className="quality-text-overlay">
+                      <h3 className="quality-title">{feature.title}</h3>
+                    </div>
+
+                  </div>
+                  <div className="quality-card-back">
+                    <h3 className="quality-back-title">{feature.title}</h3>
+                    <p className="quality-back-desc">{feature.description}</p>
+                  </div>
                 </div>
               </div>
             ))}
